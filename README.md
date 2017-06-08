@@ -17,3 +17,12 @@ openstack stack create -t template.yaml\
 my_stack_name
 ```
 internal_etcd should open ports 12379 and 12380 and netdata should open 19999. These can both be open to just the private network.  
+Other (optional) parameters:
+```
+name            default
+OS_REGION       regionOne
+capacity        3
+scaledownperiod 200
+metricsserver   "None"
+```
+If metricsserver is None, the netdata security group is not required
