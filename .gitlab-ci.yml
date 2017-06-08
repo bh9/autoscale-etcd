@@ -3,7 +3,7 @@ variables:
  image: "Ubuntu Xenial"
  instance_type: "m1.small"
  key_name: "bh9_testing"
- sec_grps: '["cloudforms_ssh_in","internal_etcd","netdata","my_service_sec_grp"]'
+ sec_grps: '["cloudforms_ssh_in","internal_etcd","netdata","cockroachdb"]'
  auth_url: "http://delta.internal.sanger.ac.uk:5000/v2.0/"
 
 stages:
