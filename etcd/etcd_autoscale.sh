@@ -31,7 +31,7 @@ export OS_USERNAME=$thisisausername #set some OS variables
 export OS_PASSWORD=$thisisapassword
 export OS_TENANT_NAME=$thisisatenantname
 export no_proxy=,172.27.66.32
-export OS_AUTH_URL=http://delta.internal.sanger.ac.uk:5000/v2.0
+export OS_AUTH_URL=$thisisaurl
 #export AWS_DEFAULT_REGION=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | jq --raw-output .region)
 if [[ ! $AWS_DEFAULT_REGION ]]; then
     echo "$pkg: failed to get region"

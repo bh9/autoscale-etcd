@@ -4,6 +4,7 @@ variables:
  instance_type: "m1.small"
  key_name: "bh9_testing"
  sec_grps: '["cloudforms_ssh_in","internal_etcd","netdata","my_service_sec_grp"]'
+ auth_url: "http://delta.internal.sanger.ac.uk:5000/v2.0/"
 
 stages:
  - deploy
@@ -13,5 +14,5 @@ openstack_stack_create:
   tags:
    - openstack-autoscale
   script:
-   - openstack stack create -t template.yaml --parameter OS_USERNAME=$OS_USERNAME  --parameter OS_TENANT_NAME=$OS_TENANT_NAME --parameter OS_PASSWORD=$OS_PASSWORD --parameter net_name=$net_name --parameter image=$image --parameter sec_grps=$sec_grps --parameter instance_type=$instance_type --parameter key_name=$key_name --parameter configscript="cockroach.sh" test$CI_BUILD_ID
+   - openstack stack create -t template.yaml --parameter OS_AUTH_URL=$auth_url --parameter OS_USERNAME=$OS_USERNAME  --parameter OS_TENANT_NAME=$OS_TENANT_NAME --parameter OS_PASSWORD=$OS_PASSWORD --parameter net_name=$net_name --parameter image=$image --parameter sec_grps=$sec_grps --parameter instance_type=$instance_type --parameter key_name=$key_name --parameter configscript="cockroach.sh" test$CI_BUILD_ID
 

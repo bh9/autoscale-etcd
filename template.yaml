@@ -34,6 +34,10 @@ parameters:
     type: string
     label: Your region
     default: "regionOne"
+  OS_AUTH_URL:
+    type: string
+    label: The authorisation url for openstack
+    default: "http://delta.internal.sanger.ac.uk/5000/v2.0/"
   sec_grps:
     type: comma_delimited_list
     label: a comma separated list of security groups
@@ -104,6 +108,7 @@ resources:
                 $thisisatimeout: {get_param: scaledownperiod}
                 $thisisametricserver: {get_param: metricsserver}
                 $thisisascriptname: {get_param: configscript}
+                $thisisaurl: {get_param: OS_AUTH_URL}
 
   scaleup_policy:
     type: OS::Heat::ScalingPolicy
