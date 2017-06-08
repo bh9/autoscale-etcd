@@ -17,12 +17,13 @@ openstack stack create -t template.yaml\
 my_stack_name
 ```
 internal_etcd should open ports 12379 and 12380 and netdata should open 19999. These can both be open to just the private network (assuming the metrics server is in the same private network).  
-Other (optional) parameters:
-```
-name            default
-OS_REGION       regionOne
-capacity        3
-scaledownperiod 200
-metricsserver   "None"
-```
+Other (optional) parameters:  
+ 
+|name           |default   |description 
+|---------------|----------|---------------------------------------
+|OS_REGION      |regionOne |the nova region it should be deployed to (delta only has regionOne)
+|capacity       |3         |The target capacity that the cluster should aim to be when load is low
+|scaledownperiod|200       |The minimum time between scale down operations
+|metricsserver  |"None"    |The IP address of the metrics server
+
 If metricsserver is None, the netdata security group is not required
