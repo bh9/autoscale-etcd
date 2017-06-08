@@ -77,10 +77,11 @@ resources:
           networks: [{"network": { get_param: net_name }}]   #which private network to put the instance on
           security_groups: {get_param: sec_grps}
           metadata: {"metering.stack": {get_param: "OS::stack_id"}}
-          personality: {"/home/ubuntu/locking.py": {get_file: etcd_locking.py},"/home/ubuntu/suicide.service": {get_file: etcd_suicide.service},"/home/ubuntu/etcd2.service": {get_file: etcd_etcd2.service},"/home/ubuntu/configscript.sh": {get_file: configscript.sh}}
+          personality: {"/home/ubuntu/locking.py": {get_file: etcd/etcd_locking.py},"/home/ubuntu/suicide.service": {get_file: etcd/etcd_suicide.service},"/home/ubuntu/etcd2.service": {get_file: etcd/etcd_etcd2.service},"/home/ubuntu/configscript.sh": {get_file: configscript.sh}}
+          user_data_format: RAW
           user_data: 
             str_replace:
-              template: { get_file: etcd_autoscale.sh }
+              template: { get_file: etcd/etcd_autoscale.sh }
               params:
                 $thisisausername: {get_param: OS_USERNAME}
                 $thisisapassword: {get_param: OS_PASSWORD}
