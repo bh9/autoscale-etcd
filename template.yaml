@@ -80,7 +80,7 @@ resources:
           personality: {"/home/ubuntu/locking.py": {get_file: etcd_locking.py},"/home/ubuntu/suicide.service": {get_file: etcd_suicide.service},"/home/ubuntu/etcd2.service": {get_file: etcd_etcd2.service},"/home/ubuntu/configscript.sh": {get_file: configscript.sh}}
           user_data: 
             str_replace:
-              template: { get_file: etcd_autoscale_cockroach.sh }
+              template: { get_file: etcd_autoscale.sh }
               params:
                 $thisisausername: {get_param: OS_USERNAME}
                 $thisisapassword: {get_param: OS_PASSWORD}
