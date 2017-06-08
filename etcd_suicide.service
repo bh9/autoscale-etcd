@@ -1,0 +1,13 @@
+[Unit]
+Description=the killer cleanup service
+After=etcd2.service
+Wants=network-online.target
+
+[Service]
+Type=idle
+User=root
+ExecStart=/usr/bin/python /var/lib/etcd/locking.py
+
+[Install]
+WantedBy=multi-user.target
+
