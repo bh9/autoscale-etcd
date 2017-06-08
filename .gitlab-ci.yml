@@ -16,5 +16,6 @@ openstack_stack_create:
   script:
    - sec_grps=$(echo $sec_grps | cut -d\' -f2)
    - export OS_AUTH_URL=$auth_url
-   - openstack stack create -t template.yaml --parameter OS_AUTH_URL=$auth_url --parameter OS_USERNAME=$OS_USERNAME  --parameter OS_TENANT_NAME=$OS_TENANT_NAME --parameter OS_PASSWORD=$OS_PASSWORD --parameter net_name=$net_name --parameter image=$image --parameter sec_grps=$sec_grps --parameter instance_type=$instance_type --parameter key_name=$key_name --parameter configscript="cockroach.sh" test$CI_BUILD_ID
+   - echo $sec_grps
+   - openstack stack create -t template.yaml --parameter OS_AUTH_URL=$auth_url --parameter OS_USERNAME=$OS_USERNAME --parameter OS_TENANT_NAME=$OS_TENANT_NAME --parameter OS_PASSWORD=$OS_PASSWORD --parameter net_name=$net_name --parameter image=$image --parameter sec_grps=$sec_grps --parameter instance_type=$instance_type --parameter key_name=$key_name --parameter configscript="cockroach.sh" test$CI_BUILD_ID
 
