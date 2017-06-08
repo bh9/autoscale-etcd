@@ -32,7 +32,7 @@ while True:
         print "below threshold, acquiring lock"
         try:
           print "lock acquiring"
-          lock.acquire(blocking=False, lock_ttl=200, timeout=5) #try to get the lock if you're idle
+          lock.acquire(blocking=False, lock_ttl=$thisisatimeout, timeout=5) #try to get the lock if you're idle
           print "lock acquiring complete"
         except etcd.EtcdException:
           print "EtcdException occured, I might not be a member of the cluster"
