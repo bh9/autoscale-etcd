@@ -16,7 +16,7 @@ openstack stack create -t template.yaml\
 --parameter configscript="my_remote_script_name.sh"\
 my_stack_name
 ```
-internal_etcd should open ports 12379 and 12380 and netdata should open 19999. These can both be open to just the private network.  
+internal_etcd should open ports 12379 and 12380 and netdata should open 19999. These can both be open to just the private network (assuming the metrics server is in the same private network).  
 Other (optional) parameters:
 ```
 name            default
