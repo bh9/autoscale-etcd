@@ -25,5 +25,6 @@ Other (optional) parameters:
 |capacity       |3         |The target capacity that the cluster should aim to be when load is low
 |scaledownperiod|200       |The minimum time between scale down operations
 |metricsserver  |"None"    |The IP address of the metrics server
-
+|etcdclientport |12379     |The tcp port which etcd uses to handle client requests
+|etcdpeerport   |12380     |The tcp port which etcd uses to communicate internally
 If metricsserver is None, the netdata security group is not required
