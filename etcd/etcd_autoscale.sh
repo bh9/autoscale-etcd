@@ -338,11 +338,11 @@ ETCD_LISTEN_CLIENT_URLS="$etcd_client_scheme://$ec2_instance_ip:$client_port"
 EOF
     if [ $ETCD_CLIENT_SCHEME = "https" ]; then
         echo ETCD_AUTO_TLS=true >> "$etcd_peers_file_path"
-        echo ETCD_CLIENT_CERT_AUTH=true >> "$etcd_peers_file_path"
+#        echo ETCD_CLIENT_CERT_AUTH=true >> "$etcd_peers_file_path"
     fi
     if [ $ETCD_PEER_SCHEME = "https" ]; then
         echo ETCD_PEER_AUTO_TLS=true >> "$etcd_peers_file_path"
-        echo ETCD_PEER_CLIENT_CERT_AUTH=true >> "$etcd_peers_file_path"
+#        echo ETCD_PEER_CLIENT_CERT_AUTH=true >> "$etcd_peers_file_path"
     fi
     rm -rf /var/lib/etcd/default/
     systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
