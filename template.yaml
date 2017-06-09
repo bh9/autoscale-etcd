@@ -138,7 +138,7 @@ resources:
     type: OS::Heat::ScalingPolicy
     properties:
       adjustment_type: change_in_capacity
-      auto_scaling_group_id: { get_resource: group }
+      auto_scaling_group_id: { get_resource: asg }
       cooldown: 10
       scaling_adjustment: 1
 
