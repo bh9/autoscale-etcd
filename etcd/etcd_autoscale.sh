@@ -25,6 +25,8 @@ scriptname=$thisisascriptname
 metrics_server=$thisisametricserver
 timeout=$thisisatimeout
 minimum_machines=$thisisacapacity
+ETCD_CLIENT_PORT=$thisisaclientport
+ETCD_SERVER_PORT=$thisisapeerport
 echo $minimum_machines > /etc/sysconfig/etcd-size
 export AWS_DEFAULT_REGION=$thisisaregion
 export OS_USERNAME=$thisisausername #set some OS variables
@@ -345,7 +347,7 @@ while [ $((x)) -gt 0 ]; do
   sleep 5
 done
 IP=$(curl http://169.254.169.254/2009-04-04/meta-data/local-ipv4)
-MEMBER_ID=$(curl http://$IP:12379/v2/members | jq ".members[] | select(.name == \"$IP\") | .id" | sed "s/\"//g")
+MEMBER_ID=$(curl http://$IP:$ETCD_CLIENT_PORT/v2/members | jq ".members[] | select(.name == \"$IP\") | .id" | sed "s/\"//g")
 ID=$(openstack server list | awk "/$IP/"' {print $2}')
 cat > /var/lib/etcd/suicide.sh <<EOF
 #!/bin/bash
@@ -358,7 +360,7 @@ no_proxy=$no_proxy
 OS_AUTH_URL=$OS_AUTH_URL
 echo $IP
 echo $MEMBER_ID
-curl http://$IP:12379/v2/members/$MEMBER_ID -XDELETE | echo couldn't remove myself from the cluster, it'll happen eventually #remove yourself from the cluster before you delete yourself so the cluster responds instantly
+curl http://$IP:$ETCD_CLIENT_PORT/v2/members/$MEMBER_ID -XDELETE | echo couldn't remove myself from the cluster, it'll happen eventually #remove yourself from the cluster before you delete yourself so the cluster responds instantly
 echo $ID
 openstack server delete --os-region $AWS_DEFAULT_REGION --os-username $OS_USERNAME --os-password $OS_PASSWORD --os-tenant-name $OS_TENANT_NAME --os-auth-url $OS_AUTH_URL $ID #delete yourself
 EOF

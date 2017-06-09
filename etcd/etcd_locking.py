@@ -18,7 +18,7 @@ buf.close()
 f = open('/etc/sysconfig/etcd-size', 'r')
 minimum = f.readline() #get the minimum cluster size
 f.close()
-client = etcd.Client(host=IP, port=12379) #set up the etcd client
+client = etcd.Client(host=IP, port=$thisisaclientport) #set up the etcd client
 lock = etcd.Lock(client, 'bh9testlock') #establish the lock object
 time.sleep(20) #wait for other cluster members to recognise your existence
 while True:
