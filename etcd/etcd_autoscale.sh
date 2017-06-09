@@ -19,6 +19,9 @@ done
 curl -L https://github.com/coreos/etcd/releases/download/v3.1.8/etcd-v3.1.8-linux-amd64.tar.gz > etcd.tar.gz
 tar xvf etcd.tar.gz
 mv etcd-v3.1.8-linux-amd64 /opt/
+mkdir /var/lib/etcd
+useradd etcd
+chown etcd /var/lib/etcd
 if [ -d /etc/sysconfig/ ]; then
     echo /etc/sysconfig exists, good
 else
