@@ -16,8 +16,8 @@ while [ $((y)) -gt 0 ]; do
   y=$?
   set -e
 done
-curl https://github.com/coreos/etcd/releases/download/v3.1.8/etcd-v3.1.8-linux-amd64.tar.gz > etcd.tar.gz
-tar xvf etcd.tar.gz
+curl https://github.com/coreos/etcd/releases/download/v3.1.8/etcd-v3.1.8-linux-amd64.tar.gz > etcd.tar
+tar xvf etcd.tar
 mv -R etcd-v3.1.8-linux-amd64 /opt/
 if [ -d /etc/sysconfig/ ]; then
     echo /etc/sysconfig exists, good
