@@ -309,8 +309,15 @@ ETCD_PROXY=$etcd_proxy
 ETCD_LISTEN_PEER_URLS="$etcd_peer_scheme://$ec2_instance_ip:$server_port"
 ETCD_LISTEN_CLIENT_URLS="$etcd_client_scheme://$ec2_instance_ip:$client_port"
 EOF
+    if [ $ETCD_CLIENT_SCHEME = "https" ]; then
+        echo ETCD_AUTO_TLS=true >> "$etcd_peers_file_path"
+    fi
+    if [ $ETCD_PEER_SCHEME = "https" ]; then
+        echo ETCD_PEER_AUTO_TLS=true >> "$etcd_peers_file_path"
+    fi
     rm -rf /var/lib/etcd/default/
-    systemctl restart etcd #restart etcd now it is configured correctly so the config takes hold
+    systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
+    systemctl start etcd2
     curl $ETCD_CURLOPTS "$etcd_last_good_member_url/v2/keys/bh9testlock" -XDELETE
 # otherwise I was already listed as a member so assume that this is a new cluster
 else
@@ -338,11 +345,9 @@ ETCD_LISTEN_CLIENT_URLS="$etcd_client_scheme://$ec2_instance_ip:$client_port"
 EOF
     if [ $ETCD_CLIENT_SCHEME = "https" ]; then
         echo ETCD_AUTO_TLS=true >> "$etcd_peers_file_path"
-#        echo ETCD_CLIENT_CERT_AUTH=true >> "$etcd_peers_file_path"
     fi
     if [ $ETCD_PEER_SCHEME = "https" ]; then
         echo ETCD_PEER_AUTO_TLS=true >> "$etcd_peers_file_path"
-#        echo ETCD_PEER_CLIENT_CERT_AUTH=true >> "$etcd_peers_file_path"
     fi
     rm -rf /var/lib/etcd/default/
     systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
