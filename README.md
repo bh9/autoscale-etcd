@@ -29,4 +29,6 @@ Other (optional) parameters:
 |etcdpeerport   |12380     |The tcp port which etcd uses to communicate internally
 |retries        |10        |The number of attemtps to join the cluster before failure
 |lockattemptperiod |10     |The minimum time between a single host's lock acquire attempts
+|min_cluster    |3         |minimum cluster size (the point at which heat will autoreplace failed nodes). Note that the scale down scripts will only scale down to capacity, not min_cluster
+|max_cluster    |5         |The maximum size of the cluster
 If metricsserver is None, the netdata security group is not required

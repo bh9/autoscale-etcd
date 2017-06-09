@@ -47,6 +47,14 @@ parameters:
     type: number 
     label: start group size
     default: 3 
+  min_cluster:
+    type: number
+    label: minimum cluster size (the point at which heat will autoreplace failed nodes). Note that the scale down scripts will only scale down to capacity, not min_cluster
+    default: 3
+  max_cluster:
+    type: number
+    label: maximum cluster size
+    default: 5
   scaledownperiod:
     type: number
     label: time between scales (down)
@@ -86,8 +94,8 @@ resources:
     properties:
       cooldown: 10
       desired_capacity: {get_param: capacity}
-      max_size: 5
-      min_size: 1
+      max_size: {get_param: max_cluster}
+      min_size: {get_param: min_cluster}
       resource:
         type: OS::Nova::Server
         properties:
