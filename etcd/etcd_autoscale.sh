@@ -101,7 +101,7 @@ fi
 x=1
 while [ $((x)) -gt 0 ]; do
   set +e
-  mv /home/ubuntu/suicide.service /etc/systemd/system/suicide.service
+  mv /home/ubuntu/suicide.service /usr/lib/systemd/system/suicide.service
   x=$?
   set -e
   echo moving suicide.service
@@ -110,7 +110,7 @@ done
 x=1
 while [ $((x)) -gt 0 ]; do
   set +e
-  mv /home/ubuntu/etcd2.service /etc/systemd/system/etcd2.service
+  mv /home/ubuntu/etcd2.service /usr/lib/systemd/system/etcd2.service
   x=$?
   set -e
   echo moving etcd2.service
