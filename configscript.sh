@@ -7,8 +7,8 @@ cockroach version
 myip=$(curl -s http://169.254.169.254/2009-04-04/meta-data/local-ipv4)
 leader=$(curl $myip:$thisisaclientport/v2/stats/leader | jq -r '.[]')
 if [ "$leader" = 'not current leader' ]; then
-    leaderid=$(curl $myip:12379/v2/stats/self | jq '.leaderInfo.leader')
-    leaderip=$(curl $myip:12379/v2/members | jq -r ".members[] | select(.id == $leaderid) | .name")
+    leaderid=$(curl $myip:$thisisaclientport/v2/stats/self | jq '.leaderInfo.leader')
+    leaderip=$(curl $myip:$thisisaclientport/v2/members | jq -r ".members[] | select(.id == $leaderid) | .name")
     while [ ! $connected ]; do
 	set +e
 	cockroach node ls --insecure --host $leaderip
