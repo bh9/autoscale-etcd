@@ -319,7 +319,7 @@ EOF
         echo ETCD_PEER_AUTO_TLS=true >> "$etcd_peers_file_path"
     fi
     rm -rf /var/lib/etcd/default/
-    systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
+#    systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
     systemctl start etcd2
     curl $ETCD_CURLOPTS "$etcd_last_good_member_url/v2/keys/bh9testlock" -XDELETE
 # otherwise I was already listed as a member so assume that this is a new cluster
@@ -353,7 +353,7 @@ EOF
         echo ETCD_PEER_AUTO_TLS=true >> "$etcd_peers_file_path"
     fi
     rm -rf /var/lib/etcd/default/
-    systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
+ #   systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
     systemctl start etcd2
 fi
 x=1
