@@ -71,6 +71,10 @@ parameters:
     label: etcd peer-side port
     description: the tcp port over which etcd communicates with the rest of the cluster
     default: 12380 
+  retries:
+    type: number
+    label: the number of attempt that should be made to join the etcd cluster
+    default: 10
 
 resources:
   group:
@@ -128,7 +132,8 @@ resources:
                 $thisisaurl: {get_param: OS_AUTH_URL}
                 $thisisapeerport: {get_param: etcdpeerport}
                 $thisisaclientport: {get_param: etcdclientport}
-
+                $thisisaretrycount: {get_param: retries}
+ 
   scaleup_policy:
     type: OS::Heat::ScalingPolicy
     properties:

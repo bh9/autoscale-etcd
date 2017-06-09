@@ -27,6 +27,7 @@ timeout=$thisisatimeout
 minimum_machines=$thisisacapacity
 ETCD_CLIENT_PORT=$thisisaclientport
 ETCD_SERVER_PORT=$thisisapeerport
+RETRY_TIMES=$thisisaretrycount
 echo $minimum_machines > /etc/sysconfig/etcd-size
 export AWS_DEFAULT_REGION=$thisisaregion
 export OS_USERNAME=$thisisausername #set some OS variables
