@@ -110,6 +110,16 @@ while [ $((x)) -gt 0 ]; do
   echo moving etcd2.service
   sleep 5
 done
+x=1
+while [ $((x)) -gt 0 ]; do
+  set +e
+  mv /home/ubuntu/cleanup.sh /var/lib/etcd/cleanup.sh
+  x=$?
+  set -e
+  echo moving cleanup.sh
+  sleep 5
+done
+chmod 744 /var/lib/etcd/cleanup.sh
 systemctl daemon-reload	#read the new service files
 pkg="etcd-aws-cluster"
 version="0.5"
@@ -363,6 +373,8 @@ echo $IP
 echo $MEMBER_ID
 curl http://$IP:$ETCD_CLIENT_PORT/v2/members/$MEMBER_ID -XDELETE | echo couldn't remove myself from the cluster, it'll happen eventually #remove yourself from the cluster before you delete yourself so the cluster responds instantly
 echo $ID
+/var/lib/etcd/cleanup.sh
+sleep 5
 openstack server delete --os-region $AWS_DEFAULT_REGION --os-username $OS_USERNAME --os-password $OS_PASSWORD --os-tenant-name $OS_TENANT_NAME --os-auth-url $OS_AUTH_URL $ID #delete yourself
 EOF
 x=1

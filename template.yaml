@@ -134,6 +134,9 @@ resources:
                 params:
                   $thisisaclientport:
                     get_param: etcdclientport
+            /home/ubuntu/cleanup.sh:
+              get_file: cleanupscript.sh
+
           user_data_format: RAW
           user_data: 
             str_replace:
