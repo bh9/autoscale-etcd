@@ -75,6 +75,10 @@ parameters:
     type: number
     label: the number of attempt that should be made to join the etcd cluster
     default: 10
+  lockattemptperiod:
+    type: number
+    label: the minimum time between a host's attempts at acquiring the kill lock
+    default: 10
 
 resources:
   asg:
@@ -105,6 +109,8 @@ resources:
                     get_param: scaledownperiod
                   $thisisaclientport: 
                     get_param: etcdclientport
+                  $thisisanattemptperiod:
+                    get_param: lockattemptperiod
             /home/ubuntu/suicide.service: 
               get_file: etcd/etcd_suicide.service
             /home/ubuntu/etcd2.service: 

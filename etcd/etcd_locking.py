@@ -52,5 +52,5 @@ while True:
       print "only " + str(members) + " members, not deleting"
   except etcd.EtcdException:
     print "EtcdException occured, but not in the locking section"
-  time.sleep(10) #wait 10 seconds then try again. Agressiveness will be tunable in future
+  time.sleep($thisisanattemptperiod) #wait 10 seconds then try again. Agressiveness will be tunable in future
 

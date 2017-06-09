@@ -28,4 +28,5 @@ Other (optional) parameters:
 |etcdclientport |12379     |The tcp port which etcd uses to handle client requests
 |etcdpeerport   |12380     |The tcp port which etcd uses to communicate internally
 |retries        |10        |The number of attemtps to join the cluster before failure
+|lockattemptperiod |10     |The minimum time between a single host's lock acquire attempts
 If metricsserver is None, the netdata security group is not required
