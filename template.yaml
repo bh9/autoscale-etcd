@@ -87,12 +87,16 @@ parameters:
     type: number
     label: the minimum time between a host's attempts at acquiring the kill lock
     default: 10
+  scaleupcooldown:
+    type: number
+    label: the minimum time between scale up operations
+    default: 10
 
 resources:
   asg:
     type: OS::Heat::AutoScalingGroup
     properties:
-      cooldown: 10
+      cooldown: {get_param: scaleupcooldown}
       desired_capacity: {get_param: capacity}
       max_size: {get_param: max_cluster}
       min_size: {get_param: min_cluster}
@@ -153,7 +157,7 @@ resources:
     properties:
       adjustment_type: change_in_capacity
       auto_scaling_group_id: { get_resource: asg }
-      cooldown: 10
+      cooldown: {get_param: scaleupcooldown}
       scaling_adjustment: 1
 
   cpu_alarm_high:

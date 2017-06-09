@@ -31,4 +31,5 @@ Other (optional) parameters:
 |lockattemptperiod |10     |The minimum time between a single host's lock acquire attempts
 |min_cluster    |3         |minimum cluster size (the point at which heat will autoreplace failed nodes). Note that the scale down scripts will only scale down to capacity, not min_cluster
 |max_cluster    |5         |The maximum size of the cluster
+|scaleupcooldown|10        |The minimum time between scale up operations, note that ceilometer applies a minimum of 10 minutes due to it's gathering period
 If metricsserver is None, the netdata security group is not required
