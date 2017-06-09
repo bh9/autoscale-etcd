@@ -28,6 +28,8 @@ minimum_machines=$thisisacapacity
 ETCD_CLIENT_PORT=$thisisaclientport
 ETCD_SERVER_PORT=$thisisapeerport
 RETRY_TIMES=$thisisaretrycount
+ETCD_CLIENT_SCHEME=$thisisaclientscheme
+ETCD_PEER_SCHEME=$thisisapeerscheme
 echo $minimum_machines > /etc/sysconfig/etcd-size
 export AWS_DEFAULT_REGION=$thisisaregion
 export OS_USERNAME=$thisisausername #set some OS variables
@@ -334,6 +336,13 @@ ETCD_INITIAL_CLUSTER="$etcd_initial_cluster"
 ETCD_LISTEN_PEER_URLS="$etcd_peer_scheme://$ec2_instance_ip:$server_port"
 ETCD_LISTEN_CLIENT_URLS="$etcd_client_scheme://$ec2_instance_ip:$client_port"
 EOF
+    if [ $ETCD_CLIENT_SCHEME = "https" ]; then
+        echo ETCD_AUTO_TLS=true >> "$etcd_peers_file_path"
+        echo ETCD_CLIENT_CERT_AUTH=true >> "$etcd_peers_file_path"
+    fi
+    if [ $ETCD_PEER_SCHEME = "https" ]; then
+        echo ETCD_PEER_AUTO_TLS=true >> "$etcd_peers_file_path"
+        echo ETCD_PEER_CLIENT_CERT_AUTH=true >> "$etcd_peers_file_path"
     rm -rf /var/lib/etcd/default/
     systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
     systemctl start etcd2
@@ -348,7 +357,7 @@ while [ $((x)) -gt 0 ]; do
   sleep 5
 done
 IP=$(curl http://169.254.169.254/2009-04-04/meta-data/local-ipv4)
-MEMBER_ID=$(curl http://$IP:$ETCD_CLIENT_PORT/v2/members | jq ".members[] | select(.name == \"$IP\") | .id" | sed "s/\"//g")
+MEMBER_ID=$(curl $etcd_client_scheme://$IP:$ETCD_CLIENT_PORT/v2/members | jq ".members[] | select(.name == \"$IP\") | .id" | sed "s/\"//g")
 ID=$(openstack server list | awk "/$IP/"' {print $2}')
 cat > /var/lib/etcd/suicide.sh <<EOF
 #!/bin/bash
@@ -361,7 +370,7 @@ no_proxy=$no_proxy
 OS_AUTH_URL=$OS_AUTH_URL
 echo $IP
 echo $MEMBER_ID
-curl http://$IP:$ETCD_CLIENT_PORT/v2/members/$MEMBER_ID -XDELETE | echo couldn't remove myself from the cluster, it'll happen eventually #remove yourself from the cluster before you delete yourself so the cluster responds instantly
+curl $etcd_client_scheme://$IP:$ETCD_CLIENT_PORT/v2/members/$MEMBER_ID -XDELETE | echo couldn't remove myself from the cluster, it'll happen eventually #remove yourself from the cluster before you delete yourself so the cluster responds instantly
 echo $ID
 openstack server delete --os-region $AWS_DEFAULT_REGION --os-username $OS_USERNAME --os-password $OS_PASSWORD --os-tenant-name $OS_TENANT_NAME --os-auth-url $OS_AUTH_URL $ID #delete yourself
 EOF

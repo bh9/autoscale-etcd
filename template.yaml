@@ -63,7 +63,7 @@ parameters:
   configscript: 
     type: string
     label: name of script
-    description: Tha name the script should have on the instances
+    description: The name the script should have on the instances
   metricsserver:
     type: string
     label: netdata server ip
@@ -91,6 +91,22 @@ parameters:
     type: number
     label: the minimum time between scale up operations
     default: 10
+  etcdclientscheme:
+    type: string
+    label: client protocol (http or https)
+    constraints:
+      - allowed_values:
+        - http
+        - https
+    default: http
+  etcdpeerscheme:
+    type: string
+    label: peer to peer protocol (http or https)
+    constraints:
+      - allowed_values:
+        - http
+        - https
+    default: http
 
 resources:
   asg:
@@ -134,6 +150,8 @@ resources:
                 params:
                   $thisisaclientport:
                     get_param: etcdclientport
+                  $thisisaclientscheme:
+                    get_param: etcdclientscheme  
           user_data_format: RAW
           user_data: 
             str_replace:
@@ -151,6 +169,8 @@ resources:
                 $thisisapeerport: {get_param: etcdpeerport}
                 $thisisaclientport: {get_param: etcdclientport}
                 $thisisaretrycount: {get_param: retries}
+                $thisisaclientscheme: {get_param: etcdclientscheme}
+                $thisisapeerscheme: {get_param: etcdpeerscheme}
  
   scaleup_policy:
     type: OS::Heat::ScalingPolicy
