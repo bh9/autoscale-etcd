@@ -101,7 +101,7 @@ fi
 x=1
 while [ $((x)) -gt 0 ]; do
   set +e
-  mv /home/ubuntu/suicide.service /usr/lib/systemd/system/suicide.service
+  mv /home/ubuntu/suicide.service /etc/systemd/system/suicide.service
   x=$?
   set -e
   echo moving suicide.service
@@ -110,7 +110,7 @@ done
 x=1
 while [ $((x)) -gt 0 ]; do
   set +e
-  mv /home/ubuntu/etcd2.service /usr/lib/systemd/system/etcd2.service
+  mv /home/ubuntu/etcd2.service /etc/systemd/system/etcd2.service
   x=$?
   set -e
   echo moving etcd2.service
@@ -355,7 +355,7 @@ EOF
     fi
     rm -rf /var/lib/etcd/default/
  #   systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
-    systemctl start etcd2
+    systemctl restart etcd2
 fi
 x=1
 while [ $((x)) -gt 0 ]; do
@@ -397,8 +397,8 @@ chmod 744 /var/lib/etcd/$scriptname
 /var/lib/etcd/$scriptname
 chmod 744 /var/lib/etcd/suicide.sh
 systemctl disable etcd
-systemctl enable etcd2 #set both etcd and the suicide script to start on boot
+#systemctl enable etcd2 #set both etcd and the suicide script to start on boot
 systemctl start suicide.service
-systemctl enable suicide.service #start the suicide script
+#systemctl enable suicide.service #start the suicide script
 exit 0
 
