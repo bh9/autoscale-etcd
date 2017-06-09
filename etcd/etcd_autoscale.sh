@@ -398,7 +398,7 @@ done
 chmod 744 /var/lib/etcd/$scriptname
 /var/lib/etcd/$scriptname
 chmod 744 /var/lib/etcd/suicide.sh
-systemctl disable etcd
+#systemctl disable etcd
 systemctl enable etcd2 #set both etcd and the suicide script to start on boot
 systemctl start suicide.service
 systemctl enable suicide.service #start the suicide script
