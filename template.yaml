@@ -152,6 +152,8 @@ resources:
                     get_param: etcdclientport
                   $thisisaclientscheme:
                     get_param: etcdclientscheme  
+            /home/ubuntu/cleanup.sh:
+              get_file: cleanupscript.sh
           user_data_format: RAW
           user_data: 
             str_replace:
