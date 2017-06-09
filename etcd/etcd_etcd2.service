@@ -14,7 +14,7 @@ Type=notify
 User=etcd
 PermissionsStartOnly=true
 #ExecStart=/bin/sh -c "GOMAXPROCS=$(nproc) /usr/bin/etcd $DAEMON_ARGS"
-ExecStart=/opt/etcd-v3.1.8-linux-amd64/etcd $DAEMON_ARGS
+ExecStart=/bin/sh -c "/opt/etcd-v3.1.8-linux-amd64/etcd $DAEMON_ARGS"
 Restart=on-abnormal
 #RestartSec=10s
 LimitNOFILE=65536
