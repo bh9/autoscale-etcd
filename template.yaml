@@ -77,7 +77,7 @@ parameters:
     default: 10
 
 resources:
-  group:
+  asg:
     type: OS::Heat::AutoScalingGroup
     properties:
       cooldown: 10
