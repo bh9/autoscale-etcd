@@ -12,16 +12,13 @@ done
 #apt-get update
 while [ $((y)) -gt 0 ]; do
   set +e
-  apt-get install -y curl jq python-etcd python-openstackclient python-psutil python-pycurl zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config
+  apt-get install -y curl etcd jq python-etcd python-openstackclient python-psutil python-pycurl zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config
   y=$?
   set -e
 done
 curl -L https://github.com/coreos/etcd/releases/download/v3.1.8/etcd-v3.1.8-linux-amd64.tar.gz > etcd.tar.gz
 tar xvf etcd.tar.gz
-mv etcd-v3.1.8-linux-amd64 /opt/
-mkdir /var/lib/etcd
-useradd etcd
-chown etcd /var/lib/etcd
+mv -f etcd-v3.1.8-linux-amd64/etcd /bin/etcd
 if [ -d /etc/sysconfig/ ]; then
     echo /etc/sysconfig exists, good
 else
