@@ -16,10 +16,6 @@ while [ $((y)) -gt 0 ]; do
   y=$?
   set -e
 done
-curl -L https://github.com/coreos/etcd/releases/download/v3.1.8/etcd-v3.1.8-linux-amd64.tar.gz > etcd.tar.gz
-tar xvf etcd.tar.gz
-systemctl stop etcd
-mv -f etcd-v3.1.8-linux-amd64/etcd /usr/bin/etcd
 if [ -d /etc/sysconfig/ ]; then
     echo /etc/sysconfig exists, good
 else
@@ -32,8 +28,6 @@ minimum_machines=$thisisacapacity
 ETCD_CLIENT_PORT=$thisisaclientport
 ETCD_SERVER_PORT=$thisisapeerport
 RETRY_TIMES=$thisisaretrycount
-ETCD_CLIENT_SCHEME=$thisisaclientscheme
-ETCD_PEER_SCHEME=$thisisapeerscheme
 echo $minimum_machines > /etc/sysconfig/etcd-size
 export AWS_DEFAULT_REGION=$thisisaregion
 export OS_USERNAME=$thisisausername #set some OS variables
@@ -98,15 +92,15 @@ if [ $metrics_server != "None" ]; then
 EOF
     systemctl restart netdata
 fi
-x=1
-while [ $((x)) -gt 0 ]; do
-  set +e
-  mv /home/ubuntu/suicide.service /etc/systemd/system/suicide.service
-  x=$?
-  set -e
-  echo moving suicide.service
-  sleep 5
-done
+#x=1
+#while [ $((x)) -gt 0 ]; do
+#  set +e
+#  mv /home/ubuntu/suicide.service /etc/systemd/system/suicide.service
+#  x=$?
+#  set -e
+#  echo moving suicide.service
+#  sleep 5
+#done
 x=1
 while [ $((x)) -gt 0 ]; do
   set +e
@@ -116,16 +110,16 @@ while [ $((x)) -gt 0 ]; do
   echo moving etcd2.service
   sleep 5
 done
-x=1
-while [ $((x)) -gt 0 ]; do
-  set +e
-  mv /home/ubuntu/cleanup.sh /var/lib/etcd/cleanup.sh
-  x=$?
-  set -e
-  echo moving cleanup.sh
-  sleep 5
-done
-chmod 744 /var/lib/etcd/cleanup.sh
+#x=1
+#while [ $((x)) -gt 0 ]; do
+#  set +e
+#  mv /home/ubuntu/cleanup.sh /var/lib/etcd/cleanup.sh
+#  x=$?
+#  set -e
+#  echo moving cleanup.sh
+#  sleep 5
+#done
+#chmod 744 /var/lib/etcd/cleanup.sh
 systemctl daemon-reload	#read the new service files
 pkg="etcd-aws-cluster"
 version="0.5"
@@ -151,7 +145,7 @@ if [ -f "$etcd_peers_file_path" ]; then
     echo "$pkg: etcd-peers file $etcd_peers_file_path already created, exiting"
     exit 0
 fi
-
+PROXY_ASG=$thisisastackname
 ec2_instance_id=$(curl -s http://169.254.169.254/2009-04-04/meta-data/instance-id) #get the id and ip from the meta-data server
 if [[ ! $ec2_instance_id ]]; then
     echo "$pkg: failed to get instance id from instance metadata"
@@ -323,15 +317,9 @@ ETCD_PROXY=$etcd_proxy
 ETCD_LISTEN_PEER_URLS="$etcd_peer_scheme://$ec2_instance_ip:$server_port"
 ETCD_LISTEN_CLIENT_URLS="$etcd_client_scheme://$ec2_instance_ip:$client_port"
 EOF
-    if [ $ETCD_CLIENT_SCHEME = "https" ]; then
-        echo ETCD_AUTO_TLS=true >> "$etcd_peers_file_path"
-    fi
-    if [ $ETCD_PEER_SCHEME = "https" ]; then
-        echo ETCD_PEER_AUTO_TLS=true >> "$etcd_peers_file_path"
-    fi
     rm -rf /var/lib/etcd/default/
-#    systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
-    systemctl start etcd2
+    systemctl stop etcd
+    systemctl start etcd2 #restart etcd now it is configured correctly so the config takes hold
     curl $ETCD_CURLOPTS "$etcd_last_good_member_url/v2/keys/bh9testlock" -XDELETE
 # otherwise I was already listed as a member so assume that this is a new cluster
 else
@@ -353,58 +341,45 @@ ETCD_INITIAL_CLUSTER_STATE=new
 ETCD_NAME=$ec2_instance_ip
 ETCD_INITIAL_ADVERTISE_PEER_URLS="$etcd_peer_scheme://$ec2_instance_ip:$server_port"
 ETCD_ADVERTISE_CLIENT_URLS="$etcd_client_scheme://$ec2_instance_ip:$client_port"
+ETCD_PROXY=$etcd_proxy
 ETCD_INITIAL_CLUSTER="$etcd_initial_cluster"
 ETCD_LISTEN_PEER_URLS="$etcd_peer_scheme://$ec2_instance_ip:$server_port"
 ETCD_LISTEN_CLIENT_URLS="$etcd_client_scheme://$ec2_instance_ip:$client_port"
 EOF
-    if [ $ETCD_CLIENT_SCHEME = "https" ]; then
-        echo ETCD_AUTO_TLS=true >> "$etcd_peers_file_path"
-    fi
-    if [ $ETCD_PEER_SCHEME = "https" ]; then
-        echo ETCD_PEER_AUTO_TLS=true >> "$etcd_peers_file_path"
-    fi
     rm -rf /var/lib/etcd/default/
- #   systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
-    systemctl stop etcd
-    systemctl stop etcd2
-    set +e
-    systemctl start etcd2
-    x=$?
-    set -e
-    if [ $((x)) -gt 0 ]; then
-        systemctl restart etcd2
-    fi
+    systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
+    systemctl restart etcd2
 fi
-x=1
-while [ $((x)) -gt 0 ]; do
-  set +e
-  mv /home/ubuntu/locking.py /var/lib/etcd/locking.py
-  x=$?
-  set -e
-  echo moving locking.py
-  sleep 5
-done
-IP=$(curl http://169.254.169.254/2009-04-04/meta-data/local-ipv4)
-MEMBER_ID=$(curl $etcd_client_scheme://$IP:$ETCD_CLIENT_PORT/v2/members | jq ".members[] | select(.name == \"$IP\") | .id" | sed "s/\"//g")
-ID=$(openstack server list | awk "/$IP/"' {print $2}')
-cat > /var/lib/etcd/suicide.sh <<EOF
-#!/bin/bash
-set -e
-OS_REGION=$AWS_DEFAULT_REGION
-OS_USERNAME=$OS_USERNAME
-OS_PASSWORD=$OS_PASSWORD
-OS_TENANT_NAME=$OS_TENANT_NAME
-no_proxy=$no_proxy
-OS_AUTH_URL=$OS_AUTH_URL
-echo $IP
-echo $MEMBER_ID
-curl $etcd_client_scheme://$IP:$ETCD_CLIENT_PORT/v2/members/$MEMBER_ID -XDELETE | echo couldn't remove myself from the cluster, it'll happen eventually #remove yourself from the cluster before you delete yourself so the cluster responds instantly
-echo $ID
-/var/lib/etcd/cleanup.sh
-sleep 5
-openstack server delete --os-region $AWS_DEFAULT_REGION --os-username $OS_USERNAME --os-password $OS_PASSWORD --os-tenant-name $OS_TENANT_NAME --os-auth-url $OS_AUTH_URL $ID #delete yourself
-EOF
-x=1
+#x=1
+#while [ $((x)) -gt 0 ]; do
+#  set +e
+#  mv /home/ubuntu/locking.py /var/lib/etcd/locking.py
+ # x=$?
+#  set -e
+#  echo moving locking.py
+#  sleep 5
+#done
+#IP=$(curl http://169.254.169.254/2009-04-04/meta-data/local-ipv4)
+#MEMBER_ID=$(curl http://$IP:$ETCD_CLIENT_PORT/v2/members | jq ".members[] | select(.name == \"$IP\") | .id" | sed "s/\"//g")
+#ID=$(openstack server list | awk "/$IP/"' {print $2}')
+#cat > /var/lib/etcd/suicide.sh <<EOF
+##!/bin/bash
+#set -e
+#OS_REGION=$AWS_DEFAULT_REGION
+#OS_USERNAME=$OS_USERNAME
+#OS_PASSWORD=$OS_PASSWORD
+#OS_TENANT_NAME=$OS_TENANT_NAME
+#no_proxy=$no_proxy
+#OS_AUTH_URL=$OS_AUTH_URL
+#echo $IP
+#echo $MEMBER_ID
+#curl http://$IP:$ETCD_CLIENT_PORT/v2/members/$MEMBER_ID -XDELETE | echo couldn't remove myself from the cluster, it'll happen eventually #remove yourself from the cluster before you delete yourself so the cluster responds instantly
+#echo $ID
+#/var/lib/etcd/cleanup.sh
+#sleep 5
+#openstack server delete --os-region $AWS_DEFAULT_REGION --os-username $OS_USERNAME --os-password $OS_PASSWORD --os-tenant-name $OS_TENANT_NAME --os-auth-url $OS_AUTH_URL $ID #delete yourself
+#EOF
+#x=1
 while [ $((x)) -gt 0 ]; do
   set +e
   mv /home/ubuntu/configscript.sh /var/lib/etcd/$scriptname
@@ -415,10 +390,10 @@ while [ $((x)) -gt 0 ]; do
 done
 chmod 744 /var/lib/etcd/$scriptname
 /var/lib/etcd/$scriptname
-chmod 744 /var/lib/etcd/suicide.sh
+#chmod 744 /var/lib/etcd/suicide.sh
 systemctl disable etcd
 #systemctl enable etcd2 #set both etcd and the suicide script to start on boot
-systemctl start suicide.service
+#systemctl start suicide.service
 #systemctl enable suicide.service #start the suicide script
 exit 0
 
