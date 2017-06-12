@@ -16,6 +16,10 @@ while [ $((y)) -gt 0 ]; do
   y=$?
   set -e
 done
+curl -L https://github.com/coreos/etcd/releases/download/v3.1.8/etcd-v3.1.8-linux-amd64.tar.gz > etcd.tar.gz
+tar xvf etcd.tar.gz
+systemctl stop etcd
+mv -f etcd-v3.1.8-linux-amd64/etcd /usr/bin/etcd
 if [ -d /etc/sysconfig/ ]; then
     echo /etc/sysconfig exists, good
 else
@@ -28,6 +32,8 @@ minimum_machines=$thisisacapacity
 ETCD_CLIENT_PORT=$thisisaclientport
 ETCD_SERVER_PORT=$thisisapeerport
 RETRY_TIMES=$thisisaretrycount
+ETCD_CLIENT_SCHEME=$thisisaclientscheme
+ETCD_PEER_SCHEME=$thisisapeerscheme
 echo $minimum_machines > /etc/sysconfig/etcd-size
 export AWS_DEFAULT_REGION=$thisisaregion
 export OS_USERNAME=$thisisausername #set some OS variables
@@ -317,8 +323,15 @@ ETCD_PROXY=$etcd_proxy
 ETCD_LISTEN_PEER_URLS="$etcd_peer_scheme://$ec2_instance_ip:$server_port"
 ETCD_LISTEN_CLIENT_URLS="$etcd_client_scheme://$ec2_instance_ip:$client_port"
 EOF
+    if [ $ETCD_CLIENT_SCHEME = "https" ]; then
+        echo ETCD_AUTO_TLS=true >> "$etcd_peers_file_path"
+    fi
+    if [ $ETCD_PEER_SCHEME = "https" ]; then
+        echo ETCD_PEER_AUTO_TLS=true >> "$etcd_peers_file_path"
+    fi
     rm -rf /var/lib/etcd/default/
-    systemctl restart etcd #restart etcd now it is configured correctly so the config takes hold
+#    systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
+    systemctl start etcd2
     curl $ETCD_CURLOPTS "$etcd_last_good_member_url/v2/keys/bh9testlock" -XDELETE
 # otherwise I was already listed as a member so assume that this is a new cluster
 else
@@ -344,9 +357,15 @@ ETCD_INITIAL_CLUSTER="$etcd_initial_cluster"
 ETCD_LISTEN_PEER_URLS="$etcd_peer_scheme://$ec2_instance_ip:$server_port"
 ETCD_LISTEN_CLIENT_URLS="$etcd_client_scheme://$ec2_instance_ip:$client_port"
 EOF
+    if [ $ETCD_CLIENT_SCHEME = "https" ]; then
+        echo ETCD_AUTO_TLS=true >> "$etcd_peers_file_path"
+    fi
+    if [ $ETCD_PEER_SCHEME = "https" ]; then
+        echo ETCD_PEER_AUTO_TLS=true >> "$etcd_peers_file_path"
+    fi
     rm -rf /var/lib/etcd/default/
-    systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
-    systemctl start etcd2
+ #   systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
+    systemctl restart etcd2
 fi
 x=1
 while [ $((x)) -gt 0 ]; do
@@ -358,7 +377,7 @@ while [ $((x)) -gt 0 ]; do
   sleep 5
 done
 IP=$(curl http://169.254.169.254/2009-04-04/meta-data/local-ipv4)
-MEMBER_ID=$(curl http://$IP:$ETCD_CLIENT_PORT/v2/members | jq ".members[] | select(.name == \"$IP\") | .id" | sed "s/\"//g")
+MEMBER_ID=$(curl $etcd_client_scheme://$IP:$ETCD_CLIENT_PORT/v2/members | jq ".members[] | select(.name == \"$IP\") | .id" | sed "s/\"//g")
 ID=$(openstack server list | awk "/$IP/"' {print $2}')
 cat > /var/lib/etcd/suicide.sh <<EOF
 #!/bin/bash
@@ -371,7 +390,7 @@ no_proxy=$no_proxy
 OS_AUTH_URL=$OS_AUTH_URL
 echo $IP
 echo $MEMBER_ID
-curl http://$IP:$ETCD_CLIENT_PORT/v2/members/$MEMBER_ID -XDELETE | echo couldn't remove myself from the cluster, it'll happen eventually #remove yourself from the cluster before you delete yourself so the cluster responds instantly
+curl $etcd_client_scheme://$IP:$ETCD_CLIENT_PORT/v2/members/$MEMBER_ID -XDELETE | echo couldn't remove myself from the cluster, it'll happen eventually #remove yourself from the cluster before you delete yourself so the cluster responds instantly
 echo $ID
 /var/lib/etcd/cleanup.sh
 sleep 5
@@ -390,8 +409,8 @@ chmod 744 /var/lib/etcd/$scriptname
 /var/lib/etcd/$scriptname
 chmod 744 /var/lib/etcd/suicide.sh
 systemctl disable etcd
-systemctl enable etcd2 #set both etcd and the suicide script to start on boot
+#systemctl enable etcd2 #set both etcd and the suicide script to start on boot
 systemctl start suicide.service
-systemctl enable suicide.service #start the suicide script
+#systemctl enable suicide.service #start the suicide script
 exit 0
 
