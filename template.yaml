@@ -203,13 +203,13 @@ resources:
         #  get_file: etcd/etcd_suicide.service
         #/home/ubuntu/etcd2.service:
          # get_file: etcd/etcd_etcd2.service
-#        /home/ubuntu/configscript.sh:
- #         str_replace:
-  #          template:
-   #           get_file: configscript.sh
-    #        params:
-     #         $thisisaclientport:
-      #          get_param: etcdclientport
+        /home/ubuntu/configscript.sh:
+          str_replace:
+            template:
+              get_file: proxyconfig.sh
+            params:
+              $thisisaclientport:
+                get_param: etcdclientport
 #        /home/ubuntu/cleanup.sh:
  #         get_file: cleanupscript.sh
 

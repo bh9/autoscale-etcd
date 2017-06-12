@@ -380,16 +380,16 @@ fi
 #openstack server delete --os-region $AWS_DEFAULT_REGION --os-username $OS_USERNAME --os-password $OS_PASSWORD --os-tenant-name $OS_TENANT_NAME --os-auth-url $OS_AUTH_URL $ID #delete yourself
 #EOF
 #x=1
-#while [ $((x)) -gt 0 ]; do
-#  set +e
-#  mv /home/ubuntu/configscript.sh /var/lib/etcd/$scriptname
-#  x=$?
-#  set -e
-#  echo moving $scriptname
-#  sleep 5
-#done
-#chmod 744 /var/lib/etcd/$scriptname
-#/var/lib/etcd/$scriptname
+while [ $((x)) -gt 0 ]; do
+  set +e
+  mv /home/ubuntu/configscript.sh /var/lib/etcd/$scriptname
+  x=$?
+  set -e
+  echo moving $scriptname
+  sleep 5
+done
+chmod 744 /var/lib/etcd/$scriptname
+/var/lib/etcd/$scriptname
 #chmod 744 /var/lib/etcd/suicide.sh
 systemctl disable etcd
 #systemctl enable etcd2 #set both etcd and the suicide script to start on boot
