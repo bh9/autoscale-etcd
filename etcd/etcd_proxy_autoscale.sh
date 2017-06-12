@@ -348,7 +348,7 @@ ETCD_LISTEN_CLIENT_URLS="$etcd_client_scheme://$ec2_instance_ip:$client_port"
 EOF
     rm -rf /var/lib/etcd/default/
     systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
-    systemctl start etcd2
+    systemctl restart etcd2
 fi
 #x=1
 #while [ $((x)) -gt 0 ]; do
@@ -359,9 +359,9 @@ fi
 #  echo moving locking.py
 #  sleep 5
 #done
-IP=$(curl http://169.254.169.254/2009-04-04/meta-data/local-ipv4)
-MEMBER_ID=$(curl http://$IP:$ETCD_CLIENT_PORT/v2/members | jq ".members[] | select(.name == \"$IP\") | .id" | sed "s/\"//g")
-ID=$(openstack server list | awk "/$IP/"' {print $2}')
+#IP=$(curl http://169.254.169.254/2009-04-04/meta-data/local-ipv4)
+#MEMBER_ID=$(curl http://$IP:$ETCD_CLIENT_PORT/v2/members | jq ".members[] | select(.name == \"$IP\") | .id" | sed "s/\"//g")
+#ID=$(openstack server list | awk "/$IP/"' {print $2}')
 #cat > /var/lib/etcd/suicide.sh <<EOF
 ##!/bin/bash
 #set -e
@@ -392,7 +392,7 @@ ID=$(openstack server list | awk "/$IP/"' {print $2}')
 #/var/lib/etcd/$scriptname
 #chmod 744 /var/lib/etcd/suicide.sh
 systemctl disable etcd
-systemctl enable etcd2 #set both etcd and the suicide script to start on boot
+#systemctl enable etcd2 #set both etcd and the suicide script to start on boot
 #systemctl start suicide.service
 #systemctl enable suicide.service #start the suicide script
 exit 0
