@@ -371,7 +371,7 @@ EOF
     systemctl start etcd2
     x=$?
     set -e
-    if [$x -gt 0]; then
+    if [$((x)) -gt 0]; then
         systemctl restart etcd2
     fi
 fi
