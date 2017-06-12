@@ -186,6 +186,8 @@ resources:
         security_groups: {get_param: sec_grps}
 #        metadata: {"metering.stack": {get_param: "OS::stack_name"}}
         personality:
+          /home/ubuntu/etcd2.service:
+            get_file: etcd/etcd_etcd2.service
           #/home/ubuntu/locking.py:
            # str_replace:
             #  template:
@@ -199,8 +201,8 @@ resources:
                #   get_param: lockattemptperiod
          # /home/ubuntu/suicide.service:
           #  get_file: etcd/etcd_suicide.service
-          /home/ubuntu/etcd2.service:
-            get_file: etcd/etcd_etcd2.service
+          #/home/ubuntu/etcd2.service:
+           # get_file: etcd/etcd_etcd2.service
   #        /home/ubuntu/configscript.sh:
    #         str_replace:
     #          template:
