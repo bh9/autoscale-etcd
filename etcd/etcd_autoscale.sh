@@ -367,7 +367,13 @@ EOF
  #   systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
     systemctl stop etcd
     systemctl stop etcd2
+    set +e
     systemctl start etcd2
+    x=$?
+    set -e
+    if [$x -gt 0]; then
+        systemctl restart etcd2
+    fi
 fi
 x=1
 while [ $((x)) -gt 0 ]; do
