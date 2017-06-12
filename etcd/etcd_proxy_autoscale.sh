@@ -341,6 +341,7 @@ ETCD_INITIAL_CLUSTER_STATE=new
 ETCD_NAME=$ec2_instance_ip
 ETCD_INITIAL_ADVERTISE_PEER_URLS="$etcd_peer_scheme://$ec2_instance_ip:$server_port"
 ETCD_ADVERTISE_CLIENT_URLS="$etcd_client_scheme://$ec2_instance_ip:$client_port"
+ETCD_PROXY=$etcd_proxy
 ETCD_INITIAL_CLUSTER="$etcd_initial_cluster"
 ETCD_LISTEN_PEER_URLS="$etcd_peer_scheme://$ec2_instance_ip:$server_port"
 ETCD_LISTEN_CLIENT_URLS="$etcd_client_scheme://$ec2_instance_ip:$client_port"
