@@ -365,7 +365,9 @@ EOF
     fi
     rm -rf /var/lib/etcd/default/
  #   systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
-    systemctl restart etcd2
+    systemctl stop etcd
+    systemctl stop etcd2
+    systemctl start etcd2
 fi
 x=1
 while [ $((x)) -gt 0 ]; do
