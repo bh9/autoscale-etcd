@@ -32,4 +32,7 @@ Other (optional) parameters:
 |min_cluster    |3         |minimum cluster size (the point at which heat will autoreplace failed nodes). Note that the scale down scripts will only scale down to capacity, not min_cluster
 |max_cluster    |5         |The maximum size of the cluster
 |scaleupcooldown|10        |The minimum time between scale up operations, note that ceilometer applies a minimum of 10 minutes due to it's gathering period
+|etcdclientscheme |http    |The protocol used to serve client requests (Note: https uses auto-tls. Since VMs have low entropy, this step can take 5 minutes)
+|etcdpeerscheme |http      |The protocol used for peer-to-peer communications (Note: https uses auto-tls. Since VMs have low entropy, this step can take 5 minutes)
+
 If metricsserver is None, the netdata security group is not required
