@@ -8,6 +8,7 @@ while [ $((x)) -gt 0 ];do
     set +e 
     wget -qO- --timeout 30 http://$first_host:12379/v2/members 
     x=$?
+    set -e
     sleep 5
 done
 for i in ${etcd_hosts}; do
@@ -31,7 +32,16 @@ for i in ${etcd_hosts}; do
         fi
     fi
 done
+x=1
+while [ $((x)) -gt 0 ];do
+    set +e 
+    wget -qO- --timeout 30 http://$first_host:8080/_status/nodes
+    x=$?
+    set -e
+    sleep 5
+done
 crnodes=$(wget -qO- --timeout 30 ${first_host}:8080/_status/nodes | jq '.[]|length')
+echo "$crnodes"
 if [ $((crnodes)) -eq $((lasttotal)) ]; then
     echo cockroach agrees on cluster size with etcd
     exit 0
