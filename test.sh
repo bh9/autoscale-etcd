@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 set pipefail
 etcd_hosts=$(openstack server list -c Networks -c Name | gawk "/a$CI_BUILD_ID/"' {match($0,/((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/); ip = substr($0,RSTART,RLENGTH); print ip}')
 for i in ${etcd_hosts}; do
