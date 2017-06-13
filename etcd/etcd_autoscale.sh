@@ -163,7 +163,7 @@ if [[ ! $ec2_instance_ip ]]; then
     echo "$pkg: failed to get instance IP address"
     exit 3
 fi
-
+echo $ec2_instance_ip $(hostname) >> /etc/hosts
 # If we're in proxy mode we don't have to look this up and expect an env var
 if [[ ! $PROXY_ASG ]]; then
     etcd_proxy=off
