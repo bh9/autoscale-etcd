@@ -25,5 +25,15 @@ Other (optional) parameters:
 |capacity       |3         |The target capacity that the cluster should aim to be when load is low
 |scaledownperiod|200       |The minimum time between scale down operations
 |metricsserver  |"None"    |The IP address of the metrics server
+|etcdclientport |12379     |The tcp port which etcd uses to handle client requests
+|etcdpeerport   |12380     |The tcp port which etcd uses to communicate internally
+|retries        |10        |The number of attemtps to join the cluster before failure
+|lockattemptperiod |10     |The minimum time between a single host's lock acquire attempts
+|min_cluster    |3         |minimum cluster size (the point at which heat will autoreplace failed nodes). Note that the scale down scripts will only scale down to capacity, not min_cluster
+|max_cluster    |5         |The maximum size of the cluster
+|scaleupcooldown|10        |The minimum time between scale up operations, note that ceilometer applies a minimum of 10 minutes due to it's gathering period
+|etcdclientscheme |http    |The protocol used to serve client requests (Note: https uses auto-tls. Since VMs have low entropy, this step can take 5 minutes)
+|etcdpeerscheme |http      |The protocol used for peer-to-peer communications (Note: https uses auto-tls. Since VMs have low entropy, this step can take 5 minutes)
+|proxies        |0         |The number of proxies in front of the etcd cluster (use proxyconfig.sh to configure them to also act as e.g. a mongos)
 
 If metricsserver is None, the netdata security group is not required

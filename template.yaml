@@ -47,6 +47,14 @@ parameters:
     type: number 
     label: start group size
     default: 3 
+  min_cluster:
+    type: number
+    label: minimum cluster size (the point at which heat will autoreplace failed nodes). Note that the scale down scripts will only scale down to capacity, not min_cluster
+    default: 3
+  max_cluster:
+    type: number
+    label: maximum cluster size
+    default: 5
   scaledownperiod:
     type: number
     label: time between scales (down)
@@ -55,21 +63,63 @@ parameters:
   configscript: 
     type: string
     label: name of script
-    description: Tha name the script should have on the instances
+    description: The name the script should have on the instances
   metricsserver:
     type: string
     label: netdata server ip
     description: The ip of an openstack instance running netdata with an api key configured with the same value as its openstack id
     default: "None"
+  etcdclientport:
+    type: number
+    label: etcd client-side port
+    description: the tcp port over which etcd serves client requests
+    default: 12379
+  etcdpeerport:
+    type: number
+    label: etcd peer-side port
+    description: the tcp port over which etcd communicates with the rest of the cluster
+    default: 12380 
+  retries:
+    type: number
+    label: the number of attempt that should be made to join the etcd cluster
+    default: 10
+  lockattemptperiod:
+    type: number
+    label: the minimum time between a host's attempts at acquiring the kill lock
+    default: 10
+  scaleupcooldown:
+    type: number
+    label: the minimum time between scale up operations
+    default: 10
+  etcdclientscheme:
+    type: string
+    label: client protocol (http or https)
+    constraints:
+      - allowed_values:
+        - http
+        - https
+    default: http
+  etcdpeerscheme:
+    type: string
+    label: peer to peer protocol (http or https)
+    constraints:
+      - allowed_values:
+        - http
+        - https
+    default: http
+  proxies:
+    type: number
+    label: number of proxies
+    default: 0
 
 resources:
-  group:
+  asg:
     type: OS::Heat::AutoScalingGroup
     properties:
-      cooldown: 10
+      cooldown: {get_param: scaleupcooldown}
       desired_capacity: {get_param: capacity}
-      max_size: 5
-      min_size: 1
+      max_size: {get_param: max_cluster}
+      min_size: {get_param: min_cluster}
       resource:
         type: OS::Nova::Server
         properties:
@@ -89,12 +139,25 @@ resources:
                 params:
                   $thisisatimeout:
                     get_param: scaledownperiod
+                  $thisisaclientport: 
+                    get_param: etcdclientport
+                  $thisisanattemptperiod:
+                    get_param: lockattemptperiod
             /home/ubuntu/suicide.service: 
               get_file: etcd/etcd_suicide.service
             /home/ubuntu/etcd2.service: 
               get_file: etcd/etcd_etcd2.service
             /home/ubuntu/configscript.sh: 
-              get_file: configscript.sh
+              str_replace:
+                template:
+                  get_file: configscript.sh
+                params:
+                  $thisisaclientport:
+                    get_param: etcdclientport
+                  $thisisaclientscheme:
+                    get_param: etcdclientscheme  
+            /home/ubuntu/cleanup.sh:
+              get_file: cleanupscript.sh
           user_data_format: RAW
           user_data: 
             str_replace:
@@ -109,13 +172,82 @@ resources:
                 $thisisametricserver: {get_param: metricsserver}
                 $thisisascriptname: {get_param: configscript}
                 $thisisaurl: {get_param: OS_AUTH_URL}
+                $thisisapeerport: {get_param: etcdpeerport}
+                $thisisaclientport: {get_param: etcdclientport}
+                $thisisaretrycount: {get_param: retries}
+                $thisisaclientscheme: {get_param: etcdclientscheme}
+                $thisisapeerscheme: {get_param: etcdpeerscheme}
+ 
+  proxy-group:
+    type: OS::Heat::AutoScalingGroup
+    properties:
+      cooldown: {get_param: scaleupcooldown}
+      desired_capacity: {get_param: proxies}
+      max_size: {get_param: proxies}
+      min_size: {get_param: proxies}
+      resource:
+        type: OS::Nova::Server
+        properties:
+          name: etcd-proxy
+          key_name: { get_param: key_name } #use a pre-registered key for access after creation
+          image: { get_param: image }    #which image to use for the VM
+          config_drive: true
+          flavor: { get_param: instance_type }      #which flavor of instance to boot
+          networks: [{"network": { get_param: net_name }}]   #which private network to put the instance on
+          security_groups: {get_param: sec_grps}
+#      metadata: {"metering.stack": {get_param: "OS::stack_name"}}
+          personality:
+            /home/ubuntu/etcd2.service:
+              get_file: etcd/etcd_etcd2.service
+        #/home/ubuntu/locking.py:
+         # str_replace:
+          #  template:
+           #   get_file: etcd/etcd_locking.py
+            #params:
+             # $thisisatimeout:
+              #  get_param: scaledownperiod
+          #    $thisisaclientport:
+           #     get_param: etcdclientport
+            #  $thisisanattemptperiod:
+             #   get_param: lockattemptperiod
+       # /home/ubuntu/suicide.service:
+        #  get_file: etcd/etcd_suicide.service
+        #/home/ubuntu/etcd2.service:
+         # get_file: etcd/etcd_etcd2.service
+            /home/ubuntu/configscript.sh:
+              str_replace:
+                template:
+                  get_file: proxyconfig.sh
+                params:
+                  $thisisaclientport:
+                    get_param: etcdclientport
+#        /home/ubuntu/cleanup.sh:
+ #         get_file: cleanupscript.sh
+
+          user_data_format: RAW
+          user_data:
+            str_replace:
+              template: { get_file: etcd/etcd_proxy_autoscale.sh }
+              params:
+                $thisisausername: {get_param: OS_USERNAME}
+                $thisisapassword: {get_param: OS_PASSWORD}
+                $thisisatenantname: {get_param: OS_TENANT_NAME}
+                $thisisaregion: {get_param: OS_REGION}
+            #$thisisatimeout: {get_param: scaledownperiod}
+                $thisisametricserver: {get_param: metricsserver}
+            #$thisisascriptname: {get_param: configscript}
+                $thisisaurl: {get_param: OS_AUTH_URL}
+                $thisisapeerport: {get_param: etcdpeerport}
+                $thisisaclientport: {get_param: etcdclientport}
+                $thisisaretrycount: {get_param: retries}
+                $thisisastackname: {get_param: "OS::stack_name"}
 
   scaleup_policy:
     type: OS::Heat::ScalingPolicy
     properties:
       adjustment_type: change_in_capacity
-      auto_scaling_group_id: { get_resource: group }
-      cooldown: 10
+      auto_scaling_group_id: { get_resource: asg }
+      cooldown: {get_param: scaleupcooldown}
       scaling_adjustment: 1
 
   cpu_alarm_high:
