@@ -1,5 +1,5 @@
 variables:
- net_name: "CI_net"
+ net_name: "gitlab-autoscale"
  image: "Ubuntu Xenial"
  instance_type: "m1.small"
  key_name: "bh9_testing"
