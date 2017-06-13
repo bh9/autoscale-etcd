@@ -6,12 +6,12 @@ first_host=$(echo "$etcd_hosts" | head -n 1)
 x=1
 while [ $((x)) -gt 0 ];do
     set +e 
-    wget --timeout 30 http://$first_host:12379/v2/members 
+    wget -qO- --timeout 30 http://$first_host:12379/v2/members 
     x=$?
     sleep 5
 done
 for i in ${etcd_hosts}; do
-    newtotal=$(wget --timeout 30 http://${i}:12379/v2/members | jq '.[] | length')
+    newtotal=$(wget -qO- --timeout 30 http://${i}:12379/v2/members | jq '.[] | length')
     if [ -n "$lasttotal" ]; then
         if [ $((newtotal)) -eq $((lasttotal)) ]; then
             echo "$i" agrees
@@ -31,7 +31,7 @@ for i in ${etcd_hosts}; do
         fi
     fi
 done
-crnodes=$(wget --timeout 30 ${first_host}:8080/_status/nodes | jq '.[]|length')
+crnodes=$(wget -qO- --timeout 30 ${first_host}:8080/_status/nodes | jq '.[]|length')
 if [ $((crnodes)) -eq $((lasttotal)) ]; then
     echo cockroach agrees on cluster size with etcd
     exit 0
