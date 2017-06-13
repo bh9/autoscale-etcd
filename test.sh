@@ -2,7 +2,7 @@
 set -e
 set pipefail
 etcd_hosts=$(openstack server list -c Networks -c Name | gawk "/a$CI_BUILD_ID/"' {match($0,/((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/); ip = substr($0,RSTART,RLENGTH); print ip}')
-for i in etcd_hosts; do
+for i in ${etcd_hosts}; do
     newtotal=$(wget --timeout 30 http://${i}:12379/v2/members | jq '.[] | length')
     if [ -n "$lasttotal" ]; then
         if [ $((newtotal)) -eq $((lasttotal)) ]; then
