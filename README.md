@@ -34,5 +34,6 @@ Other (optional) parameters:
 |scaleupcooldown|10        |The minimum time between scale up operations, note that ceilometer applies a minimum of 10 minutes due to it's gathering period
 |etcdclientscheme |http    |The protocol used to serve client requests (Note: https uses auto-tls. Since VMs have low entropy, this step can take 5 minutes)
 |etcdpeerscheme |http      |The protocol used for peer-to-peer communications (Note: https uses auto-tls. Since VMs have low entropy, this step can take 5 minutes)
+|proxies        |0         |The number of proxies in front of the etcd cluster (use proxyconfig.sh to configure them to also act as e.g. a mongos)
 
 If metricsserver is None, the netdata security group is not required
