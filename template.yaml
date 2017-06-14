@@ -89,14 +89,14 @@ parameters:
   comparator:
     type: string
     label: the comparator between the metric and the threshold
-    default: <
+    default: '<'
     constraints:
       - allowed_values:
-        - <
-        - >
-        - ==
-        - <=
-        - >=
+        - '<'
+        - '>'
+        - '=='
+        - '<='
+        - '>='
   etcdclientport:
     type: number
     label: etcd client-side port
