@@ -28,7 +28,7 @@ while True:
     members = len(stats)
     if int(minimum) < members:
       print "over minimum, checking metrics"
-      if psutil.cpu_percent() < 10: #if there are more members than the minimum, check cpu_percent
+      if psutil.$thisisametric $thisisacomparator $thisisathreshold: #if there are more members than the minimum, check cpu_percent
         print "below threshold, acquiring lock"
         try:
           print "lock acquiring"
