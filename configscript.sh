@@ -4,11 +4,11 @@ curl https://binaries.cockroachdb.com/cockroach-latest.linux-amd64.tgz > cockroa
 tar xfz cockroach.tgz
 cp -i cockroach-latest.linux-amd64/cockroach /usr/local/bin
 cockroach version
-myip=$(curl -s http://169.254.169.254/2009-04-04/meta-data/local-ipv4)
-leader=$(curl $myip:12379/v2/stats/leader | jq -r '.[]')
+myip=$(curl -s -m 100 http://169.254.169.254/2009-04-04/meta-data/local-ipv4)
+leader=$(curl -k -m 100 $thisisaclientscheme://$myip:$thisisaclientport/v2/stats/leader | jq -r '.[]')
 if [ "$leader" = 'not current leader' ]; then
-    leaderid=$(curl $myip:12379/v2/stats/self | jq '.leaderInfo.leader')
-    leaderip=$(curl $myip:12379/v2/members | jq -r ".members[] | select(.id == $leaderid) | .name")
+    leaderid=$(curl -k -m 100 $thisisaclientscheme://$myip:$thisisaclientport/v2/stats/self | jq '.leaderInfo.leader')
+    leaderip=$(curl -k -m 100 $thisisaclientscheme://$myip:$thisisaclientport/v2/members | jq -r ".members[] | select(.id == $leaderid) | .name")
     while [ ! $connected ]; do
 	set +e
 	cockroach node ls --insecure --host $leaderip
