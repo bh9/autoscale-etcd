@@ -7,6 +7,7 @@ import cStringIO
 import sys
 import subprocess
 
+METRIC="$thisisametric"
 buf=cStringIO.StringIO()
 curl = pycurl.Curl()
 curl.setopt(curl.URL, "http://169.254.169.254/2009-04-04/meta-data/local-ipv4")
@@ -28,8 +29,19 @@ while True:
     members = len(stats)
     if int(minimum) < members:
       print "over minimum, checking metrics"
-      if psutil.$thisisametric $thisisacomparator $thisisathreshold: #if there are more members than the minimum, check cpu_percent
-        print "below threshold, acquiring lock"
+      buf=cStringIO.StringIO()
+      curl = pycurl.Curl()
+      curl.setopt(curl.URL, "http://localhost:19999/api/v1/allmetrics")
+      curl.setopt(curl.WRITEFUNCTION, buf.write)
+      curl.perform()
+      METRICS = buf.getvalue() #get the instance's ip
+      curl.close()
+      buf.close()
+      FIRSTPOS=METRICS.find(METRIC)
+      LENMET=len(METRIC)
+      METRICVALUE=METRICS[FIRSTPOS+LENMET:].partition('\"')[0]
+      if METRICVALUE $thisisacomparator $thisisathreshold: #if there are more members than the minimum, check cpu_percent
+        print "beyond threshold, acquiring lock"
         try:
           print "lock acquiring"
           lock.acquire(blocking=False, lock_ttl=$thisisatimeout, timeout=5) #try to get the lock if you're idle

@@ -71,17 +71,9 @@ parameters:
     default: "None"
   metric:
     type: string
-    label: the psutil function to use for scaling down
-    description: the psutil function to use for scaling down (e.g. `cpu_percent(interval=2)` or `net_io_counters().packets_sent`, see https://pythonhosted.org/psutil/ for more options). Currently, this is only as it would be returned, however rate of change is planned
-    default: cpu_percent()
-    constraints:
-      - allowed_values:
-        - cpu_percent()
-        - virtual_memory().available
-        - swap_memory().available
-        - disk_usage('/').free
-        - net_io_counters().errin
-        - net_io_counters().errout
+    label: the netdata metric to use for scaling down
+    description: the netdata metric to use for scaling down (e.g. `NETDATA_SYSTEM_CPU_IDLE` or `NETDATA_SYSTEM_LIAD_LOAD1` or `NETDATA_SYSTEM_IO_IN, see doc/all_metrics for more options). Currently, this is only as it would be returned, however, I plan to add rate of change
+    default: NETDATA_SYSTEM_CPU_IDLE
   threshold:
     type: number
     label: the scaledown threshold of the chosen metric (default is cpu_percent)
