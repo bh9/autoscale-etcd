@@ -1,0 +1,1407 @@
+
+# chart: disk_qops.vda (name: disk_qops.vda)
+NETDATA_DISK_QOPS_VDA_OPERATIONS="0"      # operations
+NETDATA_DISK_QOPS_VDA_VISIBLETOTAL="0"      # operations
+
+# chart: disk_svctm.vda (name: disk_svctm.vda)
+NETDATA_DISK_SVCTM_VDA_SVCTM="0"      # ms per operation
+NETDATA_DISK_SVCTM_VDA_VISIBLETOTAL="0"      # ms per operation
+
+# chart: disk_avgsz.vda (name: disk_avgsz.vda)
+NETDATA_DISK_AVGSZ_VDA_READS="0"      # kilobytes per operation
+NETDATA_DISK_AVGSZ_VDA_WRITES="0"      # kilobytes per operation
+NETDATA_DISK_AVGSZ_VDA_VISIBLETOTAL="0"      # kilobytes per operation
+
+# chart: disk_await.vda (name: disk_await.vda)
+NETDATA_DISK_AWAIT_VDA_READS="0"      # ms per operation
+NETDATA_DISK_AWAIT_VDA_WRITES="0"      # ms per operation
+NETDATA_DISK_AWAIT_VDA_VISIBLETOTAL="0"      # ms per operation
+
+# chart: netdata.compression_ratio (name: netdata.compression_ratio)
+NETDATA_NETDATA_COMPRESSION_RATIO_SAVINGS="4"      # percentage
+NETDATA_NETDATA_COMPRESSION_RATIO_VISIBLETOTAL="4"      # percentage
+
+# chart: netdata.response_time (name: netdata.response_time)
+NETDATA_NETDATA_RESPONSE_TIME_AVERAGE="0"      # ms/request
+NETDATA_NETDATA_RESPONSE_TIME_MAX="0"      # ms/request
+NETDATA_NETDATA_RESPONSE_TIME_VISIBLETOTAL="0"      # ms/request
+
+# chart: netdata.net (name: netdata.net)
+NETDATA_NETDATA_NET_IN="0"      # kilobits/s
+NETDATA_NETDATA_NET_OUT="-0"      # kilobits/s
+NETDATA_NETDATA_NET_VISIBLETOTAL="0"      # kilobits/s
+
+# chart: netdata.requests (name: netdata.requests)
+NETDATA_NETDATA_REQUESTS_REQUESTS="0"      # requests/s
+NETDATA_NETDATA_REQUESTS_VISIBLETOTAL="0"      # requests/s
+
+# chart: netdata.clients (name: netdata.clients)
+NETDATA_NETDATA_CLIENTS_CLIENTS="1"      # connected clients
+NETDATA_NETDATA_CLIENTS_VISIBLETOTAL="1"      # connected clients
+
+# chart: netdata.server_cpu (name: netdata.server_cpu)
+NETDATA_NETDATA_SERVER_CPU_USER="4"      # milliseconds/s
+NETDATA_NETDATA_SERVER_CPU_SYSTEM="0"      # milliseconds/s
+NETDATA_NETDATA_SERVER_CPU_VISIBLETOTAL="4"      # milliseconds/s
+
+# chart: netdata.plugin_proc_cpu (name: netdata.plugin_proc_cpu)
+NETDATA_NETDATA_PLUGIN_PROC_CPU_USER="1"      # milliseconds/s
+NETDATA_NETDATA_PLUGIN_PROC_CPU_SYSTEM="0"      # milliseconds/s
+NETDATA_NETDATA_PLUGIN_PROC_CPU_VISIBLETOTAL="1"      # milliseconds/s
+
+# chart: netdata.plugin_proc_modules (name: netdata.plugin_proc_modules)
+NETDATA_NETDATA_PLUGIN_PROC_MODULES_STAT="0"      # milliseconds/run
+NETDATA_NETDATA_PLUGIN_PROC_MODULES_UPTIME="0"      # milliseconds/run
+NETDATA_NETDATA_PLUGIN_PROC_MODULES_LOADAVG="0"      # milliseconds/run
+NETDATA_NETDATA_PLUGIN_PROC_MODULES_ENTROPY="0"      # milliseconds/run
+NETDATA_NETDATA_PLUGIN_PROC_MODULES_INTERRUPTS="0"      # milliseconds/run
+NETDATA_NETDATA_PLUGIN_PROC_MODULES_SOFTIRQS="0"      # milliseconds/run
+NETDATA_NETDATA_PLUGIN_PROC_MODULES_VMSTAT="0"      # milliseconds/run
+NETDATA_NETDATA_PLUGIN_PROC_MODULES_MEMINFO="0"      # milliseconds/run
+NETDATA_NETDATA_PLUGIN_PROC_MODULES_KSM="0"      # milliseconds/run
+NETDATA_NETDATA_PLUGIN_PROC_MODULES_NUMA="0"      # milliseconds/run
+NETDATA_NETDATA_PLUGIN_PROC_MODULES_NETDEV="0"      # milliseconds/run
+NETDATA_NETDATA_PLUGIN_PROC_MODULES_NETSTAT="0"      # milliseconds/run
+NETDATA_NETDATA_PLUGIN_PROC_MODULES_SNMP="0"      # milliseconds/run
+NETDATA_NETDATA_PLUGIN_PROC_MODULES_SNMP6="0"      # milliseconds/run
+NETDATA_NETDATA_PLUGIN_PROC_MODULES_SOFTNET="0"      # milliseconds/run
+NETDATA_NETDATA_PLUGIN_PROC_MODULES_DISKSTATS="0"      # milliseconds/run
+NETDATA_NETDATA_PLUGIN_PROC_MODULES_IPC="0"      # milliseconds/run
+NETDATA_NETDATA_PLUGIN_PROC_MODULES_VISIBLETOTAL="0"      # milliseconds/run
+
+# chart: system.ipc_semaphore_arrays (name: system.ipc_semaphore_arrays)
+NETDATA_SYSTEM_IPC_SEMAPHORE_ARRAYS_ARRAYS="8"      # arrays
+NETDATA_SYSTEM_IPC_SEMAPHORE_ARRAYS_VISIBLETOTAL="8"      # arrays
+
+# chart: system.ipc_semaphores (name: system.ipc_semaphores)
+NETDATA_SYSTEM_IPC_SEMAPHORES_SEMAPHORES="120"      # semaphores
+NETDATA_SYSTEM_IPC_SEMAPHORES_VISIBLETOTAL="120"      # semaphores
+
+# chart: disk_iotime.vda (name: disk_iotime.vda)
+NETDATA_DISK_IOTIME_VDA_READS="0"      # milliseconds/s
+NETDATA_DISK_IOTIME_VDA_WRITES="-0"      # milliseconds/s
+NETDATA_DISK_IOTIME_VDA_VISIBLETOTAL="0"      # milliseconds/s
+
+# chart: disk_mops.vda (name: disk_mops.vda)
+NETDATA_DISK_MOPS_VDA_READS="0"      # merged operations/s
+NETDATA_DISK_MOPS_VDA_WRITES="-0"      # merged operations/s
+NETDATA_DISK_MOPS_VDA_VISIBLETOTAL="0"      # merged operations/s
+
+# chart: disk_util.vda (name: disk_util.vda)
+NETDATA_DISK_UTIL_VDA_UTILIZATION="0"      # % of time working
+NETDATA_DISK_UTIL_VDA_VISIBLETOTAL="0"      # % of time working
+
+# chart: groups.pipes (name: groups.pipes)
+NETDATA_GROUPS_PIPES_UBUNTU="0"      # open pipes
+NETDATA_GROUPS_PIPES_POSTGRES="6"      # open pipes
+NETDATA_GROUPS_PIPES_IRODS="0"      # open pipes
+NETDATA_GROUPS_PIPES_ROOT="7"      # open pipes
+NETDATA_GROUPS_PIPES_NETDATA="1"      # open pipes
+NETDATA_GROUPS_PIPES_VISIBLETOTAL="14"      # open pipes
+
+# chart: disk_backlog.vda (name: disk_backlog.vda)
+NETDATA_DISK_BACKLOG_VDA_BACKLOG="0"      # backlog (ms)
+NETDATA_DISK_BACKLOG_VDA_VISIBLETOTAL="0"      # backlog (ms)
+
+# chart: disk_ops.vda (name: disk_ops.vda)
+NETDATA_DISK_OPS_VDA_READS="0"      # operations/s
+NETDATA_DISK_OPS_VDA_WRITES="-0"      # operations/s
+NETDATA_DISK_OPS_VDA_VISIBLETOTAL="0"      # operations/s
+
+# chart: groups.sockets (name: groups.sockets)
+NETDATA_GROUPS_SOCKETS_UBUNTU="0"      # open sockets
+NETDATA_GROUPS_SOCKETS_POSTGRES="3"      # open sockets
+NETDATA_GROUPS_SOCKETS_IRODS="2"      # open sockets
+NETDATA_GROUPS_SOCKETS_ROOT="43"      # open sockets
+NETDATA_GROUPS_SOCKETS_NETDATA="0"      # open sockets
+NETDATA_GROUPS_SOCKETS_VISIBLETOTAL="48"      # open sockets
+
+# chart: disk.vda (name: disk.vda)
+NETDATA_DISK_VDA_READS="0"      # kilobytes/s
+NETDATA_DISK_VDA_WRITES="-0"      # kilobytes/s
+NETDATA_DISK_VDA_VISIBLETOTAL="0"      # kilobytes/s
+
+# chart: groups.files (name: groups.files)
+NETDATA_GROUPS_FILES_UBUNTU="1"      # open files
+NETDATA_GROUPS_FILES_POSTGRES="4"      # open files
+NETDATA_GROUPS_FILES_IRODS="4"      # open files
+NETDATA_GROUPS_FILES_ROOT="51"      # open files
+NETDATA_GROUPS_FILES_NETDATA="4"      # open files
+NETDATA_GROUPS_FILES_VISIBLETOTAL="64"      # open files
+
+# chart: groups.lwrites (name: groups.lwrites)
+NETDATA_GROUPS_LWRITES_UBUNTU="0"      # kilobytes/s
+NETDATA_GROUPS_LWRITES_POSTGRES="0"      # kilobytes/s
+NETDATA_GROUPS_LWRITES_IRODS="0"      # kilobytes/s
+NETDATA_GROUPS_LWRITES_ROOT="8"      # kilobytes/s
+NETDATA_GROUPS_LWRITES_NETDATA="0"      # kilobytes/s
+NETDATA_GROUPS_LWRITES_VISIBLETOTAL="8"      # kilobytes/s
+
+# chart: groups.lreads (name: groups.lreads)
+NETDATA_GROUPS_LREADS_UBUNTU="0"      # kilobytes/s
+NETDATA_GROUPS_LREADS_POSTGRES="0"      # kilobytes/s
+NETDATA_GROUPS_LREADS_IRODS="0"      # kilobytes/s
+NETDATA_GROUPS_LREADS_ROOT="53"      # kilobytes/s
+NETDATA_GROUPS_LREADS_NETDATA="0"      # kilobytes/s
+NETDATA_GROUPS_LREADS_VISIBLETOTAL="53"      # kilobytes/s
+
+# chart: groups.pwrites (name: groups.pwrites)
+NETDATA_GROUPS_PWRITES_UBUNTU="0"      # kilobytes/s
+NETDATA_GROUPS_PWRITES_POSTGRES="0"      # kilobytes/s
+NETDATA_GROUPS_PWRITES_IRODS="0"      # kilobytes/s
+NETDATA_GROUPS_PWRITES_ROOT="0"      # kilobytes/s
+NETDATA_GROUPS_PWRITES_NETDATA="0"      # kilobytes/s
+NETDATA_GROUPS_PWRITES_VISIBLETOTAL="0"      # kilobytes/s
+
+# chart: groups.preads (name: groups.preads)
+NETDATA_GROUPS_PREADS_UBUNTU="0"      # kilobytes/s
+NETDATA_GROUPS_PREADS_POSTGRES="0"      # kilobytes/s
+NETDATA_GROUPS_PREADS_IRODS="0"      # kilobytes/s
+NETDATA_GROUPS_PREADS_ROOT="0"      # kilobytes/s
+NETDATA_GROUPS_PREADS_NETDATA="0"      # kilobytes/s
+NETDATA_GROUPS_PREADS_VISIBLETOTAL="0"      # kilobytes/s
+
+# chart: groups.minor_faults (name: groups.minor_faults)
+NETDATA_GROUPS_MINOR_FAULTS_UBUNTU="0"      # page faults/s
+NETDATA_GROUPS_MINOR_FAULTS_POSTGRES="0"      # page faults/s
+NETDATA_GROUPS_MINOR_FAULTS_IRODS="0"      # page faults/s
+NETDATA_GROUPS_MINOR_FAULTS_ROOT="0"      # page faults/s
+NETDATA_GROUPS_MINOR_FAULTS_NETDATA="0"      # page faults/s
+NETDATA_GROUPS_MINOR_FAULTS_VISIBLETOTAL="0"      # page faults/s
+
+# chart: cpu.cpu1_softnet_stat (name: cpu.cpu1_softnet_stat)
+NETDATA_CPU_CPU1_SOFTNET_STAT_PROCESSED="0"      # events/s
+NETDATA_CPU_CPU1_SOFTNET_STAT_DROPPED="0"      # events/s
+NETDATA_CPU_CPU1_SOFTNET_STAT_SQUEEZED="0"      # events/s
+NETDATA_CPU_CPU1_SOFTNET_STAT_RECEIVED_RPS="0"      # events/s
+NETDATA_CPU_CPU1_SOFTNET_STAT_FLOW_LIMIT_COUNT="0"      # events/s
+NETDATA_CPU_CPU1_SOFTNET_STAT_VISIBLETOTAL="0"      # events/s
+
+# chart: groups.major_faults (name: groups.major_faults)
+NETDATA_GROUPS_MAJOR_FAULTS_UBUNTU="0"      # page faults/s
+NETDATA_GROUPS_MAJOR_FAULTS_POSTGRES="0"      # page faults/s
+NETDATA_GROUPS_MAJOR_FAULTS_IRODS="0"      # page faults/s
+NETDATA_GROUPS_MAJOR_FAULTS_ROOT="0"      # page faults/s
+NETDATA_GROUPS_MAJOR_FAULTS_NETDATA="0"      # page faults/s
+NETDATA_GROUPS_MAJOR_FAULTS_VISIBLETOTAL="0"      # page faults/s
+
+# chart: cpu.cpu0_softnet_stat (name: cpu.cpu0_softnet_stat)
+NETDATA_CPU_CPU0_SOFTNET_STAT_PROCESSED="0"      # events/s
+NETDATA_CPU_CPU0_SOFTNET_STAT_DROPPED="0"      # events/s
+NETDATA_CPU_CPU0_SOFTNET_STAT_SQUEEZED="0"      # events/s
+NETDATA_CPU_CPU0_SOFTNET_STAT_RECEIVED_RPS="0"      # events/s
+NETDATA_CPU_CPU0_SOFTNET_STAT_FLOW_LIMIT_COUNT="0"      # events/s
+NETDATA_CPU_CPU0_SOFTNET_STAT_VISIBLETOTAL="0"      # events/s
+
+# chart: groups.cpu_system (name: groups.cpu_system)
+NETDATA_GROUPS_CPU_SYSTEM_UBUNTU="0"      # cpu time %
+NETDATA_GROUPS_CPU_SYSTEM_POSTGRES="0"      # cpu time %
+NETDATA_GROUPS_CPU_SYSTEM_IRODS="0"      # cpu time %
+NETDATA_GROUPS_CPU_SYSTEM_ROOT="0"      # cpu time %
+NETDATA_GROUPS_CPU_SYSTEM_NETDATA="0"      # cpu time %
+NETDATA_GROUPS_CPU_SYSTEM_VISIBLETOTAL="0"      # cpu time %
+
+# chart: system.softnet_stat (name: system.softnet_stat)
+NETDATA_SYSTEM_SOFTNET_STAT_PROCESSED="0"      # events/s
+NETDATA_SYSTEM_SOFTNET_STAT_DROPPED="0"      # events/s
+NETDATA_SYSTEM_SOFTNET_STAT_SQUEEZED="0"      # events/s
+NETDATA_SYSTEM_SOFTNET_STAT_RECEIVED_RPS="0"      # events/s
+NETDATA_SYSTEM_SOFTNET_STAT_FLOW_LIMIT_COUNT="0"      # events/s
+NETDATA_SYSTEM_SOFTNET_STAT_VISIBLETOTAL="0"      # events/s
+
+# chart: groups.cpu_user (name: groups.cpu_user)
+NETDATA_GROUPS_CPU_USER_UBUNTU="0"      # cpu time %
+NETDATA_GROUPS_CPU_USER_POSTGRES="0"      # cpu time %
+NETDATA_GROUPS_CPU_USER_IRODS="0"      # cpu time %
+NETDATA_GROUPS_CPU_USER_ROOT="0"      # cpu time %
+NETDATA_GROUPS_CPU_USER_NETDATA="0"      # cpu time %
+NETDATA_GROUPS_CPU_USER_VISIBLETOTAL="0"      # cpu time %
+
+# chart: ipv6.ect (name: ipv6.ect)
+NETDATA_IPV6_ECT_INNOECTPKTS="0"      # packets/s
+NETDATA_IPV6_ECT_INECT1PKTS="0"      # packets/s
+NETDATA_IPV6_ECT_INECT0PKTS="0"      # packets/s
+NETDATA_IPV6_ECT_INCEPKTS="0"      # packets/s
+NETDATA_IPV6_ECT_VISIBLETOTAL="0"      # packets/s
+
+# chart: groups.processes (name: groups.processes)
+NETDATA_GROUPS_PROCESSES_UBUNTU="1"      # processes
+NETDATA_GROUPS_PROCESSES_POSTGRES="6"      # processes
+NETDATA_GROUPS_PROCESSES_IRODS="2"      # processes
+NETDATA_GROUPS_PROCESSES_ROOT="77"      # processes
+NETDATA_GROUPS_PROCESSES_NETDATA="1"      # processes
+NETDATA_GROUPS_PROCESSES_VISIBLETOTAL="87"      # processes
+
+# chart: groups.threads (name: groups.threads)
+NETDATA_GROUPS_THREADS_UBUNTU="1"      # threads
+NETDATA_GROUPS_THREADS_POSTGRES="6"      # threads
+NETDATA_GROUPS_THREADS_IRODS="12"      # threads
+NETDATA_GROUPS_THREADS_ROOT="92"      # threads
+NETDATA_GROUPS_THREADS_NETDATA="1"      # threads
+NETDATA_GROUPS_THREADS_VISIBLETOTAL="112"      # threads
+
+# chart: ipv6.icmptypes (name: ipv6.icmptypes)
+NETDATA_IPV6_ICMPTYPES_INTYPE1="0"      # messages/s
+NETDATA_IPV6_ICMPTYPES_INTYPE128="0"      # messages/s
+NETDATA_IPV6_ICMPTYPES_INTYPE129="0"      # messages/s
+NETDATA_IPV6_ICMPTYPES_INTYPE136="0"      # messages/s
+NETDATA_IPV6_ICMPTYPES_OUTTYPE1="-0"      # messages/s
+NETDATA_IPV6_ICMPTYPES_OUTTYPE128="-0"      # messages/s
+NETDATA_IPV6_ICMPTYPES_OUTTYPE129="-0"      # messages/s
+NETDATA_IPV6_ICMPTYPES_OUTTYPE133="-0"      # messages/s
+NETDATA_IPV6_ICMPTYPES_OUTTYPE135="-0"      # messages/s
+NETDATA_IPV6_ICMPTYPES_OUTTYPE143="-0"      # messages/s
+NETDATA_IPV6_ICMPTYPES_VISIBLETOTAL="0"      # messages/s
+
+# chart: ipv6.icmpmldv2 (name: ipv6.icmpmldv2)
+NETDATA_IPV6_ICMPMLDV2_RECEIVED="0"      # reports/s
+NETDATA_IPV6_ICMPMLDV2_SENT="-0"      # reports/s
+NETDATA_IPV6_ICMPMLDV2_VISIBLETOTAL="0"      # reports/s
+
+# chart: groups.vmem (name: groups.vmem)
+NETDATA_GROUPS_VMEM_UBUNTU="21"      # MB
+NETDATA_GROUPS_VMEM_POSTGRES="1305"      # MB
+NETDATA_GROUPS_VMEM_IRODS="989"      # MB
+NETDATA_GROUPS_VMEM_ROOT="932"      # MB
+NETDATA_GROUPS_VMEM_NETDATA="2"      # MB
+NETDATA_GROUPS_VMEM_VISIBLETOTAL="3249"      # MB
+
+# chart: ipv6.icmpneighbor (name: ipv6.icmpneighbor)
+NETDATA_IPV6_ICMPNEIGHBOR_INSOLICITS="0"      # messages/s
+NETDATA_IPV6_ICMPNEIGHBOR_OUTSOLICITS="-0"      # messages/s
+NETDATA_IPV6_ICMPNEIGHBOR_INADVERTISEMENTS="0"      # messages/s
+NETDATA_IPV6_ICMPNEIGHBOR_OUTADVERTISEMENTS="-0"      # messages/s
+NETDATA_IPV6_ICMPNEIGHBOR_VISIBLETOTAL="0"      # messages/s
+
+# chart: groups.mem (name: groups.mem)
+NETDATA_GROUPS_MEM_UBUNTU="2"      # MB
+NETDATA_GROUPS_MEM_POSTGRES="9"      # MB
+NETDATA_GROUPS_MEM_IRODS="93"      # MB
+NETDATA_GROUPS_MEM_ROOT="42"      # MB
+NETDATA_GROUPS_MEM_NETDATA="0"      # MB
+NETDATA_GROUPS_MEM_VISIBLETOTAL="146"      # MB
+
+# chart: ipv6.icmprouter (name: ipv6.icmprouter)
+NETDATA_IPV6_ICMPROUTER_INSOLICITS="0"      # messages/s
+NETDATA_IPV6_ICMPROUTER_OUTSOLICITS="-0"      # messages/s
+NETDATA_IPV6_ICMPROUTER_INADVERTISEMENTS="0"      # messages/s
+NETDATA_IPV6_ICMPROUTER_OUTADVERTISEMENTS="-0"      # messages/s
+NETDATA_IPV6_ICMPROUTER_VISIBLETOTAL="0"      # messages/s
+
+# chart: groups.cpu (name: groups.cpu)
+NETDATA_GROUPS_CPU_UBUNTU="0"      # cpu time %
+NETDATA_GROUPS_CPU_POSTGRES="0"      # cpu time %
+NETDATA_GROUPS_CPU_IRODS="0"      # cpu time %
+NETDATA_GROUPS_CPU_ROOT="0"      # cpu time %
+NETDATA_GROUPS_CPU_NETDATA="0"      # cpu time %
+NETDATA_GROUPS_CPU_VISIBLETOTAL="0"      # cpu time %
+
+# chart: ipv6.icmp (name: ipv6.icmp)
+NETDATA_IPV6_ICMP_RECEIVED="0"      # messages/s
+NETDATA_IPV6_ICMP_SENT="-0"      # messages/s
+NETDATA_IPV6_ICMP_VISIBLETOTAL="0"      # messages/s
+
+# chart: ipv6.mcastpkts (name: ipv6.mcastpkts)
+NETDATA_IPV6_MCASTPKTS_RECEIVED="0"      # packets/s
+NETDATA_IPV6_MCASTPKTS_SENT="-0"      # packets/s
+NETDATA_IPV6_MCASTPKTS_VISIBLETOTAL="0"      # packets/s
+
+# chart: users.pipes (name: users.pipes)
+NETDATA_USERS_PIPES_UBUNTU="0"      # open pipes
+NETDATA_USERS_PIPES_POSTGRES="6"      # open pipes
+NETDATA_USERS_PIPES_IRODS="0"      # open pipes
+NETDATA_USERS_PIPES_ROOT="7"      # open pipes
+NETDATA_USERS_PIPES_NETDATA="1"      # open pipes
+NETDATA_USERS_PIPES_VISIBLETOTAL="14"      # open pipes
+
+# chart: ipv6.mcast (name: ipv6.mcast)
+NETDATA_IPV6_MCAST_RECEIVED="0"      # kilobits/s
+NETDATA_IPV6_MCAST_SENT="-0"      # kilobits/s
+NETDATA_IPV6_MCAST_VISIBLETOTAL="0"      # kilobits/s
+
+# chart: users.sockets (name: users.sockets)
+NETDATA_USERS_SOCKETS_UBUNTU="0"      # open sockets
+NETDATA_USERS_SOCKETS_POSTGRES="3"      # open sockets
+NETDATA_USERS_SOCKETS_IRODS="2"      # open sockets
+NETDATA_USERS_SOCKETS_ROOT="43"      # open sockets
+NETDATA_USERS_SOCKETS_NETDATA="0"      # open sockets
+NETDATA_USERS_SOCKETS_VISIBLETOTAL="48"      # open sockets
+
+# chart: ipv6.errors (name: ipv6.errors)
+NETDATA_IPV6_ERRORS_INDISCARDS="0"      # packets/s
+NETDATA_IPV6_ERRORS_OUTDISCARDS="-0"      # packets/s
+NETDATA_IPV6_ERRORS_INHDRERRORS="0"      # packets/s
+NETDATA_IPV6_ERRORS_INADDRERRORS="0"      # packets/s
+NETDATA_IPV6_ERRORS_INUNKNOWNPROTOS="0"      # packets/s
+NETDATA_IPV6_ERRORS_INTOOBIGERRORS="0"      # packets/s
+NETDATA_IPV6_ERRORS_INTRUNCATEDPKTS="0"      # packets/s
+NETDATA_IPV6_ERRORS_INNOROUTES="0"      # packets/s
+NETDATA_IPV6_ERRORS_OUTNOROUTES="-0"      # packets/s
+NETDATA_IPV6_ERRORS_VISIBLETOTAL="0"      # packets/s
+
+# chart: users.files (name: users.files)
+NETDATA_USERS_FILES_UBUNTU="1"      # open files
+NETDATA_USERS_FILES_POSTGRES="4"      # open files
+NETDATA_USERS_FILES_IRODS="4"      # open files
+NETDATA_USERS_FILES_ROOT="51"      # open files
+NETDATA_USERS_FILES_NETDATA="4"      # open files
+NETDATA_USERS_FILES_VISIBLETOTAL="64"      # open files
+
+# chart: ipv6.packets (name: ipv6.packets)
+NETDATA_IPV6_PACKETS_RECEIVED="0"      # packets/s
+NETDATA_IPV6_PACKETS_SENT="-0"      # packets/s
+NETDATA_IPV6_PACKETS_FORWARDED="0"      # packets/s
+NETDATA_IPV6_PACKETS_DELIVERS="-0"      # packets/s
+NETDATA_IPV6_PACKETS_VISIBLETOTAL="0"      # packets/s
+
+# chart: users.lwrites (name: users.lwrites)
+NETDATA_USERS_LWRITES_UBUNTU="0"      # kilobytes/s
+NETDATA_USERS_LWRITES_POSTGRES="0"      # kilobytes/s
+NETDATA_USERS_LWRITES_IRODS="0"      # kilobytes/s
+NETDATA_USERS_LWRITES_ROOT="8"      # kilobytes/s
+NETDATA_USERS_LWRITES_NETDATA="0"      # kilobytes/s
+NETDATA_USERS_LWRITES_VISIBLETOTAL="8"      # kilobytes/s
+
+# chart: system.ipv6 (name: system.ipv6)
+NETDATA_SYSTEM_IPV6_RECEIVED="0"      # kilobits/s
+NETDATA_SYSTEM_IPV6_SENT="-0"      # kilobits/s
+NETDATA_SYSTEM_IPV6_VISIBLETOTAL="0"      # kilobits/s
+
+# chart: users.lreads (name: users.lreads)
+NETDATA_USERS_LREADS_UBUNTU="0"      # kilobytes/s
+NETDATA_USERS_LREADS_POSTGRES="0"      # kilobytes/s
+NETDATA_USERS_LREADS_IRODS="0"      # kilobytes/s
+NETDATA_USERS_LREADS_ROOT="53"      # kilobytes/s
+NETDATA_USERS_LREADS_NETDATA="0"      # kilobytes/s
+NETDATA_USERS_LREADS_VISIBLETOTAL="53"      # kilobytes/s
+
+# chart: ipv4.udplite_errors (name: ipv4.udplite_errors)
+NETDATA_IPV4_UDPLITE_ERRORS_RCVBUFERRORS="0"      # packets/s
+NETDATA_IPV4_UDPLITE_ERRORS_SNDBUFERRORS="-0"      # packets/s
+NETDATA_IPV4_UDPLITE_ERRORS_NOPORTS="0"      # packets/s
+NETDATA_IPV4_UDPLITE_ERRORS_IGNOREDMULTI="0"      # packets/s
+NETDATA_IPV4_UDPLITE_ERRORS_INERRORS="0"      # packets/s
+NETDATA_IPV4_UDPLITE_ERRORS_INCSUMERRORS="0"      # packets/s
+NETDATA_IPV4_UDPLITE_ERRORS_VISIBLETOTAL="0"      # packets/s
+
+# chart: users.pwrites (name: users.pwrites)
+NETDATA_USERS_PWRITES_UBUNTU="0"      # kilobytes/s
+NETDATA_USERS_PWRITES_POSTGRES="0"      # kilobytes/s
+NETDATA_USERS_PWRITES_IRODS="0"      # kilobytes/s
+NETDATA_USERS_PWRITES_ROOT="0"      # kilobytes/s
+NETDATA_USERS_PWRITES_NETDATA="0"      # kilobytes/s
+NETDATA_USERS_PWRITES_VISIBLETOTAL="0"      # kilobytes/s
+
+# chart: ipv4.udplite (name: ipv4.udplite)
+NETDATA_IPV4_UDPLITE_INDATAGRAMS="0"      # packets/s
+NETDATA_IPV4_UDPLITE_OUTDATAGRAMS="-0"      # packets/s
+NETDATA_IPV4_UDPLITE_VISIBLETOTAL="0"      # packets/s
+
+# chart: users.preads (name: users.preads)
+NETDATA_USERS_PREADS_UBUNTU="0"      # kilobytes/s
+NETDATA_USERS_PREADS_POSTGRES="0"      # kilobytes/s
+NETDATA_USERS_PREADS_IRODS="0"      # kilobytes/s
+NETDATA_USERS_PREADS_ROOT="0"      # kilobytes/s
+NETDATA_USERS_PREADS_NETDATA="0"      # kilobytes/s
+NETDATA_USERS_PREADS_VISIBLETOTAL="0"      # kilobytes/s
+
+# chart: ipv4.udperrors (name: ipv4.udperrors)
+NETDATA_IPV4_UDPERRORS_RCVBUFERRORS="0"      # events/s
+NETDATA_IPV4_UDPERRORS_SNDBUFERRORS="-0"      # events/s
+NETDATA_IPV4_UDPERRORS_INERRORS="0"      # events/s
+NETDATA_IPV4_UDPERRORS_NOPORTS="0"      # events/s
+NETDATA_IPV4_UDPERRORS_INCSUMERRORS="0"      # events/s
+NETDATA_IPV4_UDPERRORS_IGNOREDMULTI="0"      # events/s
+NETDATA_IPV4_UDPERRORS_VISIBLETOTAL="0"      # events/s
+
+# chart: users.minor_faults (name: users.minor_faults)
+NETDATA_USERS_MINOR_FAULTS_UBUNTU="0"      # page faults/s
+NETDATA_USERS_MINOR_FAULTS_POSTGRES="0"      # page faults/s
+NETDATA_USERS_MINOR_FAULTS_IRODS="0"      # page faults/s
+NETDATA_USERS_MINOR_FAULTS_ROOT="0"      # page faults/s
+NETDATA_USERS_MINOR_FAULTS_NETDATA="0"      # page faults/s
+NETDATA_USERS_MINOR_FAULTS_VISIBLETOTAL="0"      # page faults/s
+
+# chart: ipv4.udppackets (name: ipv4.udppackets)
+NETDATA_IPV4_UDPPACKETS_INDATAGRAMS="0"      # packets/s
+NETDATA_IPV4_UDPPACKETS_OUTDATAGRAMS="-0"      # packets/s
+NETDATA_IPV4_UDPPACKETS_VISIBLETOTAL="0"      # packets/s
+
+# chart: users.major_faults (name: users.major_faults)
+NETDATA_USERS_MAJOR_FAULTS_UBUNTU="0"      # page faults/s
+NETDATA_USERS_MAJOR_FAULTS_POSTGRES="0"      # page faults/s
+NETDATA_USERS_MAJOR_FAULTS_IRODS="0"      # page faults/s
+NETDATA_USERS_MAJOR_FAULTS_ROOT="0"      # page faults/s
+NETDATA_USERS_MAJOR_FAULTS_NETDATA="0"      # page faults/s
+NETDATA_USERS_MAJOR_FAULTS_VISIBLETOTAL="0"      # page faults/s
+
+# chart: ipv4.tcphandshake (name: ipv4.tcphandshake)
+NETDATA_IPV4_TCPHANDSHAKE_ESTABRESETS="0"      # events/s
+NETDATA_IPV4_TCPHANDSHAKE_OUTRSTS="-0"      # events/s
+NETDATA_IPV4_TCPHANDSHAKE_ACTIVEOPENS="0"      # events/s
+NETDATA_IPV4_TCPHANDSHAKE_PASSIVEOPENS="0"      # events/s
+NETDATA_IPV4_TCPHANDSHAKE_ATTEMPTFAILS="0"      # events/s
+NETDATA_IPV4_TCPHANDSHAKE_TCPSYNRETRANS="0"      # events/s
+NETDATA_IPV4_TCPHANDSHAKE_VISIBLETOTAL="0"      # events/s
+
+# chart: ipv4.tcperrors (name: ipv4.tcperrors)
+NETDATA_IPV4_TCPERRORS_INERRS="0"      # packets/s
+NETDATA_IPV4_TCPERRORS_INCSUMERRORS="0"      # packets/s
+NETDATA_IPV4_TCPERRORS_RETRANSSEGS="-0"      # packets/s
+NETDATA_IPV4_TCPERRORS_VISIBLETOTAL="0"      # packets/s
+
+# chart: users.cpu_system (name: users.cpu_system)
+NETDATA_USERS_CPU_SYSTEM_UBUNTU="0"      # cpu time %
+NETDATA_USERS_CPU_SYSTEM_POSTGRES="0"      # cpu time %
+NETDATA_USERS_CPU_SYSTEM_IRODS="0"      # cpu time %
+NETDATA_USERS_CPU_SYSTEM_ROOT="0"      # cpu time %
+NETDATA_USERS_CPU_SYSTEM_NETDATA="0"      # cpu time %
+NETDATA_USERS_CPU_SYSTEM_VISIBLETOTAL="0"      # cpu time %
+
+# chart: ipv4.tcppackets (name: ipv4.tcppackets)
+NETDATA_IPV4_TCPPACKETS_INSEGS="0"      # packets/s
+NETDATA_IPV4_TCPPACKETS_OUTSEGS="-0"      # packets/s
+NETDATA_IPV4_TCPPACKETS_VISIBLETOTAL="0"      # packets/s
+
+# chart: ipv4.tcpsock (name: ipv4.tcpsock)
+NETDATA_IPV4_TCPSOCK_CURRESTAB="2"      # active connections
+NETDATA_IPV4_TCPSOCK_VISIBLETOTAL="2"      # active connections
+
+# chart: users.cpu_user (name: users.cpu_user)
+NETDATA_USERS_CPU_USER_UBUNTU="0"      # cpu time %
+NETDATA_USERS_CPU_USER_POSTGRES="0"      # cpu time %
+NETDATA_USERS_CPU_USER_IRODS="0"      # cpu time %
+NETDATA_USERS_CPU_USER_ROOT="0"      # cpu time %
+NETDATA_USERS_CPU_USER_NETDATA="0"      # cpu time %
+NETDATA_USERS_CPU_USER_VISIBLETOTAL="0"      # cpu time %
+
+# chart: users.processes (name: users.processes)
+NETDATA_USERS_PROCESSES_UBUNTU="1"      # processes
+NETDATA_USERS_PROCESSES_POSTGRES="6"      # processes
+NETDATA_USERS_PROCESSES_IRODS="2"      # processes
+NETDATA_USERS_PROCESSES_ROOT="77"      # processes
+NETDATA_USERS_PROCESSES_NETDATA="1"      # processes
+NETDATA_USERS_PROCESSES_VISIBLETOTAL="87"      # processes
+
+# chart: users.threads (name: users.threads)
+NETDATA_USERS_THREADS_UBUNTU="1"      # threads
+NETDATA_USERS_THREADS_POSTGRES="6"      # threads
+NETDATA_USERS_THREADS_IRODS="12"      # threads
+NETDATA_USERS_THREADS_ROOT="92"      # threads
+NETDATA_USERS_THREADS_NETDATA="1"      # threads
+NETDATA_USERS_THREADS_VISIBLETOTAL="112"      # threads
+
+# chart: users.vmem (name: users.vmem)
+NETDATA_USERS_VMEM_UBUNTU="21"      # MB
+NETDATA_USERS_VMEM_POSTGRES="1305"      # MB
+NETDATA_USERS_VMEM_IRODS="989"      # MB
+NETDATA_USERS_VMEM_ROOT="932"      # MB
+NETDATA_USERS_VMEM_NETDATA="2"      # MB
+NETDATA_USERS_VMEM_VISIBLETOTAL="3249"      # MB
+
+# chart: ipv4.icmpmsg (name: ipv4.icmpmsg)
+NETDATA_IPV4_ICMPMSG_INTYPE0="0"      # packets/s
+NETDATA_IPV4_ICMPMSG_OUTTYPE0="-0"      # packets/s
+NETDATA_IPV4_ICMPMSG_INTYPE3="0"      # packets/s
+NETDATA_IPV4_ICMPMSG_OUTTYPE3="-0"      # packets/s
+NETDATA_IPV4_ICMPMSG_INTYPE5="0"      # packets/s
+NETDATA_IPV4_ICMPMSG_OUTTYPE5="-0"      # packets/s
+NETDATA_IPV4_ICMPMSG_INTYPE8="0"      # packets/s
+NETDATA_IPV4_ICMPMSG_OUTTYPE8="-0"      # packets/s
+NETDATA_IPV4_ICMPMSG_INTYPE9="0"      # packets/s
+NETDATA_IPV4_ICMPMSG_OUTTYPE9="-0"      # packets/s
+NETDATA_IPV4_ICMPMSG_INTYPE10="0"      # packets/s
+NETDATA_IPV4_ICMPMSG_OUTTYPE10="-0"      # packets/s
+NETDATA_IPV4_ICMPMSG_INTYPE11="0"      # packets/s
+NETDATA_IPV4_ICMPMSG_OUTTYPE11="-0"      # packets/s
+NETDATA_IPV4_ICMPMSG_INTYPE12="0"      # packets/s
+NETDATA_IPV4_ICMPMSG_OUTTYPE12="-0"      # packets/s
+NETDATA_IPV4_ICMPMSG_INTYPE13="0"      # packets/s
+NETDATA_IPV4_ICMPMSG_OUTTYPE13="-0"      # packets/s
+NETDATA_IPV4_ICMPMSG_INTYPE14="0"      # packets/s
+NETDATA_IPV4_ICMPMSG_OUTTYPE14="-0"      # packets/s
+NETDATA_IPV4_ICMPMSG_VISIBLETOTAL="0"      # packets/s
+
+# chart: ipv4.icmp_errors (name: ipv4.icmp_errors)
+NETDATA_IPV4_ICMP_ERRORS_INERRORS="0"      # packets/s
+NETDATA_IPV4_ICMP_ERRORS_OUTERRORS="-0"      # packets/s
+NETDATA_IPV4_ICMP_ERRORS_INCSUMERRORS="0"      # packets/s
+NETDATA_IPV4_ICMP_ERRORS_VISIBLETOTAL="0"      # packets/s
+
+# chart: users.mem (name: users.mem)
+NETDATA_USERS_MEM_UBUNTU="2"      # MB
+NETDATA_USERS_MEM_POSTGRES="9"      # MB
+NETDATA_USERS_MEM_IRODS="93"      # MB
+NETDATA_USERS_MEM_ROOT="42"      # MB
+NETDATA_USERS_MEM_NETDATA="0"      # MB
+NETDATA_USERS_MEM_VISIBLETOTAL="146"      # MB
+
+# chart: ipv4.icmp (name: ipv4.icmp)
+NETDATA_IPV4_ICMP_INMSGS="0"      # packets/s
+NETDATA_IPV4_ICMP_OUTMSGS="-0"      # packets/s
+NETDATA_IPV4_ICMP_VISIBLETOTAL="0"      # packets/s
+
+# chart: users.cpu (name: users.cpu)
+NETDATA_USERS_CPU_UBUNTU="0"      # cpu time %
+NETDATA_USERS_CPU_POSTGRES="0"      # cpu time %
+NETDATA_USERS_CPU_IRODS="0"      # cpu time %
+NETDATA_USERS_CPU_ROOT="0"      # cpu time %
+NETDATA_USERS_CPU_NETDATA="0"      # cpu time %
+NETDATA_USERS_CPU_VISIBLETOTAL="0"      # cpu time %
+
+# chart: ipv4.errors (name: ipv4.errors)
+NETDATA_IPV4_ERRORS_INDISCARDS="0"      # packets/s
+NETDATA_IPV4_ERRORS_OUTDISCARDS="-0"      # packets/s
+NETDATA_IPV4_ERRORS_INHDRERRORS="0"      # packets/s
+NETDATA_IPV4_ERRORS_OUTNOROUTES="-0"      # packets/s
+NETDATA_IPV4_ERRORS_INADDRERRORS="0"      # packets/s
+NETDATA_IPV4_ERRORS_INUNKNOWNPROTOS="0"      # packets/s
+NETDATA_IPV4_ERRORS_VISIBLETOTAL="0"      # packets/s
+
+# chart: ipv4.fragsin (name: ipv4.fragsin)
+NETDATA_IPV4_FRAGSIN_REASMOKS="0"      # packets/s
+NETDATA_IPV4_FRAGSIN_REASMFAILS="-0"      # packets/s
+NETDATA_IPV4_FRAGSIN_REASMREQDS="0"      # packets/s
+NETDATA_IPV4_FRAGSIN_VISIBLETOTAL="0"      # packets/s
+
+# chart: ipv4.fragsout (name: ipv4.fragsout)
+NETDATA_IPV4_FRAGSOUT_FRAGOKS="0"      # packets/s
+NETDATA_IPV4_FRAGSOUT_FRAGFAILS="-0"      # packets/s
+NETDATA_IPV4_FRAGSOUT_FRAGCREATES="0"      # packets/s
+NETDATA_IPV4_FRAGSOUT_VISIBLETOTAL="0"      # packets/s
+
+# chart: apps.pipes (name: apps.pipes)
+NETDATA_APPS_PIPES_NETDATA="2"      # open pipes
+NETDATA_APPS_PIPES_APPS_PLUGIN="1"      # open pipes
+NETDATA_APPS_PIPES_PYTHON_D_PLUGIN="0"      # open pipes
+NETDATA_APPS_PIPES_TC_QOS_HELPER="1"      # open pipes
+NETDATA_APPS_PIPES_SQL="6"      # open pipes
+NETDATA_APPS_PIPES_LOGS="0"      # open pipes
+NETDATA_APPS_PIPES_SSH="1"      # open pipes
+NETDATA_APPS_PIPES_DHCP="0"      # open pipes
+NETDATA_APPS_PIPES_CRON="0"      # open pipes
+NETDATA_APPS_PIPES_KSMD="0"      # open pipes
+NETDATA_APPS_PIPES_SYSTEM="0"      # open pipes
+NETDATA_APPS_PIPES_KERNEL="0"      # open pipes
+NETDATA_APPS_PIPES_OTHER="4"      # open pipes
+NETDATA_APPS_PIPES_VISIBLETOTAL="15"      # open pipes
+
+# chart: ipv4.packets (name: ipv4.packets)
+NETDATA_IPV4_PACKETS_INRECEIVES="0"      # packets/s
+NETDATA_IPV4_PACKETS_OUTREQUESTS="-0"      # packets/s
+NETDATA_IPV4_PACKETS_FORWDATAGRAMS="0"      # packets/s
+NETDATA_IPV4_PACKETS_INDELIVERS="0"      # packets/s
+NETDATA_IPV4_PACKETS_VISIBLETOTAL="0"      # packets/s
+
+# chart: ipv4.ecnpkts (name: ipv4.ecnpkts)
+NETDATA_IPV4_ECNPKTS_INCEPKTS="0"      # packets/s
+NETDATA_IPV4_ECNPKTS_INNOECTPKTS="-0"      # packets/s
+NETDATA_IPV4_ECNPKTS_INECT0PKTS="0"      # packets/s
+NETDATA_IPV4_ECNPKTS_INECT1PKTS="0"      # packets/s
+NETDATA_IPV4_ECNPKTS_VISIBLETOTAL="0"      # packets/s
+
+# chart: ipv4.inerrors (name: ipv4.inerrors)
+NETDATA_IPV4_INERRORS_INNOROUTES="0"      # packets/s
+NETDATA_IPV4_INERRORS_INTRUNCATEDPKTS="0"      # packets/s
+NETDATA_IPV4_INERRORS_INCSUMERRORS="0"      # packets/s
+NETDATA_IPV4_INERRORS_VISIBLETOTAL="0"      # packets/s
+
+# chart: apps.sockets (name: apps.sockets)
+NETDATA_APPS_SOCKETS_NETDATA="5"      # open sockets
+NETDATA_APPS_SOCKETS_APPS_PLUGIN="0"      # open sockets
+NETDATA_APPS_SOCKETS_PYTHON_D_PLUGIN="0"      # open sockets
+NETDATA_APPS_SOCKETS_TC_QOS_HELPER="0"      # open sockets
+NETDATA_APPS_SOCKETS_SQL="3"      # open sockets
+NETDATA_APPS_SOCKETS_LOGS="1"      # open sockets
+NETDATA_APPS_SOCKETS_SSH="7"      # open sockets
+NETDATA_APPS_SOCKETS_DHCP="5"      # open sockets
+NETDATA_APPS_SOCKETS_CRON="0"      # open sockets
+NETDATA_APPS_SOCKETS_KSMD="0"      # open sockets
+NETDATA_APPS_SOCKETS_SYSTEM="16"      # open sockets
+NETDATA_APPS_SOCKETS_KERNEL="0"      # open sockets
+NETDATA_APPS_SOCKETS_OTHER="11"      # open sockets
+NETDATA_APPS_SOCKETS_VISIBLETOTAL="48"      # open sockets
+
+# chart: system.ipv4 (name: system.ipv4)
+NETDATA_SYSTEM_IPV4_INOCTETS="0"      # kilobits/s
+NETDATA_SYSTEM_IPV4_OUTOCTETS="-0"      # kilobits/s
+NETDATA_SYSTEM_IPV4_VISIBLETOTAL="0"      # kilobits/s
+
+# chart: ipv4.tcpsyncookies (name: ipv4.tcpsyncookies)
+NETDATA_IPV4_TCPSYNCOOKIES_SYNCOOKIESRECV="0"      # packets/s
+NETDATA_IPV4_TCPSYNCOOKIES_SYNCOOKIESSENT="-0"      # packets/s
+NETDATA_IPV4_TCPSYNCOOKIES_SYNCOOKIESFAILED="-0"      # packets/s
+NETDATA_IPV4_TCPSYNCOOKIES_VISIBLETOTAL="0"      # packets/s
+
+# chart: ipv4.tcpofo (name: ipv4.tcpofo)
+NETDATA_IPV4_TCPOFO_TCPOFOQUEUE="0"      # packets/s
+NETDATA_IPV4_TCPOFO_TCPOFODROP="-0"      # packets/s
+NETDATA_IPV4_TCPOFO_TCPOFOMERGE="0"      # packets/s
+NETDATA_IPV4_TCPOFO_OFOPRUNED="-0"      # packets/s
+NETDATA_IPV4_TCPOFO_VISIBLETOTAL="0"      # packets/s
+
+# chart: apps.files (name: apps.files)
+NETDATA_APPS_FILES_NETDATA="24"      # open files
+NETDATA_APPS_FILES_APPS_PLUGIN="7"      # open files
+NETDATA_APPS_FILES_PYTHON_D_PLUGIN="0"      # open files
+NETDATA_APPS_FILES_TC_QOS_HELPER="4"      # open files
+NETDATA_APPS_FILES_SQL="4"      # open files
+NETDATA_APPS_FILES_LOGS="3"      # open files
+NETDATA_APPS_FILES_SSH="4"      # open files
+NETDATA_APPS_FILES_DHCP="2"      # open files
+NETDATA_APPS_FILES_CRON="3"      # open files
+NETDATA_APPS_FILES_KSMD="0"      # open files
+NETDATA_APPS_FILES_SYSTEM="9"      # open files
+NETDATA_APPS_FILES_KERNEL="0"      # open files
+NETDATA_APPS_FILES_OTHER="14"      # open files
+NETDATA_APPS_FILES_VISIBLETOTAL="74"      # open files
+
+# chart: ipv4.tcpconnaborts (name: ipv4.tcpconnaborts)
+NETDATA_IPV4_TCPCONNABORTS_TCPABORTONDATA="0"      # connections/s
+NETDATA_IPV4_TCPCONNABORTS_TCPABORTONCLOSE="0"      # connections/s
+NETDATA_IPV4_TCPCONNABORTS_TCPABORTONMEMORY="0"      # connections/s
+NETDATA_IPV4_TCPCONNABORTS_TCPABORTONTIMEOUT="0"      # connections/s
+NETDATA_IPV4_TCPCONNABORTS_TCPABORTONLINGER="0"      # connections/s
+NETDATA_IPV4_TCPCONNABORTS_TCPABORTFAILED="-0"      # connections/s
+NETDATA_IPV4_TCPCONNABORTS_VISIBLETOTAL="0"      # connections/s
+
+# chart: net_packets.eth0 (name: net_packets.eth0)
+NETDATA_NET_PACKETS_ETH0_RECEIVED="0"      # packets/s
+NETDATA_NET_PACKETS_ETH0_SENT="-0"      # packets/s
+NETDATA_NET_PACKETS_ETH0_MULTICAST="0"      # packets/s
+NETDATA_NET_PACKETS_ETH0_VISIBLETOTAL="0"      # packets/s
+
+# chart: apps.lwrites (name: apps.lwrites)
+NETDATA_APPS_LWRITES_NETDATA="0"      # kilobytes/s
+NETDATA_APPS_LWRITES_APPS_PLUGIN="8"      # kilobytes/s
+NETDATA_APPS_LWRITES_PYTHON_D_PLUGIN="0"      # kilobytes/s
+NETDATA_APPS_LWRITES_TC_QOS_HELPER="0"      # kilobytes/s
+NETDATA_APPS_LWRITES_SQL="0"      # kilobytes/s
+NETDATA_APPS_LWRITES_LOGS="0"      # kilobytes/s
+NETDATA_APPS_LWRITES_SSH="0"      # kilobytes/s
+NETDATA_APPS_LWRITES_DHCP="0"      # kilobytes/s
+NETDATA_APPS_LWRITES_CRON="0"      # kilobytes/s
+NETDATA_APPS_LWRITES_KSMD="0"      # kilobytes/s
+NETDATA_APPS_LWRITES_SYSTEM="0"      # kilobytes/s
+NETDATA_APPS_LWRITES_KERNEL="0"      # kilobytes/s
+NETDATA_APPS_LWRITES_OTHER="0"      # kilobytes/s
+NETDATA_APPS_LWRITES_VISIBLETOTAL="8"      # kilobytes/s
+
+# chart: net.eth0 (name: net.eth0)
+NETDATA_NET_ETH0_RECEIVED="0"      # kilobits/s
+NETDATA_NET_ETH0_SENT="-0"      # kilobits/s
+NETDATA_NET_ETH0_VISIBLETOTAL="0"      # kilobits/s
+
+# chart: mem.slab (name: mem.slab)
+NETDATA_MEM_SLAB_RECLAIMABLE="152"      # MB
+NETDATA_MEM_SLAB_UNRECLAIMABLE="13"      # MB
+NETDATA_MEM_SLAB_VISIBLETOTAL="165"      # MB
+
+# chart: mem.kernel (name: mem.kernel)
+NETDATA_MEM_KERNEL_SLAB="165"      # MB
+NETDATA_MEM_KERNEL_KERNELSTACK="1"      # MB
+NETDATA_MEM_KERNEL_PAGETABLES="4"      # MB
+NETDATA_MEM_KERNEL_VMALLOCUSED="9"      # MB
+NETDATA_MEM_KERNEL_VISIBLETOTAL="179"      # MB
+
+# chart: apps.lreads (name: apps.lreads)
+NETDATA_APPS_LREADS_NETDATA="22"      # kilobytes/s
+NETDATA_APPS_LREADS_APPS_PLUGIN="30"      # kilobytes/s
+NETDATA_APPS_LREADS_PYTHON_D_PLUGIN="0"      # kilobytes/s
+NETDATA_APPS_LREADS_TC_QOS_HELPER="0"      # kilobytes/s
+NETDATA_APPS_LREADS_SQL="0"      # kilobytes/s
+NETDATA_APPS_LREADS_LOGS="0"      # kilobytes/s
+NETDATA_APPS_LREADS_SSH="0"      # kilobytes/s
+NETDATA_APPS_LREADS_DHCP="0"      # kilobytes/s
+NETDATA_APPS_LREADS_CRON="0"      # kilobytes/s
+NETDATA_APPS_LREADS_KSMD="0"      # kilobytes/s
+NETDATA_APPS_LREADS_SYSTEM="0"      # kilobytes/s
+NETDATA_APPS_LREADS_KERNEL="0"      # kilobytes/s
+NETDATA_APPS_LREADS_OTHER="0"      # kilobytes/s
+NETDATA_APPS_LREADS_VISIBLETOTAL="52"      # kilobytes/s
+
+# chart: mem.writeback (name: mem.writeback)
+NETDATA_MEM_WRITEBACK_DIRTY="0"      # MB
+NETDATA_MEM_WRITEBACK_WRITEBACK="0"      # MB
+NETDATA_MEM_WRITEBACK_FUSEWRITEBACK="0"      # MB
+NETDATA_MEM_WRITEBACK_NFSWRITEBACK="0"      # MB
+NETDATA_MEM_WRITEBACK_BOUNCE="0"      # MB
+NETDATA_MEM_WRITEBACK_VISIBLETOTAL="0"      # MB
+
+# chart: mem.committed (name: mem.committed)
+NETDATA_MEM_COMMITTED_COMMITTED_AS="402"      # MB
+NETDATA_MEM_COMMITTED_VISIBLETOTAL="402"      # MB
+
+# chart: system.ram (name: system.ram)
+NETDATA_SYSTEM_RAM_FREE="1936"      # MB
+NETDATA_SYSTEM_RAM_USED="341"      # MB
+NETDATA_SYSTEM_RAM_CACHED="1568"      # MB
+NETDATA_SYSTEM_RAM_BUFFERS="108"      # MB
+NETDATA_SYSTEM_RAM_VISIBLETOTAL="3953"      # MB
+
+# chart: apps.pwrites (name: apps.pwrites)
+NETDATA_APPS_PWRITES_NETDATA="0"      # kilobytes/s
+NETDATA_APPS_PWRITES_APPS_PLUGIN="0"      # kilobytes/s
+NETDATA_APPS_PWRITES_PYTHON_D_PLUGIN="0"      # kilobytes/s
+NETDATA_APPS_PWRITES_TC_QOS_HELPER="0"      # kilobytes/s
+NETDATA_APPS_PWRITES_SQL="0"      # kilobytes/s
+NETDATA_APPS_PWRITES_LOGS="0"      # kilobytes/s
+NETDATA_APPS_PWRITES_SSH="0"      # kilobytes/s
+NETDATA_APPS_PWRITES_DHCP="0"      # kilobytes/s
+NETDATA_APPS_PWRITES_CRON="0"      # kilobytes/s
+NETDATA_APPS_PWRITES_KSMD="0"      # kilobytes/s
+NETDATA_APPS_PWRITES_SYSTEM="0"      # kilobytes/s
+NETDATA_APPS_PWRITES_KERNEL="0"      # kilobytes/s
+NETDATA_APPS_PWRITES_OTHER="0"      # kilobytes/s
+NETDATA_APPS_PWRITES_VISIBLETOTAL="0"      # kilobytes/s
+
+# chart: mem.pgfaults (name: mem.pgfaults)
+NETDATA_MEM_PGFAULTS_MINOR="0"      # page faults/s
+NETDATA_MEM_PGFAULTS_MAJOR="-0"      # page faults/s
+NETDATA_MEM_PGFAULTS_VISIBLETOTAL="0"      # page faults/s
+
+# chart: system.io (name: system.io)
+NETDATA_SYSTEM_IO_IN="0"      # kilobytes/s
+NETDATA_SYSTEM_IO_OUT="-0"      # kilobytes/s
+NETDATA_SYSTEM_IO_VISIBLETOTAL="0"      # kilobytes/s
+
+# chart: apps.preads (name: apps.preads)
+NETDATA_APPS_PREADS_NETDATA="0"      # kilobytes/s
+NETDATA_APPS_PREADS_APPS_PLUGIN="0"      # kilobytes/s
+NETDATA_APPS_PREADS_PYTHON_D_PLUGIN="0"      # kilobytes/s
+NETDATA_APPS_PREADS_TC_QOS_HELPER="0"      # kilobytes/s
+NETDATA_APPS_PREADS_SQL="0"      # kilobytes/s
+NETDATA_APPS_PREADS_LOGS="0"      # kilobytes/s
+NETDATA_APPS_PREADS_SSH="0"      # kilobytes/s
+NETDATA_APPS_PREADS_DHCP="0"      # kilobytes/s
+NETDATA_APPS_PREADS_CRON="0"      # kilobytes/s
+NETDATA_APPS_PREADS_KSMD="0"      # kilobytes/s
+NETDATA_APPS_PREADS_SYSTEM="0"      # kilobytes/s
+NETDATA_APPS_PREADS_KERNEL="0"      # kilobytes/s
+NETDATA_APPS_PREADS_OTHER="0"      # kilobytes/s
+NETDATA_APPS_PREADS_VISIBLETOTAL="0"      # kilobytes/s
+
+# chart: cpu.cpu1_softirqs (name: cpu.cpu1_softirqs)
+NETDATA_CPU_CPU1_SOFTIRQS_HI="0"      # softirqs/s
+NETDATA_CPU_CPU1_SOFTIRQS_TIMER="3"      # softirqs/s
+NETDATA_CPU_CPU1_SOFTIRQS_NET_TX="0"      # softirqs/s
+NETDATA_CPU_CPU1_SOFTIRQS_NET_RX="0"      # softirqs/s
+NETDATA_CPU_CPU1_SOFTIRQS_BLOCK="0"      # softirqs/s
+NETDATA_CPU_CPU1_SOFTIRQS_BLOCK_IOPOLL="0"      # softirqs/s
+NETDATA_CPU_CPU1_SOFTIRQS_TASKLET="0"      # softirqs/s
+NETDATA_CPU_CPU1_SOFTIRQS_SCHED="2"      # softirqs/s
+NETDATA_CPU_CPU1_SOFTIRQS_HRTIMER="0"      # softirqs/s
+NETDATA_CPU_CPU1_SOFTIRQS_RCU="1"      # softirqs/s
+NETDATA_CPU_CPU1_SOFTIRQS_VISIBLETOTAL="6"      # softirqs/s
+
+# chart: cpu.cpu0_softirqs (name: cpu.cpu0_softirqs)
+NETDATA_CPU_CPU0_SOFTIRQS_HI="0"      # softirqs/s
+NETDATA_CPU_CPU0_SOFTIRQS_TIMER="5"      # softirqs/s
+NETDATA_CPU_CPU0_SOFTIRQS_NET_TX="0"      # softirqs/s
+NETDATA_CPU_CPU0_SOFTIRQS_NET_RX="0"      # softirqs/s
+NETDATA_CPU_CPU0_SOFTIRQS_BLOCK="0"      # softirqs/s
+NETDATA_CPU_CPU0_SOFTIRQS_BLOCK_IOPOLL="0"      # softirqs/s
+NETDATA_CPU_CPU0_SOFTIRQS_TASKLET="0"      # softirqs/s
+NETDATA_CPU_CPU0_SOFTIRQS_SCHED="5"      # softirqs/s
+NETDATA_CPU_CPU0_SOFTIRQS_HRTIMER="0"      # softirqs/s
+NETDATA_CPU_CPU0_SOFTIRQS_RCU="4"      # softirqs/s
+NETDATA_CPU_CPU0_SOFTIRQS_VISIBLETOTAL="14"      # softirqs/s
+
+# chart: apps.minor_faults (name: apps.minor_faults)
+NETDATA_APPS_MINOR_FAULTS_NETDATA="0"      # page faults/s
+NETDATA_APPS_MINOR_FAULTS_APPS_PLUGIN="0"      # page faults/s
+NETDATA_APPS_MINOR_FAULTS_PYTHON_D_PLUGIN="0"      # page faults/s
+NETDATA_APPS_MINOR_FAULTS_TC_QOS_HELPER="0"      # page faults/s
+NETDATA_APPS_MINOR_FAULTS_SQL="0"      # page faults/s
+NETDATA_APPS_MINOR_FAULTS_LOGS="0"      # page faults/s
+NETDATA_APPS_MINOR_FAULTS_SSH="0"      # page faults/s
+NETDATA_APPS_MINOR_FAULTS_DHCP="0"      # page faults/s
+NETDATA_APPS_MINOR_FAULTS_CRON="0"      # page faults/s
+NETDATA_APPS_MINOR_FAULTS_KSMD="0"      # page faults/s
+NETDATA_APPS_MINOR_FAULTS_SYSTEM="0"      # page faults/s
+NETDATA_APPS_MINOR_FAULTS_KERNEL="0"      # page faults/s
+NETDATA_APPS_MINOR_FAULTS_OTHER="0"      # page faults/s
+NETDATA_APPS_MINOR_FAULTS_VISIBLETOTAL="0"      # page faults/s
+
+# chart: system.softirqs (name: system.softirqs)
+NETDATA_SYSTEM_SOFTIRQS_HI="0"      # softirqs/s
+NETDATA_SYSTEM_SOFTIRQS_TIMER="8"      # softirqs/s
+NETDATA_SYSTEM_SOFTIRQS_NET_TX="0"      # softirqs/s
+NETDATA_SYSTEM_SOFTIRQS_NET_RX="0"      # softirqs/s
+NETDATA_SYSTEM_SOFTIRQS_BLOCK="0"      # softirqs/s
+NETDATA_SYSTEM_SOFTIRQS_BLOCK_IOPOLL="0"      # softirqs/s
+NETDATA_SYSTEM_SOFTIRQS_TASKLET="0"      # softirqs/s
+NETDATA_SYSTEM_SOFTIRQS_SCHED="7"      # softirqs/s
+NETDATA_SYSTEM_SOFTIRQS_HRTIMER="0"      # softirqs/s
+NETDATA_SYSTEM_SOFTIRQS_RCU="5"      # softirqs/s
+NETDATA_SYSTEM_SOFTIRQS_VISIBLETOTAL="20"      # softirqs/s
+
+# chart: apps.major_faults (name: apps.major_faults)
+NETDATA_APPS_MAJOR_FAULTS_NETDATA="0"      # page faults/s
+NETDATA_APPS_MAJOR_FAULTS_APPS_PLUGIN="0"      # page faults/s
+NETDATA_APPS_MAJOR_FAULTS_PYTHON_D_PLUGIN="0"      # page faults/s
+NETDATA_APPS_MAJOR_FAULTS_TC_QOS_HELPER="0"      # page faults/s
+NETDATA_APPS_MAJOR_FAULTS_SQL="0"      # page faults/s
+NETDATA_APPS_MAJOR_FAULTS_LOGS="0"      # page faults/s
+NETDATA_APPS_MAJOR_FAULTS_SSH="0"      # page faults/s
+NETDATA_APPS_MAJOR_FAULTS_DHCP="0"      # page faults/s
+NETDATA_APPS_MAJOR_FAULTS_CRON="0"      # page faults/s
+NETDATA_APPS_MAJOR_FAULTS_KSMD="0"      # page faults/s
+NETDATA_APPS_MAJOR_FAULTS_SYSTEM="0"      # page faults/s
+NETDATA_APPS_MAJOR_FAULTS_KERNEL="0"      # page faults/s
+NETDATA_APPS_MAJOR_FAULTS_OTHER="0"      # page faults/s
+NETDATA_APPS_MAJOR_FAULTS_VISIBLETOTAL="0"      # page faults/s
+
+# chart: apps.cpu_system (name: apps.cpu_system)
+NETDATA_APPS_CPU_SYSTEM_NETDATA="0"      # cpu time %
+NETDATA_APPS_CPU_SYSTEM_APPS_PLUGIN="0"      # cpu time %
+NETDATA_APPS_CPU_SYSTEM_PYTHON_D_PLUGIN="0"      # cpu time %
+NETDATA_APPS_CPU_SYSTEM_TC_QOS_HELPER="0"      # cpu time %
+NETDATA_APPS_CPU_SYSTEM_SQL="0"      # cpu time %
+NETDATA_APPS_CPU_SYSTEM_LOGS="0"      # cpu time %
+NETDATA_APPS_CPU_SYSTEM_SSH="0"      # cpu time %
+NETDATA_APPS_CPU_SYSTEM_DHCP="0"      # cpu time %
+NETDATA_APPS_CPU_SYSTEM_CRON="0"      # cpu time %
+NETDATA_APPS_CPU_SYSTEM_KSMD="0"      # cpu time %
+NETDATA_APPS_CPU_SYSTEM_SYSTEM="0"      # cpu time %
+NETDATA_APPS_CPU_SYSTEM_KERNEL="0"      # cpu time %
+NETDATA_APPS_CPU_SYSTEM_OTHER="0"      # cpu time %
+NETDATA_APPS_CPU_SYSTEM_VISIBLETOTAL="0"      # cpu time %
+
+# chart: apps.cpu_user (name: apps.cpu_user)
+NETDATA_APPS_CPU_USER_NETDATA="0"      # cpu time %
+NETDATA_APPS_CPU_USER_APPS_PLUGIN="0"      # cpu time %
+NETDATA_APPS_CPU_USER_PYTHON_D_PLUGIN="0"      # cpu time %
+NETDATA_APPS_CPU_USER_TC_QOS_HELPER="0"      # cpu time %
+NETDATA_APPS_CPU_USER_SQL="0"      # cpu time %
+NETDATA_APPS_CPU_USER_LOGS="0"      # cpu time %
+NETDATA_APPS_CPU_USER_SSH="0"      # cpu time %
+NETDATA_APPS_CPU_USER_DHCP="0"      # cpu time %
+NETDATA_APPS_CPU_USER_CRON="0"      # cpu time %
+NETDATA_APPS_CPU_USER_KSMD="0"      # cpu time %
+NETDATA_APPS_CPU_USER_SYSTEM="0"      # cpu time %
+NETDATA_APPS_CPU_USER_KERNEL="0"      # cpu time %
+NETDATA_APPS_CPU_USER_OTHER="0"      # cpu time %
+NETDATA_APPS_CPU_USER_VISIBLETOTAL="0"      # cpu time %
+
+# chart: cpu.cpu1_interrupts (name: cpu.cpu1_interrupts)
+NETDATA_CPU_CPU1_INTERRUPTS_0="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_1="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_4="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_6="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_8="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_9="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_10="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_11="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_12="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_14="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_15="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_40="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_41="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_42="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_43="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_44="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_NMI="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_LOC="57"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_SPU="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_PMI="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_IWI="2"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_RTR="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_RES="3"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_CAL="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_TLB="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_TRM="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_THR="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_MCE="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_MCP="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_ERR="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_MIS="0"      # interrupts/s
+NETDATA_CPU_CPU1_INTERRUPTS_VISIBLETOTAL="62"      # interrupts/s
+
+# chart: apps.processes (name: apps.processes)
+NETDATA_APPS_PROCESSES_NETDATA="1"      # processes
+NETDATA_APPS_PROCESSES_APPS_PLUGIN="1"      # processes
+NETDATA_APPS_PROCESSES_PYTHON_D_PLUGIN="0"      # processes
+NETDATA_APPS_PROCESSES_TC_QOS_HELPER="1"      # processes
+NETDATA_APPS_PROCESSES_SQL="6"      # processes
+NETDATA_APPS_PROCESSES_LOGS="1"      # processes
+NETDATA_APPS_PROCESSES_SSH="4"      # processes
+NETDATA_APPS_PROCESSES_DHCP="1"      # processes
+NETDATA_APPS_PROCESSES_CRON="2"      # processes
+NETDATA_APPS_PROCESSES_KSMD="1"      # processes
+NETDATA_APPS_PROCESSES_SYSTEM="4"      # processes
+NETDATA_APPS_PROCESSES_KERNEL="51"      # processes
+NETDATA_APPS_PROCESSES_OTHER="14"      # processes
+NETDATA_APPS_PROCESSES_VISIBLETOTAL="87"      # processes
+
+# chart: apps.threads (name: apps.threads)
+NETDATA_APPS_THREADS_NETDATA="13"      # threads
+NETDATA_APPS_THREADS_APPS_PLUGIN="1"      # threads
+NETDATA_APPS_THREADS_PYTHON_D_PLUGIN="0"      # threads
+NETDATA_APPS_THREADS_TC_QOS_HELPER="1"      # threads
+NETDATA_APPS_THREADS_SQL="6"      # threads
+NETDATA_APPS_THREADS_LOGS="4"      # threads
+NETDATA_APPS_THREADS_SSH="4"      # threads
+NETDATA_APPS_THREADS_DHCP="1"      # threads
+NETDATA_APPS_THREADS_CRON="2"      # threads
+NETDATA_APPS_THREADS_KSMD="1"      # threads
+NETDATA_APPS_THREADS_SYSTEM="4"      # threads
+NETDATA_APPS_THREADS_KERNEL="51"      # threads
+NETDATA_APPS_THREADS_OTHER="24"      # threads
+NETDATA_APPS_THREADS_VISIBLETOTAL="112"      # threads
+
+# chart: cpu.cpu0_interrupts (name: cpu.cpu0_interrupts)
+NETDATA_CPU_CPU0_INTERRUPTS_0="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_1="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_4="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_6="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_8="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_9="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_10="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_11="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_12="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_14="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_15="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_40="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_41="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_42="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_43="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_44="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_NMI="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_LOC="9"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_SPU="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_PMI="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_IWI="2"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_RTR="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_RES="3"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_CAL="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_TLB="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_TRM="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_THR="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_MCE="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_MCP="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_ERR="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_MIS="0"      # interrupts/s
+NETDATA_CPU_CPU0_INTERRUPTS_VISIBLETOTAL="14"      # interrupts/s
+
+# chart: apps.vmem (name: apps.vmem)
+NETDATA_APPS_VMEM_NETDATA="24"      # MB
+NETDATA_APPS_VMEM_APPS_PLUGIN="1"      # MB
+NETDATA_APPS_VMEM_PYTHON_D_PLUGIN="0"      # MB
+NETDATA_APPS_VMEM_TC_QOS_HELPER="2"      # MB
+NETDATA_APPS_VMEM_SQL="1305"      # MB
+NETDATA_APPS_VMEM_LOGS="254"      # MB
+NETDATA_APPS_VMEM_SSH="287"      # MB
+NETDATA_APPS_VMEM_DHCP="10"      # MB
+NETDATA_APPS_VMEM_CRON="42"      # MB
+NETDATA_APPS_VMEM_KSMD="0"      # MB
+NETDATA_APPS_VMEM_SYSTEM="134"      # MB
+NETDATA_APPS_VMEM_KERNEL="0"      # MB
+NETDATA_APPS_VMEM_OTHER="1190"      # MB
+NETDATA_APPS_VMEM_VISIBLETOTAL="3249"      # MB
+
+# chart: apps.mem (name: apps.mem)
+NETDATA_APPS_MEM_NETDATA="21"      # MB
+NETDATA_APPS_MEM_APPS_PLUGIN="0"      # MB
+NETDATA_APPS_MEM_PYTHON_D_PLUGIN="0"      # MB
+NETDATA_APPS_MEM_TC_QOS_HELPER="0"      # MB
+NETDATA_APPS_MEM_SQL="9"      # MB
+NETDATA_APPS_MEM_LOGS="7"      # MB
+NETDATA_APPS_MEM_SSH="5"      # MB
+NETDATA_APPS_MEM_DHCP="2"      # MB
+NETDATA_APPS_MEM_CRON="0"      # MB
+NETDATA_APPS_MEM_KSMD="0"      # MB
+NETDATA_APPS_MEM_SYSTEM="2"      # MB
+NETDATA_APPS_MEM_KERNEL="0"      # MB
+NETDATA_APPS_MEM_OTHER="99"      # MB
+NETDATA_APPS_MEM_VISIBLETOTAL="145"      # MB
+
+# chart: system.interrupts (name: system.interrupts)
+NETDATA_SYSTEM_INTERRUPTS_0="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_1="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_4="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_6="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_8="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_9="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_10="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_11="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_12="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_14="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_15="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_40="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_41="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_42="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_43="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_44="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_NMI="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_LOC="67"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_SPU="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_PMI="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_IWI="4"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_RTR="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_RES="6"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_CAL="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_TLB="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_TRM="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_THR="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_MCE="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_MCP="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_ERR="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_MIS="0"      # interrupts/s
+NETDATA_SYSTEM_INTERRUPTS_VISIBLETOTAL="77"      # interrupts/s
+
+# chart: system.entropy (name: system.entropy)
+NETDATA_SYSTEM_ENTROPY_ENTROPY="169"      # entropy
+NETDATA_SYSTEM_ENTROPY_VISIBLETOTAL="169"      # entropy
+
+# chart: apps.cpu (name: apps.cpu)
+NETDATA_APPS_CPU_NETDATA="0"      # cpu time %
+NETDATA_APPS_CPU_APPS_PLUGIN="0"      # cpu time %
+NETDATA_APPS_CPU_PYTHON_D_PLUGIN="0"      # cpu time %
+NETDATA_APPS_CPU_TC_QOS_HELPER="0"      # cpu time %
+NETDATA_APPS_CPU_SQL="0"      # cpu time %
+NETDATA_APPS_CPU_LOGS="0"      # cpu time %
+NETDATA_APPS_CPU_SSH="0"      # cpu time %
+NETDATA_APPS_CPU_DHCP="0"      # cpu time %
+NETDATA_APPS_CPU_CRON="0"      # cpu time %
+NETDATA_APPS_CPU_KSMD="0"      # cpu time %
+NETDATA_APPS_CPU_SYSTEM="0"      # cpu time %
+NETDATA_APPS_CPU_KERNEL="0"      # cpu time %
+NETDATA_APPS_CPU_OTHER="0"      # cpu time %
+NETDATA_APPS_CPU_VISIBLETOTAL="0"      # cpu time %
+
+# chart: system.active_processes (name: system.active_processes)
+NETDATA_SYSTEM_ACTIVE_PROCESSES_ACTIVE="112"      # processes
+NETDATA_SYSTEM_ACTIVE_PROCESSES_VISIBLETOTAL="112"      # processes
+
+# chart: system.load (name: system.load)
+NETDATA_SYSTEM_LOAD_LOAD1="0"      # load
+NETDATA_SYSTEM_LOAD_LOAD5="0"      # load
+NETDATA_SYSTEM_LOAD_LOAD15="0"      # load
+NETDATA_SYSTEM_LOAD_VISIBLETOTAL="0"      # load
+
+# chart: netdata.apps_children_fix (name: netdata.apps_children_fix)
+NETDATA_NETDATA_APPS_CHILDREN_FIX_CUTIME="0"      # percentage
+NETDATA_NETDATA_APPS_CHILDREN_FIX_CSTIME="0"      # percentage
+NETDATA_NETDATA_APPS_CHILDREN_FIX_CGTIME="0"      # percentage
+NETDATA_NETDATA_APPS_CHILDREN_FIX_CMINFLT="100"      # percentage
+NETDATA_NETDATA_APPS_CHILDREN_FIX_CMAJFLT="100"      # percentage
+NETDATA_NETDATA_APPS_CHILDREN_FIX_VISIBLETOTAL="200"      # percentage
+
+# chart: system.uptime (name: system.uptime)
+NETDATA_SYSTEM_UPTIME_UPTIME="1287375"      # seconds
+NETDATA_SYSTEM_UPTIME_VISIBLETOTAL="1287375"      # seconds
+
+# chart: system.processes (name: system.processes)
+NETDATA_SYSTEM_PROCESSES_RUNNING="2"      # processes
+NETDATA_SYSTEM_PROCESSES_BLOCKED="0"      # processes
+NETDATA_SYSTEM_PROCESSES_VISIBLETOTAL="2"      # processes
+
+# chart: netdata.apps_fix (name: netdata.apps_fix)
+NETDATA_NETDATA_APPS_FIX_UTIME="0"      # percentage
+NETDATA_NETDATA_APPS_FIX_STIME="0"      # percentage
+NETDATA_NETDATA_APPS_FIX_GTIME="0"      # percentage
+NETDATA_NETDATA_APPS_FIX_MINFLT="100"      # percentage
+NETDATA_NETDATA_APPS_FIX_MAJFLT="100"      # percentage
+NETDATA_NETDATA_APPS_FIX_VISIBLETOTAL="200"      # percentage
+
+# chart: system.forks (name: system.forks)
+NETDATA_SYSTEM_FORKS_STARTED="0"      # processes/s
+NETDATA_SYSTEM_FORKS_VISIBLETOTAL="0"      # processes/s
+
+# chart: system.ctxt (name: system.ctxt)
+NETDATA_SYSTEM_CTXT_SWITCHES="153"      # context switches/s
+NETDATA_SYSTEM_CTXT_VISIBLETOTAL="153"      # context switches/s
+
+# chart: system.intr (name: system.intr)
+NETDATA_SYSTEM_INTR_INTERRUPTS="77"      # interrupts/s
+NETDATA_SYSTEM_INTR_VISIBLETOTAL="77"      # interrupts/s
+
+# chart: netdata.apps_sizes (name: netdata.apps_sizes)
+NETDATA_NETDATA_APPS_SIZES_CALLS="262"      # files/s
+NETDATA_NETDATA_APPS_SIZES_FILES="0"      # files/s
+NETDATA_NETDATA_APPS_SIZES_PIDS="87"      # files/s
+NETDATA_NETDATA_APPS_SIZES_FDS="127"      # files/s
+NETDATA_NETDATA_APPS_SIZES_TARGETS="248"      # files/s
+NETDATA_NETDATA_APPS_SIZES_NEW_PIDS="0"      # files/s
+NETDATA_NETDATA_APPS_SIZES_VISIBLETOTAL="724"      # files/s
+
+# chart: netdata.apps_cpu (name: netdata.apps_cpu)
+NETDATA_NETDATA_APPS_CPU_USER="1"      # milliseconds/s
+NETDATA_NETDATA_APPS_CPU_SYSTEM="1"      # milliseconds/s
+NETDATA_NETDATA_APPS_CPU_VISIBLETOTAL="2"      # milliseconds/s
+
+# chart: cpu.cpu1 (name: cpu.cpu1)
+NETDATA_CPU_CPU1_GUEST_NICE="0"      # percentage
+NETDATA_CPU_CPU1_GUEST="0"      # percentage
+NETDATA_CPU_CPU1_STEAL="0"      # percentage
+NETDATA_CPU_CPU1_SOFTIRQ="0"      # percentage
+NETDATA_CPU_CPU1_IRQ="0"      # percentage
+NETDATA_CPU_CPU1_USER="0"      # percentage
+NETDATA_CPU_CPU1_SYSTEM="0"      # percentage
+NETDATA_CPU_CPU1_NICE="0"      # percentage
+NETDATA_CPU_CPU1_IOWAIT="0"      # percentage
+NETDATA_CPU_CPU1_IDLE="100"      # percentage
+NETDATA_CPU_CPU1_VISIBLETOTAL="0"      # percentage
+
+# chart: cpu.cpu0 (name: cpu.cpu0)
+NETDATA_CPU_CPU0_GUEST_NICE="0"      # percentage
+NETDATA_CPU_CPU0_GUEST="0"      # percentage
+NETDATA_CPU_CPU0_STEAL="0"      # percentage
+NETDATA_CPU_CPU0_SOFTIRQ="0"      # percentage
+NETDATA_CPU_CPU0_IRQ="0"      # percentage
+NETDATA_CPU_CPU0_USER="0"      # percentage
+NETDATA_CPU_CPU0_SYSTEM="0"      # percentage
+NETDATA_CPU_CPU0_NICE="0"      # percentage
+NETDATA_CPU_CPU0_IOWAIT="0"      # percentage
+NETDATA_CPU_CPU0_IDLE="100"      # percentage
+NETDATA_CPU_CPU0_VISIBLETOTAL="0"      # percentage
+
+# chart: system.cpu (name: system.cpu)
+NETDATA_SYSTEM_CPU_GUEST_NICE="0"      # percentage
+NETDATA_SYSTEM_CPU_GUEST="0"      # percentage
+NETDATA_SYSTEM_CPU_STEAL="0"      # percentage
+NETDATA_SYSTEM_CPU_SOFTIRQ="0"      # percentage
+NETDATA_SYSTEM_CPU_IRQ="0"      # percentage
+NETDATA_SYSTEM_CPU_USER="0"      # percentage
+NETDATA_SYSTEM_CPU_SYSTEM="0"      # percentage
+NETDATA_SYSTEM_CPU_NICE="0"      # percentage
+NETDATA_SYSTEM_CPU_IOWAIT="0"      # percentage
+NETDATA_SYSTEM_CPU_IDLE="100"      # percentage
+NETDATA_SYSTEM_CPU_VISIBLETOTAL="0"      # percentage
+
+# chart: netdata.plugin_cgroups_cpu (name: netdata.plugin_cgroups_cpu)
+NETDATA_NETDATA_PLUGIN_CGROUPS_CPU_USER="0"      # milliseconds/s
+NETDATA_NETDATA_PLUGIN_CGROUPS_CPU_SYSTEM="0"      # milliseconds/s
+NETDATA_NETDATA_PLUGIN_CGROUPS_CPU_VISIBLETOTAL="0"      # milliseconds/s
+
+# chart: netdata.plugin_diskspace_dt (name: netdata.plugin_diskspace_dt)
+NETDATA_NETDATA_PLUGIN_DISKSPACE_DT_DURATION="0"      # milliseconds/run
+NETDATA_NETDATA_PLUGIN_DISKSPACE_DT_VISIBLETOTAL="0"      # milliseconds/run
+
+# chart: netdata.plugin_diskspace (name: netdata.plugin_diskspace)
+NETDATA_NETDATA_PLUGIN_DISKSPACE_USER="0"      # milliseconds/s
+NETDATA_NETDATA_PLUGIN_DISKSPACE_SYSTEM="0"      # milliseconds/s
+NETDATA_NETDATA_PLUGIN_DISKSPACE_VISIBLETOTAL="0"      # milliseconds/s
+
+# chart: disk_inodes._run_user (name: disk_inodes._run_user)
+NETDATA_DISK_INODES__RUN_USER_AVAIL="506011"      # Inodes
+NETDATA_DISK_INODES__RUN_USER_USED="2"      # Inodes
+NETDATA_DISK_INODES__RUN_USER_RESERVED_FOR_ROOT="0"      # Inodes
+NETDATA_DISK_INODES__RUN_USER_VISIBLETOTAL="506013"      # Inodes
+
+# chart: disk_space._run_user (name: disk_space._run_user)
+NETDATA_DISK_SPACE__RUN_USER_AVAIL="0"      # GB
+NETDATA_DISK_SPACE__RUN_USER_USED="0"      # GB
+NETDATA_DISK_SPACE__RUN_USER_RESERVED_FOR_ROOT="0"      # GB
+NETDATA_DISK_SPACE__RUN_USER_VISIBLETOTAL="0"      # GB
+
+# chart: disk_inodes._run_shm (name: disk_inodes._run_shm)
+NETDATA_DISK_INODES__RUN_SHM_AVAIL="506010"      # Inodes
+NETDATA_DISK_INODES__RUN_SHM_USED="3"      # Inodes
+NETDATA_DISK_INODES__RUN_SHM_RESERVED_FOR_ROOT="0"      # Inodes
+NETDATA_DISK_INODES__RUN_SHM_VISIBLETOTAL="506013"      # Inodes
+
+# chart: disk_space._run_shm (name: disk_space._run_shm)
+NETDATA_DISK_SPACE__RUN_SHM_AVAIL="2"      # GB
+NETDATA_DISK_SPACE__RUN_SHM_USED="0"      # GB
+NETDATA_DISK_SPACE__RUN_SHM_RESERVED_FOR_ROOT="0"      # GB
+NETDATA_DISK_SPACE__RUN_SHM_VISIBLETOTAL="2"      # GB
+
+# chart: disk_inodes._run_lock (name: disk_inodes._run_lock)
+NETDATA_DISK_INODES__RUN_LOCK_AVAIL="506012"      # Inodes
+NETDATA_DISK_INODES__RUN_LOCK_USED="1"      # Inodes
+NETDATA_DISK_INODES__RUN_LOCK_RESERVED_FOR_ROOT="0"      # Inodes
+NETDATA_DISK_INODES__RUN_LOCK_VISIBLETOTAL="506013"      # Inodes
+
+# chart: disk_space._run_lock (name: disk_space._run_lock)
+NETDATA_DISK_SPACE__RUN_LOCK_AVAIL="0"      # GB
+NETDATA_DISK_SPACE__RUN_LOCK_USED="0"      # GB
+NETDATA_DISK_SPACE__RUN_LOCK_RESERVED_FOR_ROOT="0"      # GB
+NETDATA_DISK_SPACE__RUN_LOCK_VISIBLETOTAL="0"      # GB
+
+# chart: disk_inodes._ (name: disk_inodes._)
+NETDATA_DISK_INODES___AVAIL="678810"      # Inodes
+NETDATA_DISK_INODES___USED="107622"      # Inodes
+NETDATA_DISK_INODES___RESERVED_FOR_ROOT="0"      # Inodes
+NETDATA_DISK_INODES___VISIBLETOTAL="786432"      # Inodes
+
+# chart: disk_space._ (name: disk_space._)
+NETDATA_DISK_SPACE___AVAIL="9"      # GB
+NETDATA_DISK_SPACE___USED="2"      # GB
+NETDATA_DISK_SPACE___RESERVED_FOR_ROOT="1"      # GB
+NETDATA_DISK_SPACE___VISIBLETOTAL="12"      # GB
+
+# chart: disk_inodes._run (name: disk_inodes._run)
+NETDATA_DISK_INODES__RUN_AVAIL="505704"      # Inodes
+NETDATA_DISK_INODES__RUN_USED="309"      # Inodes
+NETDATA_DISK_INODES__RUN_RESERVED_FOR_ROOT="0"      # Inodes
+NETDATA_DISK_INODES__RUN_VISIBLETOTAL="506013"      # Inodes
+
+# chart: disk_space._run (name: disk_space._run)
+NETDATA_DISK_SPACE__RUN_AVAIL="0"      # GB
+NETDATA_DISK_SPACE__RUN_USED="0"      # GB
+NETDATA_DISK_SPACE__RUN_RESERVED_FOR_ROOT="0"      # GB
+NETDATA_DISK_SPACE__RUN_VISIBLETOTAL="0"      # GB
+
+# chart: disk_inodes._dev (name: disk_inodes._dev)
+NETDATA_DISK_INODES__DEV_AVAIL="504389"      # Inodes
+NETDATA_DISK_INODES__DEV_USED="389"      # Inodes
+NETDATA_DISK_INODES__DEV_RESERVED_FOR_ROOT="0"      # Inodes
+NETDATA_DISK_INODES__DEV_VISIBLETOTAL="504778"      # Inodes
+
+# chart: disk_space._dev (name: disk_space._dev)
+NETDATA_DISK_SPACE__DEV_AVAIL="2"      # GB
+NETDATA_DISK_SPACE__DEV_USED="0"      # GB
+NETDATA_DISK_SPACE__DEV_RESERVED_FOR_ROOT="0"      # GB
+NETDATA_DISK_SPACE__DEV_VISIBLETOTAL="2"      # GB
+
+# chart: netdata.plugin_tc_time (name: netdata.plugin_tc_time)
+NETDATA_NETDATA_PLUGIN_TC_TIME_RUN_TIME="8"      # milliseconds/run
+NETDATA_NETDATA_PLUGIN_TC_TIME_VISIBLETOTAL="8"      # milliseconds/run
+
+# chart: netdata.plugin_tc_cpu (name: netdata.plugin_tc_cpu)
+NETDATA_NETDATA_PLUGIN_TC_CPU_USER="0"      # milliseconds/s
+NETDATA_NETDATA_PLUGIN_TC_CPU_SYSTEM="0"      # milliseconds/s
+NETDATA_NETDATA_PLUGIN_TC_CPU_VISIBLETOTAL="0"      # milliseconds/s
+
+# chart: netdata.private_charts (name: netdata.private_charts)
+NETDATA_NETDATA_PRIVATE_CHARTS_CHARTS="0"      # charts
+NETDATA_NETDATA_PRIVATE_CHARTS_VISIBLETOTAL="0"      # charts
+
+# chart: netdata.statsd_packets (name: netdata.statsd_packets)
+NETDATA_NETDATA_STATSD_PACKETS_TCP="0"      # packets/s
+NETDATA_NETDATA_STATSD_PACKETS_UDP="0"      # packets/s
+NETDATA_NETDATA_STATSD_PACKETS_VISIBLETOTAL="0"      # packets/s
+
+# chart: netdata.statsd_bytes (name: netdata.statsd_bytes)
+NETDATA_NETDATA_STATSD_BYTES_TCP="0"      # kbps
+NETDATA_NETDATA_STATSD_BYTES_UDP="0"      # kbps
+NETDATA_NETDATA_STATSD_BYTES_VISIBLETOTAL="0"      # kbps
+
+# chart: netdata.statsd_reads (name: netdata.statsd_reads)
+NETDATA_NETDATA_STATSD_READS_TCP="0"      # reads/s
+NETDATA_NETDATA_STATSD_READS_UDP="0"      # reads/s
+NETDATA_NETDATA_STATSD_READS_VISIBLETOTAL="0"      # reads/s
+
+# chart: netdata.statsd_events (name: netdata.statsd_events)
+NETDATA_NETDATA_STATSD_EVENTS_GAUGES="0"      # events/s
+NETDATA_NETDATA_STATSD_EVENTS_COUNTERS="0"      # events/s
+NETDATA_NETDATA_STATSD_EVENTS_TIMERS="0"      # events/s
+NETDATA_NETDATA_STATSD_EVENTS_METERS="0"      # events/s
+NETDATA_NETDATA_STATSD_EVENTS_HISTOGRAMS="0"      # events/s
+NETDATA_NETDATA_STATSD_EVENTS_SETS="0"      # events/s
+NETDATA_NETDATA_STATSD_EVENTS_UNKNOWN="0"      # events/s
+NETDATA_NETDATA_STATSD_EVENTS_ERRORS="0"      # events/s
+NETDATA_NETDATA_STATSD_EVENTS_VISIBLETOTAL="0"      # events/s
+
+# chart: netdata.statsd_metrics (name: netdata.statsd_metrics)
+NETDATA_NETDATA_STATSD_METRICS_GAUGES="0"      # metrics
+NETDATA_NETDATA_STATSD_METRICS_COUNTERS="0"      # metrics
+NETDATA_NETDATA_STATSD_METRICS_TIMERS="0"      # metrics
+NETDATA_NETDATA_STATSD_METRICS_METERS="0"      # metrics
+NETDATA_NETDATA_STATSD_METRICS_HISTOGRAMS="0"      # metrics
+NETDATA_NETDATA_STATSD_METRICS_SETS="0"      # metrics
+NETDATA_NETDATA_STATSD_METRICS_VISIBLETOTAL="0"      # metrics
+
+# chart: system.idlejitter (name: system.idlejitter)
+NETDATA_SYSTEM_IDLEJITTER_MIN="70"      # microseconds lost/s
+NETDATA_SYSTEM_IDLEJITTER_MAX="347"      # microseconds lost/s
+NETDATA_SYSTEM_IDLEJITTER_AVERAGE="111"      # microseconds lost/s
+NETDATA_SYSTEM_IDLEJITTER_VISIBLETOTAL="528"      # microseconds lost/s
+
+# NETDATA ALARMS RUNNING
+NETDATA_ALARM_IPV4_TCPHANDSHAKE_IPV4_TCPHANDSHAKE_LAST_COLLECTED_SECS_VALUE="0"      # seconds ago
+NETDATA_ALARM_IPV4_TCPHANDSHAKE_IPV4_TCPHANDSHAKE_LAST_COLLECTED_SECS_STATUS="CLEAR"
+NETDATA_ALARM_IPV4_TCPHANDSHAKE_1M_IPV4_TCP_RESETS_SENT_VALUE="0"      # tcp resets/s
+NETDATA_ALARM_IPV4_TCPHANDSHAKE_1M_IPV4_TCP_RESETS_SENT_STATUS="UNDEFINED"
+NETDATA_ALARM_IPV4_TCPHANDSHAKE_10S_IPV4_TCP_RESETS_SENT_VALUE="0"      # tcp resets/s
+NETDATA_ALARM_IPV4_TCPHANDSHAKE_10S_IPV4_TCP_RESETS_SENT_STATUS="CLEAR"
+NETDATA_ALARM_IPV4_TCPHANDSHAKE_1M_IPV4_TCP_RESETS_RECEIVED_VALUE="0"      # tcp resets/s
+NETDATA_ALARM_IPV4_TCPHANDSHAKE_1M_IPV4_TCP_RESETS_RECEIVED_STATUS="UNDEFINED"
+NETDATA_ALARM_IPV4_TCPHANDSHAKE_10S_IPV4_TCP_RESETS_RECEIVED_VALUE="0"      # tcp resets/s
+NETDATA_ALARM_IPV4_TCPHANDSHAKE_10S_IPV4_TCP_RESETS_RECEIVED_STATUS="CLEAR"
+NETDATA_ALARM_IPV4_UDPERRORS_IPV4_UDPERRORS_LAST_COLLECTED_SECS_VALUE="0"      # seconds ago
+NETDATA_ALARM_IPV4_UDPERRORS_IPV4_UDPERRORS_LAST_COLLECTED_SECS_STATUS="CLEAR"
+NETDATA_ALARM_IPV4_UDPERRORS_1M_IPV4_UDP_RECEIVE_BUFFER_ERRORS_VALUE="0"      # errors
+NETDATA_ALARM_IPV4_UDPERRORS_1M_IPV4_UDP_RECEIVE_BUFFER_ERRORS_STATUS="CLEAR"
+NETDATA_ALARM_IPV4_UDPERRORS_1M_IPV4_UDP_SEND_BUFFER_ERRORS_VALUE="0"      # errors
+NETDATA_ALARM_IPV4_UDPERRORS_1M_IPV4_UDP_SEND_BUFFER_ERRORS_STATUS="CLEAR"
+NETDATA_ALARM_SYSTEM_RAM_RAM_IN_USE_VALUE="9"      # %
+NETDATA_ALARM_SYSTEM_RAM_RAM_IN_USE_STATUS="CLEAR"
+NETDATA_ALARM_SYSTEM_SOFTNET_STAT_10MIN_NETDEV_BACKLOG_EXCEEDED_VALUE="0"      # packets
+NETDATA_ALARM_SYSTEM_SOFTNET_STAT_10MIN_NETDEV_BACKLOG_EXCEEDED_STATUS="CLEAR"
+NETDATA_ALARM_SYSTEM_SOFTNET_STAT_10MIN_NETDEV_BUDGET_RAN_OUTS_VALUE="0"      # events
+NETDATA_ALARM_SYSTEM_SOFTNET_STAT_10MIN_NETDEV_BUDGET_RAN_OUTS_STATUS="CLEAR"
+NETDATA_ALARM_SYSTEM_IPC_SEMAPHORES_SEMAPHORES_USED_VALUE="0"      # %
+NETDATA_ALARM_SYSTEM_IPC_SEMAPHORES_SEMAPHORES_USED_STATUS="CLEAR"
+NETDATA_ALARM_SYSTEM_IPC_SEMAPHORE_ARRAYS_SEMAPHORE_ARRAYS_USED_VALUE="6"      # %
+NETDATA_ALARM_SYSTEM_IPC_SEMAPHORE_ARRAYS_SEMAPHORE_ARRAYS_USED_STATUS="CLEAR"
+NETDATA_ALARM_SYSTEM_ENTROPY_LOWEST_ENTROPY_VALUE="129"      # entries
+NETDATA_ALARM_SYSTEM_ENTROPY_LOWEST_ENTROPY_STATUS="CLEAR"
+NETDATA_ALARM_DISK_SPACE__DEV_DISK_SPACE_USAGE_VALUE="0"      # %
+NETDATA_ALARM_DISK_SPACE__DEV_DISK_SPACE_USAGE_STATUS="CLEAR"
+NETDATA_ALARM_DISK_SPACE__DEV_DISK_FILL_RATE_VALUE="0"      # GB/hour
+NETDATA_ALARM_DISK_SPACE__DEV_DISK_FILL_RATE_STATUS="UNDEFINED"
+NETDATA_ALARM_DISK_SPACE__DEV_OUT_OF_DISK_SPACE_TIME_VALUE="10264866"      # hours
+NETDATA_ALARM_DISK_SPACE__DEV_OUT_OF_DISK_SPACE_TIME_STATUS="CLEAR"
+NETDATA_ALARM_DISK_INODES__DEV_DISK_INODE_USAGE_VALUE="0"      # %
+NETDATA_ALARM_DISK_INODES__DEV_DISK_INODE_USAGE_STATUS="CLEAR"
+NETDATA_ALARM_DISK_SPACE__RUN_DISK_SPACE_USAGE_VALUE="0"      # %
+NETDATA_ALARM_DISK_SPACE__RUN_DISK_SPACE_USAGE_STATUS="CLEAR"
+NETDATA_ALARM_DISK_SPACE__RUN_DISK_FILL_RATE_VALUE="0"      # GB/hour
+NETDATA_ALARM_DISK_SPACE__RUN_DISK_FILL_RATE_STATUS="UNDEFINED"
+NETDATA_ALARM_DISK_SPACE__RUN_OUT_OF_DISK_SPACE_TIME_VALUE="12834347"      # hours
+NETDATA_ALARM_DISK_SPACE__RUN_OUT_OF_DISK_SPACE_TIME_STATUS="CLEAR"
+NETDATA_ALARM_DISK_INODES__RUN_DISK_INODE_USAGE_VALUE="0"      # %
+NETDATA_ALARM_DISK_INODES__RUN_DISK_INODE_USAGE_STATUS="CLEAR"
+NETDATA_ALARM_DISK_SPACE___DISK_SPACE_USAGE_VALUE="18"      # %
+NETDATA_ALARM_DISK_SPACE___DISK_SPACE_USAGE_STATUS="CLEAR"
+NETDATA_ALARM_DISK_SPACE___DISK_FILL_RATE_VALUE="0"      # GB/hour
+NETDATA_ALARM_DISK_SPACE___DISK_FILL_RATE_STATUS="UNDEFINED"
+NETDATA_ALARM_DISK_SPACE___OUT_OF_DISK_SPACE_TIME_VALUE="151108"      # hours
+NETDATA_ALARM_DISK_SPACE___OUT_OF_DISK_SPACE_TIME_STATUS="CLEAR"
+NETDATA_ALARM_DISK_INODES___DISK_INODE_USAGE_VALUE="14"      # %
+NETDATA_ALARM_DISK_INODES___DISK_INODE_USAGE_STATUS="CLEAR"
+NETDATA_ALARM_DISK_SPACE__RUN_LOCK_DISK_SPACE_USAGE_VALUE="0"      # %
+NETDATA_ALARM_DISK_SPACE__RUN_LOCK_DISK_SPACE_USAGE_STATUS="CLEAR"
+NETDATA_ALARM_DISK_SPACE__RUN_LOCK_DISK_FILL_RATE_VALUE="-0"      # GB/hour
+NETDATA_ALARM_DISK_SPACE__RUN_LOCK_DISK_FILL_RATE_STATUS="UNDEFINED"
+NETDATA_ALARM_DISK_SPACE__RUN_LOCK_OUT_OF_DISK_SPACE_TIME_VALUE=""      # hours
+NETDATA_ALARM_DISK_SPACE__RUN_LOCK_OUT_OF_DISK_SPACE_TIME_STATUS="CLEAR"
+NETDATA_ALARM_DISK_INODES__RUN_LOCK_DISK_INODE_USAGE_VALUE="0"      # %
+NETDATA_ALARM_DISK_INODES__RUN_LOCK_DISK_INODE_USAGE_STATUS="CLEAR"
+NETDATA_ALARM_DISK_SPACE__RUN_SHM_DISK_SPACE_USAGE_VALUE="0"      # %
+NETDATA_ALARM_DISK_SPACE__RUN_SHM_DISK_SPACE_USAGE_STATUS="CLEAR"
+NETDATA_ALARM_DISK_SPACE__RUN_SHM_DISK_FILL_RATE_VALUE="0"      # GB/hour
+NETDATA_ALARM_DISK_SPACE__RUN_SHM_DISK_FILL_RATE_STATUS="UNDEFINED"
+NETDATA_ALARM_DISK_SPACE__RUN_SHM_OUT_OF_DISK_SPACE_TIME_VALUE="12205958"      # hours
+NETDATA_ALARM_DISK_SPACE__RUN_SHM_OUT_OF_DISK_SPACE_TIME_STATUS="CLEAR"
+NETDATA_ALARM_DISK_INODES__RUN_SHM_DISK_INODE_USAGE_VALUE="0"      # %
+NETDATA_ALARM_DISK_INODES__RUN_SHM_DISK_INODE_USAGE_STATUS="CLEAR"
+NETDATA_ALARM_DISK_SPACE__RUN_USER_DISK_SPACE_USAGE_VALUE="0"      # %
+NETDATA_ALARM_DISK_SPACE__RUN_USER_DISK_SPACE_USAGE_STATUS="CLEAR"
+NETDATA_ALARM_DISK_SPACE__RUN_USER_DISK_FILL_RATE_VALUE="-0"      # GB/hour
+NETDATA_ALARM_DISK_SPACE__RUN_USER_DISK_FILL_RATE_STATUS="UNDEFINED"
+NETDATA_ALARM_DISK_SPACE__RUN_USER_OUT_OF_DISK_SPACE_TIME_VALUE=""      # hours
+NETDATA_ALARM_DISK_SPACE__RUN_USER_OUT_OF_DISK_SPACE_TIME_STATUS="CLEAR"
+NETDATA_ALARM_DISK_INODES__RUN_USER_DISK_INODE_USAGE_VALUE="0"      # %
+NETDATA_ALARM_DISK_INODES__RUN_USER_DISK_INODE_USAGE_STATUS="CLEAR"
+NETDATA_ALARM_SYSTEM_CPU_10MIN_CPU_USAGE_VALUE="0"      # %
+NETDATA_ALARM_SYSTEM_CPU_10MIN_CPU_USAGE_STATUS="CLEAR"
+NETDATA_ALARM_SYSTEM_CPU_10MIN_CPU_IOWAIT_VALUE="0"      # %
+NETDATA_ALARM_SYSTEM_CPU_10MIN_CPU_IOWAIT_STATUS="CLEAR"
+NETDATA_ALARM_SYSTEM_CPU_20MIN_STEAL_CPU_VALUE="0"      # %
+NETDATA_ALARM_SYSTEM_CPU_20MIN_STEAL_CPU_STATUS="CLEAR"
+NETDATA_ALARM_NET_PACKETS_ETH0_INBOUND_PACKETS_DROPPED_RATIO_VALUE="0"      # %
+NETDATA_ALARM_NET_PACKETS_ETH0_INBOUND_PACKETS_DROPPED_RATIO_STATUS="CLEAR"
+NETDATA_ALARM_NET_PACKETS_ETH0_OUTBOUND_PACKETS_DROPPED_RATIO_VALUE="0"      # %
+NETDATA_ALARM_NET_PACKETS_ETH0_OUTBOUND_PACKETS_DROPPED_RATIO_STATUS="CLEAR"
+NETDATA_ALARM_NET_PACKETS_ETH0_1M_RECEIVED_PACKETS_RATE_VALUE="0"      # packets
+NETDATA_ALARM_NET_PACKETS_ETH0_1M_RECEIVED_PACKETS_RATE_STATUS="UNDEFINED"
+NETDATA_ALARM_NET_PACKETS_ETH0_10S_RECEIVED_PACKETS_STORM_VALUE="0"      # %
+NETDATA_ALARM_NET_PACKETS_ETH0_10S_RECEIVED_PACKETS_STORM_STATUS="CLEAR"
+NETDATA_ALARM_DISK_BACKLOG_VDA_10MIN_DISK_BACKLOG_VALUE="0"      # ms
+NETDATA_ALARM_DISK_BACKLOG_VDA_10MIN_DISK_BACKLOG_STATUS="CLEAR"
+NETDATA_ALARM_DISK_UTIL_VDA_10MIN_DISK_UTILIZATION_VALUE="0"      # %
+NETDATA_ALARM_DISK_UTIL_VDA_10MIN_DISK_UTILIZATION_STATUS="CLEAR"

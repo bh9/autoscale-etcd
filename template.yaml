@@ -76,7 +76,7 @@ parameters:
     default: NETDATA_SYSTEM_CPU_IDLE
   threshold:
     type: number
-    label: the scaledown threshold of the chosen metric (default is cpu_percent)
+    label: the scaledown threshold of the chosen metric (default is NETDATA_SYSTEM_CPU_IDLE)
     default: 10
   comparator:
     type: string
