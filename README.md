@@ -35,5 +35,9 @@ Other (optional) parameters:
 |etcdclientscheme |http    |The protocol used to serve client requests (Note: https uses auto-tls. Since VMs have low entropy, this step can take 5 minutes)
 |etcdpeerscheme |http      |The protocol used for peer-to-peer communications (Note: https uses auto-tls. Since VMs have low entropy, this step can take 5 minutes)
 |proxies        |0         |The number of proxies in front of the etcd cluster (use proxyconfig.sh to configure them to also act as e.g. a mongos)
+|downmetric     |NETDATA_SYSTEM_CPU_IDLE |the netdata metric to use for scaling down (e.g. `NETDATA_SYSTEM_CPU_IDLE` or `NETDATA_SYSTEM_LIAD_LOAD1` or `NETDATA_SYSTEM_IO_IN, see doc/all_metrics for more options). Currently, this is only as it would be returned, however, I plan to add rate of change
+|threshold      |10        |the scaledown threshold of the chosen metric (default is NETDATA_SYSTEM_CPU_IDLE)
+|comparator     |'<'       |the comparator between the metric and the threshold (options are '>' '<' '==' '<=' '>=')
+|upmetric       |cpu_util  |the heat metric to scale up for
 
 If metricsserver is None, the netdata security group is not required
