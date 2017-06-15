@@ -69,7 +69,7 @@ parameters:
     label: netdata server ip
     description: The ip of an openstack instance running netdata with an api key configured with the same value as its openstack id
     default: "None"
-  metric:
+  downmetric:
     type: string
     label: the netdata metric to use for scaling down
     description: the netdata metric to use for scaling down (e.g. `NETDATA_SYSTEM_CPU_IDLE` or `NETDATA_SYSTEM_LIAD_LOAD1` or `NETDATA_SYSTEM_IO_IN, see doc/all_metrics for more options). Currently, this is only as it would be returned, however, I plan to add rate of change
@@ -131,6 +131,10 @@ parameters:
     type: number
     label: number of proxies
     default: 0
+  upmetric:
+    type: string
+    label: the heat metric to scale up for
+    default: cpu_util
 
 resources:
   asg:
@@ -160,7 +164,7 @@ resources:
                   $thisisatimeout:
                     get_param: scaledownperiod
                   $thisisametric:
-                    get_param: metric
+                    get_param: downmetric
                   $thisisacomparator:
                     get_param: comparator
                   $thisisathreshold:
@@ -279,7 +283,7 @@ resources:
   cpu_alarm_high:
     type: OS::Ceilometer::Alarm
     properties:
-      meter_name: cpu_util
+      meter_name: { get_param: upmetric }
       statistic: avg
       period: 1200
       evaluation_periods: 1
