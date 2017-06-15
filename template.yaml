@@ -263,6 +263,19 @@ resources:
         - {get_attr: [scaleup_policy, alarm_url]}
       comparison_operator: gt 
 
+  machine_count_low:
+    type: OS::Ceilometer::Alarm
+    properties:
+      meter_name: cpu
+      statistic: count
+      period: 700
+      evaluation_periods: 1
+      threshold: {get_param: min_cluster }
+      query: [{'field':'resource_metadata.user_metadata.stack', 'value': {get_param: "OS::stack_id"}}]
+      alarm_actions:
+        - {get_attr: [scaleup_policy, alarm_url]}
+      comparison_operator: lt
+
 outputs:
   scale_up_url:
     description: >
