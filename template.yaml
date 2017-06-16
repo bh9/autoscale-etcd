@@ -313,6 +313,7 @@ resources:
   metrics_server:
     type: OS::Nova::Server
     properties:
+      name: metrics_server_netdata
       key_name: { get_param: key_name } #use a pre-registered key for access after creation
       image: { get_param: image }    #which image to use for the VM
       config_drive: true
