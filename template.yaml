@@ -24,12 +24,15 @@ parameters:
   OS_USERNAME:
     type: string
     label: Your username
+    hidden: true
   OS_PASSWORD:
     type: string
     label: Your password
+    hidden: true
   OS_TENANT_NAME:
     type: string
     label: Your tenant name
+    hidden: true
   OS_REGION:
     type: string
     label: Your region
