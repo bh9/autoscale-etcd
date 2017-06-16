@@ -67,11 +67,6 @@ parameters:
     type: string
     label: name of script
     description: The name the script should have on the instances
-  metricsserver:
-    type: string
-    label: netdata server ip
-    description: The ip of an openstack instance running netdata with an api key configured with the same value as its openstack id
-    default: "None"
   downmetric:
     type: string
     label: the netdata metric to use for scaling down
@@ -202,7 +197,7 @@ resources:
                 $thisisaregion: {get_param: OS_REGION}
                 $thisisacapacity: {get_param: capacity}
                 $thisisatimeout: {get_param: scaledownperiod}
-                $thisisametricserver: {get_param: metricsserver}
+                $thisisametricserver: { get_attr: [metrics_server, networks, private, 0] }
                 $thisisascriptname: {get_param: configscript}
                 $thisisaurl: {get_param: OS_AUTH_URL}
                 $thisisapeerport: {get_param: etcdpeerport}
@@ -268,7 +263,7 @@ resources:
                 $thisisatenantname: {get_param: OS_TENANT_NAME}
                 $thisisaregion: {get_param: OS_REGION}
             #$thisisatimeout: {get_param: scaledownperiod}
-                $thisisametricserver: {get_param: metricsserver}
+                $thisisametricserver: { get_attr: [metrics_server, networks, private, 0] }
             #$thisisascriptname: {get_param: configscript}
                 $thisisaurl: {get_param: OS_AUTH_URL}
                 $thisisapeerport: {get_param: etcdpeerport}
