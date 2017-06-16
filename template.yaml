@@ -210,6 +210,7 @@ resources:
                 $thisisaretrycount: {get_param: retries}
                 $thisisaclientscheme: {get_param: etcdclientscheme}
                 $thisisapeerscheme: {get_param: etcdpeerscheme}
+                $thisisaninstanceid: {get_param: "OS::stack_id"}
  
   proxy-group:
     type: OS::Heat::AutoScalingGroup
@@ -323,7 +324,7 @@ resources:
         str_replace:
           template: { get_file: netdata_central_setup.sh }
           params:
-            $thisisaninstanceid: {get_resource: metrics_server}
+            $thisisaninstanceid: {get_param: "OS::stack_id"}
 
 outputs:
   scale_up_url:
