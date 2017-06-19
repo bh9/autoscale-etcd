@@ -47,7 +47,7 @@ if [[ ! $AWS_DEFAULT_REGION ]]; then
     exit 1
 fi
 if [ $metrics_server != "None" ]; then
-    METRICS_ID=$(openstack server list | awk "/$metrics_server/"' {print $2}')
+    METRICS_ID=$thisisaninstanceid
     #apt-get install -y zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config curl
     git clone https://github.com/firehol/netdata.git --depth=1
     cd netdata
