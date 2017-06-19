@@ -24,7 +24,6 @@ Other (optional) parameters:
 |OS_REGION      |regionOne |the nova region it should be deployed to (delta only has regionOne)
 |capacity       |3         |The target capacity that the cluster should aim to be when load is low
 |scaledownperiod|200       |The minimum time between scale down operations
-|metricsserver  |"None"    |The IP address of the metrics server
 |etcdclientport |12379     |The tcp port which etcd uses to handle client requests
 |etcdpeerport   |12380     |The tcp port which etcd uses to communicate internally
 |retries        |10        |The number of attemtps to join the cluster before failure
@@ -39,5 +38,6 @@ Other (optional) parameters:
 |threshold      |10        |the scaledown threshold of the chosen metric (default is NETDATA_SYSTEM_CPU_IDLE)
 |comparator     |'<'       |the comparator between the metric and the threshold (options are '>' '<' '==' '<=' '>=')
 |upmetric       |cpu_util  |the heat metric to scale up for
+|metrics_server |0         |whether or not a metrics server should be deployed, 1 or 0
 
 If metricsserver is None, the netdata security group is not required
