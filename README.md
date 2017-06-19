@@ -40,4 +40,4 @@ Other (optional) parameters:
 |upmetric       |cpu_util  |the heat metric to scale up for
 |metrics_server |0         |whether or not a metrics server should be deployed, 1 or 0
 
-If metricsserver is None, the netdata security group is not required
+
