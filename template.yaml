@@ -271,7 +271,7 @@ resources:
                 $thisisatenantname: {get_param: OS_TENANT_NAME}
                 $thisisaregion: {get_param: OS_REGION}
             #$thisisatimeout: {get_param: scaledownperiod}
-                $thisisametricserver: { get_resource: metrics_ip.ip }
+                $thisisametricserver: { get_resource: metrics_ip }
             #$thisisascriptname: {get_param: configscript}
                 $thisisaurl: {get_param: OS_AUTH_URL}
                 $thisisapeerport: {get_param: etcdpeerport}
