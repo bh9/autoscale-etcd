@@ -205,7 +205,7 @@ resources:
                 $thisisaregion: {get_param: OS_REGION}
                 $thisisacapacity: {get_param: capacity}
                 $thisisatimeout: {get_param: scaledownperiod}
-                $thisisametricserver: { get_attr: [metrics_server, networks, private, 0] }
+                $thisisametricserver: { get_resource: metrics_ip }
                 $thisisascriptname: {get_param: configscript}
                 $thisisaurl: {get_param: OS_AUTH_URL}
                 $thisisapeerport: {get_param: etcdpeerport}
