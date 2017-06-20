@@ -11,7 +11,9 @@ done
 #apt-get update
 while [ $((y)) -gt 0 ]; do
   set +e
-  yum -y install curl etcd jq python-etcd python-openstackclient python-psutil python-pycurl zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config
+  yum -y install epel-release
+  yum -y install curl etcd jq python2-pip zlib-devel uuid-devel libmnl-devel gcc make git autoconf autogen automake pkg-config
+  pip install python-etcd python-openstackclient pycurl
   y=$?
   set -e
 done
