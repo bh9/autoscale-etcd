@@ -3,7 +3,7 @@ set -ex
 x=y=1
 while [ $((x)) -gt 0 ]; do
   set +e
-  yum update
+  yum -y update
   x=$?
   set -e
   echo updating
@@ -11,7 +11,7 @@ done
 #apt-get update
 while [ $((y)) -gt 0 ]; do
   set +e
-  yum install -y curl etcd jq python-etcd python-openstackclient python-psutil python-pycurl zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config
+  yum -y install curl etcd jq python-etcd python-openstackclient python-psutil python-pycurl zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config
   y=$?
   set -e
 done
