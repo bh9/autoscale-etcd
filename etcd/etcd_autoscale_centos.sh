@@ -12,7 +12,7 @@ done
 while [ $((y)) -gt 0 ]; do
   set +e
   yum -y install epel-release
-  yum -y install curl etcd jq python2-pip zlib-devel uuid-devel libmnl-devel gcc make git autoconf autogen automake pkg-config
+  yum -y install curl etcd jq python2-pip python-devel zlib-devel uuid-devel libmnl-devel gcc make git autoconf autogen automake pkg-config
   pip install python-etcd python-openstackclient pycurl
   y=$?
   set -e
