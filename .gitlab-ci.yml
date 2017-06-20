@@ -1,6 +1,6 @@
 variables:
  net_name: "gitlab-autoscale"
- image: "Ubuntu Xenial"
+ image: "Centos 7 (2016-09-06)"
  instance_type: "m1.small"
  key_name: "bh9_testing"
  sec_grps: 'cloudforms_ssh_in,internal_etcd,netdata,cockroachdb'
