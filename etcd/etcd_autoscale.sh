@@ -1,7 +1,11 @@
 #!/bin/bash
 set -ex
 x=y=1
-PLATFORM=$(lsb_release --release | sed -e 's/.*14.*/trusty/i' -e 's/.*7.*/centos/i' -e 's/.*16.*/xenial/i')
+if [ -f /etc/centos-release ]; then
+  PLATFORM=centos
+else
+  PLATFORM=$(lsb_release --release | sed -e 's/.*14.*/trusty/i' -e 's/.*16.*/xenial/i')
+fi
 case ${PLATFORM} in
   centos)
     while [ $((x)) -gt 0 ]; do
