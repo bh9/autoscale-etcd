@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ex
 x=y=1
-PLATFORM=$(python -mplatform | sed -e 's/.*trusty.*/trusty/i' -e 's/.*centos.*/centos/i' -e 's/.*xenial.*/xenial/i')
+PLATFORM=$(lsb_release --release | sed -e 's/.*14.*/trusty/i' -e 's/.*7.*/centos/i' -e 's/.*16.*/xenial/i')
 case ${PLATFORM} in
   centos)
     while [ $((x)) -gt 0 ]; do
