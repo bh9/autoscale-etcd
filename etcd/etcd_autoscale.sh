@@ -1,22 +1,45 @@
 #!/bin/bash
 set -ex
 x=y=1
-while [ $((x)) -gt 0 ]; do
-  set +e
-  yum -y update
-  x=$?
-  set -e
-  echo updating
-done
-#apt-get update
-while [ $((y)) -gt 0 ]; do
-  set +e
-  yum -y install epel-release
-  yum -y install libcurl-devel curl etcd jq python2-pip python-devel zlib-devel libuuid-devel libmnl-devel gcc make git autoconf autogen automake pkg-config urllib3 chardet
-  pip install --upgrade python-etcd python-openstackclient pycurl urllib3 chardet
-  y=$?
-  set -e
-done
+PLATFORM=$(python -mplatform | sed -e 's/.*trusty.*/trusty/i' -e 's/.*centos.*/centos/i' -e 's/.*xenial.*/xenial/i')
+case ${PLATFORM} in
+  centos)
+    while [ $((x)) -gt 0 ]; do
+      set +e
+      yum -y update
+      x=$?
+      set -e
+      echo updating
+    done
+    #apt-get update
+    while [ $((y)) -gt 0 ]; do
+      set +e
+      yum -y install epel-release
+      yum -y install libcurl-devel curl etcd jq python2-pip python-devel zlib-devel libuuid-devel libmnl-devel gcc make git autoconf autogen automake pkg-config urllib3 chardet
+      pip install --upgrade python-etcd python-openstackclient pycurl urllib3 chardet
+      y=$?
+      set -e
+    done
+  ;;
+  xenial)
+    DEBIAN_FRONTEND=noninteractive
+    x=y=1
+    while [ $((x)) -gt 0 ]; do
+      set +e
+      apt-get update
+      x=$?
+      set -e
+      echo updating
+    done
+    #apt-get update
+    while [ $((y)) -gt 0 ]; do
+      set +e
+      apt-get install -y curl etcd jq python-etcd python-openstackclient python-psutil python-pycurl zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config
+      y=$?
+      set -e
+    done
+  ;;
+esac
 curl -L https://github.com/coreos/etcd/releases/download/v3.1.8/etcd-v3.1.8-linux-amd64.tar.gz > etcd.tar.gz
 tar xvf etcd.tar.gz
 systemctl stop etcd
@@ -102,7 +125,7 @@ fi
 x=1
 while [ $((x)) -gt 0 ]; do
   set +e
-  mv /home/centos/suicide.service /etc/systemd/system/suicide.service
+  mv /home/etcd/suicide.service /etc/systemd/system/suicide.service
   x=$?
   set -e
   echo moving suicide.service
@@ -111,7 +134,7 @@ done
 x=1
 while [ $((x)) -gt 0 ]; do
   set +e
-  mv /home/centos/etcd2.service /etc/systemd/system/etcd2.service
+  mv /home/etcd/etcd2.service /etc/systemd/system/etcd2.service
   x=$?
   set -e
   echo moving etcd2.service
@@ -120,7 +143,7 @@ done
 x=1
 while [ $((x)) -gt 0 ]; do
   set +e
-  mv /home/centos/cleanup.sh /var/lib/etcd/cleanup.sh
+  mv /home/etcd/cleanup.sh /var/lib/etcd/cleanup.sh
   x=$?
   set -e
   echo moving cleanup.sh
@@ -379,7 +402,7 @@ fi
 x=1
 while [ $((x)) -gt 0 ]; do
   set +e
-  mv /home/centos/locking.py /var/lib/etcd/locking.py
+  mv /home/etcd/locking.py /var/lib/etcd/locking.py
   x=$?
   set -e
   echo moving locking.py
@@ -408,7 +431,7 @@ EOF
 x=1
 while [ $((x)) -gt 0 ]; do
   set +e
-  mv /home/centos/configscript.sh /var/lib/etcd/$scriptname
+  mv /home/etcd/configscript.sh /var/lib/etcd/$scriptname
   x=$?
   set -e
   echo moving $scriptname

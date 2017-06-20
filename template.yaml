@@ -162,7 +162,7 @@ resources:
           security_groups: {get_param: sec_grps}
           metadata: {"metering.stack": {get_param: "OS::stack_id"}}
           personality:
-            /home/centos/locking.py: 
+            /home/etcd/locking.py: 
               str_replace:
                 template:
                   get_file: etcd/etcd_locking.py
@@ -179,11 +179,11 @@ resources:
                     get_param: etcdclientport
                   $thisisanattemptperiod:
                     get_param: lockattemptperiod
-            /home/centos/suicide.service: 
+            /home/etcd/suicide.service: 
               get_file: etcd/etcd_suicide.service
-            /home/centos/etcd2.service: 
+            /home/etcd/etcd2.service: 
               get_file: etcd/etcd_etcd2.service
-            /home/centos/configscript.sh: 
+            /home/etcd/configscript.sh: 
               str_replace:
                 template:
                   get_file: configscript.sh
@@ -192,12 +192,12 @@ resources:
                     get_param: etcdclientport
                   $thisisaclientscheme:
                     get_param: etcdclientscheme  
-            /home/centos/cleanup.sh:
+            /home/etcd/cleanup.sh:
               get_file: cleanupscript.sh
           user_data_format: RAW
           user_data: 
             str_replace:
-              template: { get_file: etcd/etcd_autoscale_centos.sh }
+              template: { get_file: etcd/etcd_autoscale.sh }
               params:
                 $thisisausername: {get_param: OS_USERNAME}
                 $thisisapassword: {get_param: OS_PASSWORD}
@@ -234,7 +234,7 @@ resources:
           security_groups: {get_param: sec_grps}
 #      metadata: {"metering.stack": {get_param: "OS::stack_name"}}
           personality:
-            /home/centos/etcd2.service:
+            /home/etcd/etcd2.service:
               get_file: etcd/etcd_etcd2.service
         #/home/ubuntu/locking.py:
          # str_replace:
@@ -251,7 +251,7 @@ resources:
         #  get_file: etcd/etcd_suicide.service
         #/home/ubuntu/etcd2.service:
          # get_file: etcd/etcd_etcd2.service
-            /home/centos/configscript.sh:
+            /home/etcd/configscript.sh:
               str_replace:
                 template:
                   get_file: proxyconfig.sh
