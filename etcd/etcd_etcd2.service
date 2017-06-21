@@ -14,7 +14,7 @@ User=etcd
 PermissionsStartOnly=true
 #ExecStart=/bin/sh -c "GOMAXPROCS=$(nproc) /usr/bin/etcd $DAEMON_ARGS"
 ExecStart=/usr/bin/etcd --config-file /etc/sysconfig/etcd-peers $DAEMON_ARGS
-Restart=always
+Restart=on-abnormal
 #RestartSec=10s
 LimitNOFILE=65536
 TimeoutSec=300
