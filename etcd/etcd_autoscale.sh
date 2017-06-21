@@ -356,7 +356,7 @@ EOF
     if [ $ETCD_CLIENT_SCHEME = "https" ]; then
         echo "        auto-tls=true" >> "$etcd_peers_file_path"
     fi
-    echo "    }" >> "$etcd_peers_file_path"
+    echo "    }," >> "$etcd_peers_file_path"
     echo "    peer-transport-security: {" >> "$etcd_peers_file_path"
     if [ $ETCD_PEER_SCHEME = "https" ]; then
         echo auto-tls=true >> "$etcd_peers_file_path"
@@ -396,8 +396,8 @@ EOF
     if [ $ETCD_CLIENT_SCHEME = "https" ]; then
         echo auto-tls=true >> "$etcd_peers_file_path"
     fi
-    echo "    }" >> "$etcd_peers_file_path"
-    echo peer-transport-security: >> "$etcd_peers_file_path"
+    echo "    }," >> "$etcd_peers_file_path"
+    echo "    peer-transport-security": >> "$etcd_peers_file_path"
     if [ $ETCD_PEER_SCHEME = "https" ]; then
         echo auto-tls=true >> "$etcd_peers_file_path"
     fi
