@@ -240,7 +240,7 @@ for url in $etcd_peer_urls; do
         *$ec2_instance_ip*) continue;;
     esac
 
-    etcd_members="$(curl $ETCD_CURLOPTS -f -s $url/v2/members)" || true
+    etcd_members="$(curl $ETCD_CURLOPTS -m 10 -f -s $url/v2/members)" || true
     echo "etcd_members=$etcd_members"
     if [ -n "$etcd_members" ]; then
         etcd_last_good_member_url="$url"
