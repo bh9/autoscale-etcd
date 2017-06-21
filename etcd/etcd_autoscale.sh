@@ -386,7 +386,7 @@ else
     cat > "$etcd_peers_file_path" <<EOF
 {
     initial-cluster-state: new,
-    name=: $ec2_instance_ip,
+    name: $ec2_instance_ip,
     data-dir: /var/lib/etcd/default,
     initial-advertise-peer-urls: "$etcd_peer_scheme://$ec2_instance_ip:$server_port",
     advertise-client-urls: "$etcd_client_scheme://$ec2_instance_ip:$client_port",
