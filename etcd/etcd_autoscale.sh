@@ -342,21 +342,28 @@ if [[ $etcd_existing_peer_urls && $etcd_existing_peer_names != *"$ec2_instance_i
     fi
 #write the config file for an existing etcd cluster
     cat > "$etcd_peers_file_path" <<EOF
-ETCD_INITIAL_CLUSTER_STATE=existing
-ETCD_NAME=$ec2_instance_ip
-ETCD_INITIAL_CLUSTER="$etcd_initial_cluster"
-ETCD_INITIAL_ADVERTISE_PEER_URLS="$etcd_peer_scheme://$ec2_instance_ip:$server_port"
-ETCD_ADVERTISE_CLIENT_URLS="$etcd_client_scheme://$ec2_instance_ip:$client_port"
-ETCD_PROXY=$etcd_proxy
-ETCD_LISTEN_PEER_URLS="$etcd_peer_scheme://$ec2_instance_ip:$server_port"
-ETCD_LISTEN_CLIENT_URLS="$etcd_client_scheme://$ec2_instance_ip:$client_port"
+{
+    initial-cluster-state: existing,
+    name: $ec2_instance_ip,
+    data-dir: /var/lib/etcd/default,
+    initial-cluster: "$etcd_initial_cluster",
+    initial-advertise-peer-urls: "$etcd_peer_scheme://$ec2_instance_ip:$server_port",
+    advertise-client-urls: "$etcd_client_scheme://$ec2_instance_ip:$client_port",
+    proxy: $etcd_proxy,
+    listen-peer-urls: "$etcd_peer_scheme://$ec2_instance_ip:$server_port",
+    listen-client-urls: "$etcd_client_scheme://$ec2_instance_ip:$client_port",
+    client-transport-security: {
 EOF
     if [ $ETCD_CLIENT_SCHEME = "https" ]; then
-        echo ETCD_AUTO_TLS=true >> "$etcd_peers_file_path"
+        echo "        auto-tls=true" >> "$etcd_peers_file_path"
     fi
+    echo "    }," >> "$etcd_peers_file_path"
+    echo "    peer-transport-security: {" >> "$etcd_peers_file_path"
     if [ $ETCD_PEER_SCHEME = "https" ]; then
-        echo ETCD_PEER_AUTO_TLS=true >> "$etcd_peers_file_path"
+        echo auto-tls=true >> "$etcd_peers_file_path"
     fi
+    echo "    }" >> "$etcd_peers_file_path"
+    echo "}" >> "$etcd_peers_file_path"
     rm -rf /var/lib/etcd/default/
 #    systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
     systemctl start etcd2
@@ -377,31 +384,34 @@ else
     fi
 #write the config file for a new etcd cluster
     cat > "$etcd_peers_file_path" <<EOF
-ETCD_INITIAL_CLUSTER_STATE=new
-ETCD_NAME=$ec2_instance_ip
-ETCD_INITIAL_ADVERTISE_PEER_URLS="$etcd_peer_scheme://$ec2_instance_ip:$server_port"
-ETCD_ADVERTISE_CLIENT_URLS="$etcd_client_scheme://$ec2_instance_ip:$client_port"
-ETCD_INITIAL_CLUSTER="$etcd_initial_cluster"
-ETCD_LISTEN_PEER_URLS="$etcd_peer_scheme://$ec2_instance_ip:$server_port"
-ETCD_LISTEN_CLIENT_URLS="$etcd_client_scheme://$ec2_instance_ip:$client_port"
+{
+    initial-cluster-state: new,
+    name: $ec2_instance_ip,
+    data-dir: /var/lib/etcd/default,
+    initial-advertise-peer-urls: "$etcd_peer_scheme://$ec2_instance_ip:$server_port",
+    advertise-client-urls: "$etcd_client_scheme://$ec2_instance_ip:$client_port",
+    initial-cluster: "$etcd_initial_cluster",
+    listen-peer-urls: "$etcd_peer_scheme://$ec2_instance_ip:$server_port",
+    listen-client-urls: "$etcd_client_scheme://$ec2_instance_ip:$client_port",
+    client-transport-security: {
 EOF
     if [ $ETCD_CLIENT_SCHEME = "https" ]; then
-        echo ETCD_AUTO_TLS=true >> "$etcd_peers_file_path"
+        echo auto-tls=true >> "$etcd_peers_file_path"
     fi
+    echo "    }," >> "$etcd_peers_file_path"
+    echo "    peer-transport-security: {" >> "$etcd_peers_file_path"
     if [ $ETCD_PEER_SCHEME = "https" ]; then
-        echo ETCD_PEER_AUTO_TLS=true >> "$etcd_peers_file_path"
+        echo auto-tls=true >> "$etcd_peers_file_path"
     fi
+    echo "    }" >> "$etcd_peers_file_path"
+    echo "}" >> "$etcd_peers_file_path"
     rm -rf /var/lib/etcd/default/
  #   systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
     systemctl stop etcd
     systemctl stop etcd2
-    set +e
     systemctl start etcd2
-    x=$?
-    set -e
-    if [ $((x)) -gt 0 ]; then
-        systemctl restart etcd2
-    fi
+    sleep 5
+    systemctl restart etcd2
 fi
 x=1
 while [ $((x)) -gt 0 ]; do

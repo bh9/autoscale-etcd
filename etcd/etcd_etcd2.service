@@ -9,7 +9,7 @@ Wants=network-online.target
 Environment=DAEMON_ARGS=
 Environment=ETCD_NAME=%H
 Environment=ETCD_DATA_DIR=/var/lib/etcd/default
-Type=notify
+Type=simple
 User=etcd
 PermissionsStartOnly=true
 #ExecStart=/bin/sh -c "GOMAXPROCS=$(nproc) /usr/bin/etcd $DAEMON_ARGS"
