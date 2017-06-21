@@ -421,7 +421,6 @@ while [ $((x)) -gt 0 ]; do
   sleep 5
 done
 IP=$(curl -s http://169.254.169.254/2009-04-04/meta-data/local-ipv4)
-systemctl restart etcd2 #restart etcd ass it tends to get into an odd state on first start
 MEMBER_ID=$(curl -s $etcd_client_scheme://$IP:$ETCD_CLIENT_PORT/v2/members | jq ".members[] | select(.name == \"$IP\") | .id" | sed "s/\"//g")
 ID=$(openstack server list | awk "/$IP/"' {print $2}')
 cat > /var/lib/etcd/suicide.sh <<EOF
