@@ -11,7 +11,7 @@ parameters:
     type: string
     label: Image Name
     description: Image to be used for compute instance
-    default: Ubuntu Xenial #Note: Currently only works on Xenial. Has dependencies on apt and systemd so CentOS and Trusty won't work
+    default: Ubuntu Xenial #Note: Currently only works on Xenial and Centos
   instance_type:
     type: string
     label: Instance Type
@@ -162,7 +162,7 @@ resources:
           security_groups: {get_param: sec_grps}
           metadata: {"metering.stack": {get_param: "OS::stack_id"}}
           personality:
-            /home/ubuntu/locking.py: 
+            /home/etcd/locking.py: 
               str_replace:
                 template:
                   get_file: etcd/etcd_locking.py
@@ -179,11 +179,11 @@ resources:
                     get_param: etcdclientport
                   $thisisanattemptperiod:
                     get_param: lockattemptperiod
-            /home/ubuntu/suicide.service: 
+            /home/etcd/suicide.service: 
               get_file: etcd/etcd_suicide.service
-            /home/ubuntu/etcd2.service: 
+            /home/etcd/etcd2.service: 
               get_file: etcd/etcd_etcd2.service
-            /home/ubuntu/configscript.sh: 
+            /home/etcd/configscript.sh: 
               str_replace:
                 template:
                   get_file: configscript.sh
@@ -192,7 +192,7 @@ resources:
                     get_param: etcdclientport
                   $thisisaclientscheme:
                     get_param: etcdclientscheme  
-            /home/ubuntu/cleanup.sh:
+            /home/etcd/cleanup.sh:
               get_file: cleanupscript.sh
           user_data_format: RAW
           user_data: 
@@ -234,7 +234,7 @@ resources:
           security_groups: {get_param: sec_grps}
 #      metadata: {"metering.stack": {get_param: "OS::stack_name"}}
           personality:
-            /home/ubuntu/etcd2.service:
+            /home/etcd/etcd2.service:
               get_file: etcd/etcd_etcd2.service
         #/home/ubuntu/locking.py:
          # str_replace:
@@ -251,7 +251,7 @@ resources:
         #  get_file: etcd/etcd_suicide.service
         #/home/ubuntu/etcd2.service:
          # get_file: etcd/etcd_etcd2.service
-            /home/ubuntu/configscript.sh:
+            /home/etcd/configscript.sh:
               str_replace:
                 template:
                   get_file: proxyconfig.sh

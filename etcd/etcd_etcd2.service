@@ -9,12 +9,11 @@ Wants=network-online.target
 Environment=DAEMON_ARGS=
 Environment=ETCD_NAME=%H
 Environment=ETCD_DATA_DIR=/var/lib/etcd/default
-EnvironmentFile=/etc/sysconfig/etcd-peers
-Type=notify
+Type=simple
 User=etcd
 PermissionsStartOnly=true
 #ExecStart=/bin/sh -c "GOMAXPROCS=$(nproc) /usr/bin/etcd $DAEMON_ARGS"
-ExecStart=/usr/bin/etcd $DAEMON_ARGS
+ExecStart=/usr/bin/etcd --config-file /etc/sysconfig/etcd-peers $DAEMON_ARGS
 Restart=on-abnormal
 #RestartSec=10s
 LimitNOFILE=65536

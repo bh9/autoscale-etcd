@@ -1,22 +1,50 @@
 #!/bin/bash
 set -ex
-DEBIAN_FRONTEND=noninteractive
 x=y=1
-while [ $((x)) -gt 0 ]; do
-  set +e
-  apt-get update
-  x=$?
-  set -e
-  echo updating
-done
-#apt-get update
-while [ $((y)) -gt 0 ]; do
-  set +e
-  apt-get install -y curl etcd jq python-etcd python-openstackclient python-psutil python-pycurl zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config
-  y=$?
-  set -e
-done
-curl -L https://github.com/coreos/etcd/releases/download/v3.1.8/etcd-v3.1.8-linux-amd64.tar.gz > etcd.tar.gz
+if [ -f /etc/centos-release ]; then
+  PLATFORM=centos
+else
+  PLATFORM=$(lsb_release --release | sed -e 's/.*14.*/trusty/i' -e 's/.*16.*/xenial/i')
+fi
+case ${PLATFORM} in
+  centos)
+    while [ $((x)) -gt 0 ]; do
+      set +e
+      yum -y update
+      x=$?
+      set -e
+      echo updating
+    done
+    #apt-get update
+    while [ $((y)) -gt 0 ]; do
+      set +e
+      yum -y install epel-release
+      yum -y install libcurl-devel curl etcd jq python2-pip python-devel zlib-devel libuuid-devel libmnl-devel gcc make git autoconf autogen automake pkg-config urllib3 chardet
+      pip install --upgrade python-etcd python-openstackclient pycurl urllib3 chardet
+      y=$?
+      set -e
+    done
+  ;;
+  xenial)
+    DEBIAN_FRONTEND=noninteractive
+    x=y=1
+    while [ $((x)) -gt 0 ]; do
+      set +e
+      apt-get update
+      x=$?
+      set -e
+      echo updating
+    done
+    #apt-get update
+    while [ $((y)) -gt 0 ]; do
+      set +e
+      apt-get install -y curl etcd jq python-etcd python-openstackclient python-psutil python-pycurl zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config
+      y=$?
+      set -e
+    done
+  ;;
+esac
+curl -Ls https://github.com/coreos/etcd/releases/download/v3.1.8/etcd-v3.1.8-linux-amd64.tar.gz > etcd.tar.gz
 tar xvf etcd.tar.gz
 systemctl stop etcd
 mv -f etcd-v3.1.8-linux-amd64/etcd /usr/bin/etcd
@@ -101,7 +129,7 @@ fi
 x=1
 while [ $((x)) -gt 0 ]; do
   set +e
-  mv /home/ubuntu/suicide.service /etc/systemd/system/suicide.service
+  mv /home/etcd/suicide.service /etc/systemd/system/suicide.service
   x=$?
   set -e
   echo moving suicide.service
@@ -110,7 +138,7 @@ done
 x=1
 while [ $((x)) -gt 0 ]; do
   set +e
-  mv /home/ubuntu/etcd2.service /etc/systemd/system/etcd2.service
+  mv /home/etcd/etcd2.service /etc/systemd/system/etcd2.service
   x=$?
   set -e
   echo moving etcd2.service
@@ -119,7 +147,7 @@ done
 x=1
 while [ $((x)) -gt 0 ]; do
   set +e
-  mv /home/ubuntu/cleanup.sh /var/lib/etcd/cleanup.sh
+  mv /home/etcd/cleanup.sh /var/lib/etcd/cleanup.sh
   x=$?
   set -e
   echo moving cleanup.sh
@@ -212,7 +240,7 @@ for url in $etcd_peer_urls; do
         *$ec2_instance_ip*) continue;;
     esac
 
-    etcd_members="$(curl $ETCD_CURLOPTS -f -s $url/v2/members)" || true
+    etcd_members="$(curl $ETCD_CURLOPTS -m 10 -f -s $url/v2/members)" || true
     echo "etcd_members=$etcd_members"
     if [ -n "$etcd_members" ]; then
         etcd_last_good_member_url="$url"
@@ -266,7 +294,7 @@ if [[ $etcd_existing_peer_urls && $etcd_existing_peer_names != *"$ec2_instance_i
     # If we're not a proxy we add ourselves as a member to the cluster
     if [[ ! $PROXY_ASG ]]; then
         peer_url="$etcd_peer_scheme://$ec2_instance_ip:$server_port"
-        curl $ETCD_CURLOPTS "$etcd_last_good_member_url/v2/keys/bh9testlock" -XPUT -d value=lock
+        curl -s $ETCD_CURLOPTS "$etcd_last_good_member_url/v2/keys/bh9testlock" -XPUT -d value=lock
         etcd_initial_cluster=$(curl $ETCD_CURLOPTS -s -f "$etcd_last_good_member_url/v2/members" | jq --raw-output '.[] | map(.name + "=" + .peerURLs[0]) | .[]' | xargs | sed 's/  */,/g')$(echo ",$ec2_instance_ip=$peer_url")
         echo "etcd_initial_cluster=$etcd_initial_cluster"
         if [[ ! $etcd_initial_cluster ]]; then
@@ -314,25 +342,32 @@ if [[ $etcd_existing_peer_urls && $etcd_existing_peer_names != *"$ec2_instance_i
     fi
 #write the config file for an existing etcd cluster
     cat > "$etcd_peers_file_path" <<EOF
-ETCD_INITIAL_CLUSTER_STATE=existing
-ETCD_NAME=$ec2_instance_ip
-ETCD_INITIAL_CLUSTER="$etcd_initial_cluster"
-ETCD_INITIAL_ADVERTISE_PEER_URLS="$etcd_peer_scheme://$ec2_instance_ip:$server_port"
-ETCD_ADVERTISE_CLIENT_URLS="$etcd_client_scheme://$ec2_instance_ip:$client_port"
-ETCD_PROXY=$etcd_proxy
-ETCD_LISTEN_PEER_URLS="$etcd_peer_scheme://$ec2_instance_ip:$server_port"
-ETCD_LISTEN_CLIENT_URLS="$etcd_client_scheme://$ec2_instance_ip:$client_port"
+{
+    initial-cluster-state: existing,
+    name: $ec2_instance_ip,
+    data-dir: /var/lib/etcd/default,
+    initial-cluster: "$etcd_initial_cluster",
+    initial-advertise-peer-urls: "$etcd_peer_scheme://$ec2_instance_ip:$server_port",
+    advertise-client-urls: "$etcd_client_scheme://$ec2_instance_ip:$client_port",
+    proxy: $etcd_proxy,
+    listen-peer-urls: "$etcd_peer_scheme://$ec2_instance_ip:$server_port",
+    listen-client-urls: "$etcd_client_scheme://$ec2_instance_ip:$client_port",
+    client-transport-security: {
 EOF
     if [ $ETCD_CLIENT_SCHEME = "https" ]; then
-        echo ETCD_AUTO_TLS=true >> "$etcd_peers_file_path"
+        echo "        auto-tls=true" >> "$etcd_peers_file_path"
     fi
+    echo "    }," >> "$etcd_peers_file_path"
+    echo "    peer-transport-security: {" >> "$etcd_peers_file_path"
     if [ $ETCD_PEER_SCHEME = "https" ]; then
-        echo ETCD_PEER_AUTO_TLS=true >> "$etcd_peers_file_path"
+        echo auto-tls=true >> "$etcd_peers_file_path"
     fi
+    echo "    }" >> "$etcd_peers_file_path"
+    echo "}" >> "$etcd_peers_file_path"
     rm -rf /var/lib/etcd/default/
 #    systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
     systemctl start etcd2
-    curl $ETCD_CURLOPTS "$etcd_last_good_member_url/v2/keys/bh9testlock" -XDELETE
+    curl -s $ETCD_CURLOPTS "$etcd_last_good_member_url/v2/keys/bh9testlock" -XDELETE
 # otherwise I was already listed as a member so assume that this is a new cluster
 else
     # create a new cluster
@@ -349,43 +384,44 @@ else
     fi
 #write the config file for a new etcd cluster
     cat > "$etcd_peers_file_path" <<EOF
-ETCD_INITIAL_CLUSTER_STATE=new
-ETCD_NAME=$ec2_instance_ip
-ETCD_INITIAL_ADVERTISE_PEER_URLS="$etcd_peer_scheme://$ec2_instance_ip:$server_port"
-ETCD_ADVERTISE_CLIENT_URLS="$etcd_client_scheme://$ec2_instance_ip:$client_port"
-ETCD_INITIAL_CLUSTER="$etcd_initial_cluster"
-ETCD_LISTEN_PEER_URLS="$etcd_peer_scheme://$ec2_instance_ip:$server_port"
-ETCD_LISTEN_CLIENT_URLS="$etcd_client_scheme://$ec2_instance_ip:$client_port"
+{
+    initial-cluster-state: new,
+    name: $ec2_instance_ip,
+    data-dir: /var/lib/etcd/default,
+    initial-advertise-peer-urls: "$etcd_peer_scheme://$ec2_instance_ip:$server_port",
+    advertise-client-urls: "$etcd_client_scheme://$ec2_instance_ip:$client_port",
+    initial-cluster: "$etcd_initial_cluster",
+    listen-peer-urls: "$etcd_peer_scheme://$ec2_instance_ip:$server_port",
+    listen-client-urls: "$etcd_client_scheme://$ec2_instance_ip:$client_port",
+    client-transport-security: {
 EOF
     if [ $ETCD_CLIENT_SCHEME = "https" ]; then
-        echo ETCD_AUTO_TLS=true >> "$etcd_peers_file_path"
+        echo auto-tls=true >> "$etcd_peers_file_path"
     fi
+    echo "    }," >> "$etcd_peers_file_path"
+    echo "    peer-transport-security: {" >> "$etcd_peers_file_path"
     if [ $ETCD_PEER_SCHEME = "https" ]; then
-        echo ETCD_PEER_AUTO_TLS=true >> "$etcd_peers_file_path"
+        echo auto-tls=true >> "$etcd_peers_file_path"
     fi
+    echo "    }" >> "$etcd_peers_file_path"
+    echo "}" >> "$etcd_peers_file_path"
     rm -rf /var/lib/etcd/default/
  #   systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
     systemctl stop etcd
     systemctl stop etcd2
-    set +e
     systemctl start etcd2
-    x=$?
-    set -e
-    if [ $((x)) -gt 0 ]; then
-        systemctl restart etcd2
-    fi
 fi
 x=1
 while [ $((x)) -gt 0 ]; do
   set +e
-  mv /home/ubuntu/locking.py /var/lib/etcd/locking.py
+  mv /home/etcd/locking.py /var/lib/etcd/locking.py
   x=$?
   set -e
   echo moving locking.py
   sleep 5
 done
-IP=$(curl http://169.254.169.254/2009-04-04/meta-data/local-ipv4)
-MEMBER_ID=$(curl $etcd_client_scheme://$IP:$ETCD_CLIENT_PORT/v2/members | jq ".members[] | select(.name == \"$IP\") | .id" | sed "s/\"//g")
+IP=$(curl -s http://169.254.169.254/2009-04-04/meta-data/local-ipv4)
+MEMBER_ID=$(curl -s $etcd_client_scheme://$IP:$ETCD_CLIENT_PORT/v2/members | jq ".members[] | select(.name == \"$IP\") | .id" | sed "s/\"//g")
 ID=$(openstack server list | awk "/$IP/"' {print $2}')
 cat > /var/lib/etcd/suicide.sh <<EOF
 #!/bin/bash
@@ -398,7 +434,7 @@ no_proxy=$no_proxy
 OS_AUTH_URL=$OS_AUTH_URL
 echo $IP
 echo $MEMBER_ID
-curl $etcd_client_scheme://$IP:$ETCD_CLIENT_PORT/v2/members/$MEMBER_ID -XDELETE | echo couldn't remove myself from the cluster, it'll happen eventually #remove yourself from the cluster before you delete yourself so the cluster responds instantly
+curl -s $etcd_client_scheme://$IP:$ETCD_CLIENT_PORT/v2/members/$MEMBER_ID -XDELETE | echo couldn't remove myself from the cluster, it'll happen eventually #remove yourself from the cluster before you delete yourself so the cluster responds instantly
 echo $ID
 /var/lib/etcd/cleanup.sh
 sleep 5
@@ -407,7 +443,7 @@ EOF
 x=1
 while [ $((x)) -gt 0 ]; do
   set +e
-  mv /home/ubuntu/configscript.sh /var/lib/etcd/$scriptname
+  mv /home/etcd/configscript.sh /var/lib/etcd/$scriptname
   x=$?
   set -e
   echo moving $scriptname
