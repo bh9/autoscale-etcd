@@ -61,7 +61,7 @@ while True:
           print "someone else is killing themselves so I'll try again later"
       else:
         print "active"
-    elif int(minimum) = members:
+    elif int(minimum) == members:
       print "only " + str(members) + " members, not deleting"
     else:
       print "fewer than " + minimum + " members, attempting creation"
