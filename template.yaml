@@ -352,6 +352,7 @@ resources:
     properties:
       network: { get_param: net_name }
       security_groups: ["cloudforms_ssh_in","netdata"]
+
 outputs:
   scale_up_url:
     description: >

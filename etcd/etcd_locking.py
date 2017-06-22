@@ -73,12 +73,9 @@ while True:
         print "EtcdException occured, I might not be a member of the cluster"
       print "lock play done"
       if makelock.is_acquired:
-        scalecurl = pycurl.Curl()
-        scalecurl.setopt(curl.URL, "$thisisascaleupurl")
-        scalecurl.setopt(scalecurl.POSTFIELDS, "")
-        scalecurl.perform()
-        scalecurl.close()
-        print "posted to scale up url, expecting instance shortly"
+        file1 = open("/var/log/etcd_make.log", "w")
+        subprocess.call(['/var/lib/etcd/recover.sh'], stdout = file1)
+        print "posting to scale up url, expecting instance shortly"
       else:
         print "didn't get the lock, someone else is bringing up an instance"
   except etcd.EtcdException:
