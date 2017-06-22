@@ -179,8 +179,6 @@ resources:
                     get_param: etcdclientport
                   $thisisanattemptperiod:
                     get_param: lockattemptperiod
-                  $thisisascaleupurl: 
-                    get_attr: [scaleup_policy, alarm_url]
             /home/etcd/suicide.service: 
               get_file: etcd/etcd_suicide.service
             /home/etcd/etcd2.service: 
