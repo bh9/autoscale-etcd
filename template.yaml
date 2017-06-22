@@ -194,6 +194,13 @@ resources:
                     get_param: etcdclientscheme  
             /home/etcd/cleanup.sh:
               get_file: cleanupscript.sh
+            /home/etcd/recover.sh:
+              str_replace:
+                template:
+                  get_file: etcd/etcd_healthcheck.sh
+                params:
+                  $thisisaclientport: {get_param: etcdclientport}
+                  $etcd_client_scheme: {get_param: etcdclientscheme}
           user_data_format: RAW
           user_data: 
             str_replace:
