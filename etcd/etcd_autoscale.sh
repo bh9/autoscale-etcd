@@ -38,7 +38,8 @@ case ${PLATFORM} in
     #apt-get update
     while [ $((y)) -gt 0 ]; do
       set +e
-      apt-get install -y curl etcd jq python-etcd python-openstackclient python-psutil python-pycurl zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config
+      apt-get install -y curl etcd jq python-etcd python-openstackclient python-pip python-psutil python-pycurl zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config
+      pip install python-openstackclient python-heatclient
       y=$?
       set -e
     done
