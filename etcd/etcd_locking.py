@@ -20,7 +20,8 @@ f = open('/etc/sysconfig/etcd-size', 'r')
 minimum = f.readline() #get the minimum cluster size
 f.close()
 client = etcd.Client(host=IP, port=$thisisaclientport) #set up the etcd client
-lock = etcd.Lock(client, 'bh9testlock') #establish the lock object
+lock = etcd.Lock(client, 'killlock') #establish the lock object
+makelock = etcd.Lock(client, 'makelock')
 time.sleep(20) #wait for other cluster members to recognise your existence
 while True:
   try:
@@ -60,8 +61,26 @@ while True:
           print "someone else is killing themselves so I'll try again later"
       else:
         print "active"
-    else:
+    elif int(minimum) = members:
       print "only " + str(members) + " members, not deleting"
+    else:
+      print "fewer than " + minimum + " members, attempting creation"
+      try:
+        print "lock acquiring"
+        makelock.acquire(blocking=False, lock_ttl=$thisisatimeout, timeout=5) #try to get the lock if you're idle
+        print "lock acquiring complete"
+      except etcd.EtcdException:
+        print "EtcdException occured, I might not be a member of the cluster"
+      print "lock play done"
+      if makelock.is_acquired:
+        scalecurl = pycurl.Curl()
+        scalecurl.setopt(curl.URL, "$thisisascaleupurl")
+        scalecurl.setopt(scalecurl.POSTFIELDS, "")
+        scalecurl.perform()
+        scalecurl.close()
+        print "posted to scale up url, expecting instance shortly"
+      else:
+        print "didn't get the lock, someone else is bringing up an instance"
   except etcd.EtcdException:
     print "EtcdException occured, but not in the locking section"
   time.sleep($thisisanattemptperiod) #wait 10 seconds then try again. Agressiveness will be tunable in future

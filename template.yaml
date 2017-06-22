@@ -179,6 +179,8 @@ resources:
                     get_param: etcdclientport
                   $thisisanattemptperiod:
                     get_param: lockattemptperiod
+                  $thisisascaleupurl: 
+                    get_attr: [scaleup_policy, alarm_url]
             /home/etcd/suicide.service: 
               get_file: etcd/etcd_suicide.service
             /home/etcd/etcd2.service: 
@@ -300,18 +302,18 @@ resources:
         - {get_attr: [scaleup_policy, alarm_url]}
       comparison_operator: gt 
 
-  machine_count_low:
-    type: OS::Ceilometer::Alarm
-    properties:
-      meter_name: cpu
-      statistic: count
-      period: 700
-      evaluation_periods: 1
-      threshold: {get_param: min_cluster }
-      query: [{'field':'resource_metadata.user_metadata.stack', 'value': {get_param: "OS::stack_id"}}]
-      alarm_actions:
-        - {get_attr: [scaleup_policy, alarm_url]}
-      comparison_operator: lt
+#  machine_count_low:
+#    type: OS::Ceilometer::Alarm
+ #   properties:
+  #    meter_name: cpu
+   #   statistic: count
+    #  period: 700
+     # evaluation_periods: 1
+      #threshold: {get_param: min_cluster }
+#      query: [{'field':'resource_metadata.user_metadata.stack', 'value': {get_param: "OS::stack_id"}}]
+ #     alarm_actions:
+  #      - {get_attr: [scaleup_policy, alarm_url]}
+   #   comparison_operator: lt
 
   metrics_group:
     type: OS::Heat::AutoScalingGroup
