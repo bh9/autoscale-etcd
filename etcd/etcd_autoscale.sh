@@ -130,15 +130,6 @@ fi
 x=1
 while [ $((x)) -gt 0 ]; do
   set +e
-  mv /home/etcd/suicide.service /etc/systemd/system/suicide.service
-  x=$?
-  set -e
-  echo moving suicide.service
-  sleep 5
-done
-x=1
-while [ $((x)) -gt 0 ]; do
-  set +e
   mv /home/etcd/etcd2.service /etc/systemd/system/etcd2.service
   x=$?
   set -e
@@ -443,6 +434,17 @@ openstack server delete --os-region $AWS_DEFAULT_REGION --os-username $OS_USERNA
 EOF
 openstack stack show -c outputs -f json $asg_name
 SCALE_URL=$(openstack stack show -c outputs -f json $asg_name | jq '.outputs | select(.[].output_key=="scale_up_url") | .[0].output_value')
+cat > /var/lib/etcd/recover.sh <<-EOF 
+#!/bin/bash 
+set -e 
+OS_REGION=$AWS_DEFAULT_REGION 
+OS_USERNAME=$OS_USERNAME 
+OS_PASSWORD=$OS_PASSWORD 
+OS_TENANT_NAME=$OS_TENANT_NAME 
+no_proxy=$no_proxy 
+OS_AUTH_URL=$OS_AUTH_URL 
+curl $SCALE_URL 
+EOF
 while [ $((x)) -gt 0 ]; do
   set +e
   mv /home/etcd/recover.sh /var/lib/etcd/recover.sh
@@ -451,7 +453,21 @@ while [ $((x)) -gt 0 ]; do
   echo moving $scriptname
   sleep 5
 done
-cat > /etc/systemd/system/recover.service <<-EOF
+cat > /etc/systemd/system/suicide.service <<-EOF
+[Unit]
+Description=the killer cleanup service
+After=etcd2.service
+Wants=network-online.target
+
+[Service]
+Type=idle
+User=root
+ExecStart=/usr/bin/python /var/lib/etcd/locking.py
+
+[Install]
+WantedBy=multi-user.target
+EOF
+cat > /etc/systemd/system/healthcheck.service <<-EOF
 [Unit]
 Description=the etcd recovery service
 After=etcd2.service
@@ -460,7 +476,7 @@ Wants=network-online.target
 [Service]
 Type=idle
 User=root
-ExecStart=/bin/bash /var/lib/etcd/recover.sh
+ExecStart=/bin/bash /var/lib/etcd/healthcheck.sh
 
 [Install]
 WantedBy=multi-user.target

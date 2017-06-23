@@ -179,8 +179,6 @@ resources:
                     get_param: etcdclientport
                   $thisisanattemptperiod:
                     get_param: lockattemptperiod
-            /home/etcd/suicide.service: 
-              get_file: etcd/etcd_suicide.service
             /home/etcd/etcd2.service: 
               get_file: etcd/etcd_etcd2.service
             /home/etcd/configscript.sh: 
@@ -194,7 +192,7 @@ resources:
                     get_param: etcdclientscheme  
             /home/etcd/cleanup.sh:
               get_file: cleanupscript.sh
-            /home/etcd/recover.sh:
+            /home/etcd/healthcheck.sh:
               str_replace:
                 template:
                   get_file: etcd/etcd_healthcheck.sh
