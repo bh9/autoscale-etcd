@@ -18,6 +18,7 @@
     "provisioners": [
         {
             "type": "shell",
+            "execute_command": "echo ubuntu | {{ .Vars }}  sudo -E -S bash '{{ .Path }}'",
             "inline": [
                 "apt-get update",
                 "apt-get install -y curl etcd jq python-etcd python-openstackclient python-pip python-psutil python-pycurl zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config",
