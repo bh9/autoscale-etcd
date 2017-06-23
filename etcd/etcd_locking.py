@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import etcd
 import time
-import psutil
 import pycurl
 import cStringIO
 import sys
