@@ -341,7 +341,7 @@ if [[ $etcd_existing_peer_urls && $etcd_existing_peer_names != *"$ec2_instance_i
     initial-cluster: "$etcd_initial_cluster",
     initial-advertise-peer-urls: "$etcd_peer_scheme://$ec2_instance_ip:$server_port",
     advertise-client-urls: "$etcd_client_scheme://$ec2_instance_ip:$client_port",
-    proxy: $etcd_proxy,
+    proxy: "$etcd_proxy",
     listen-peer-urls: "$etcd_peer_scheme://$ec2_instance_ip:$server_port",
     listen-client-urls: "$etcd_client_scheme://$ec2_instance_ip:$client_port",
     client-transport-security: {
