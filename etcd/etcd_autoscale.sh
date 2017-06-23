@@ -8,22 +8,22 @@ else
 fi
 case ${PLATFORM} in
   centos)
-    while [ $((x)) -gt 0 ]; do
-      set +e
-      yum -y update
-      x=$?
-      set -e
-      echo updating
-    done
-    #apt-get update
-    while [ $((y)) -gt 0 ]; do
-      set +e
-      yum -y install epel-release
-      yum -y install libcurl-devel curl etcd jq python2-pip python-devel zlib-devel libuuid-devel libmnl-devel gcc make git autoconf autogen automake pkg-config urllib3 chardet
-      pip install --upgrade python-etcd python-openstackclient python-heatclient pycurl urllib3 chardet
-      y=$?
-      set -e
-    done
+#    while [ $((x)) -gt 0 ]; do
+#      set +e
+#      yum -y update
+#      x=$?
+#      set -e
+#      echo updating
+#    done
+#    #apt-get update
+#    while [ $((y)) -gt 0 ]; do
+#      set +e
+#      yum -y install epel-release
+#      yum -y install libcurl-devel curl etcd jq python2-pip python-devel zlib-devel libuuid-devel libmnl-devel gcc make git autoconf autogen automake pkg-config urllib3 chardet
+#      pip install --upgrade python-etcd python-openstackclient python-heatclient pycurl urllib3 chardet
+#      y=$?
+#      set -e
+#    done
   ;;
   xenial)
 #    DEBIAN_FRONTEND=noninteractive
