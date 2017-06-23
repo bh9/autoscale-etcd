@@ -433,17 +433,17 @@ sleep 5
 openstack server delete --os-region $AWS_DEFAULT_REGION --os-username $OS_USERNAME --os-password $OS_PASSWORD --os-tenant-name $OS_TENANT_NAME --os-auth-url $OS_AUTH_URL $ID #delete yourself
 EOF
 openstack stack show -c outputs -f json $asg_name
-SCALE_URL=$(openstack stack show -c outputs -f json $asg_name | jq -r '.outputs | select(.[].output_key=="scale_up_url") | .[0].output_value')
+SCALE_URL=$(openstack stack show -c outputs -f json $asg_name | jq '.outputs | select(.[].output_key=="scale_up_url") | .[0].output_value')
 cat > /var/lib/etcd/recover.sh <<-EOF 
 #!/bin/bash 
 set -e 
-OS_REGION=$AWS_DEFAULT_REGION 
-OS_USERNAME=$OS_USERNAME 
-OS_PASSWORD=$OS_PASSWORD 
-OS_TENANT_NAME=$OS_TENANT_NAME 
-no_proxy=$no_proxy 
-OS_AUTH_URL=$OS_AUTH_URL 
-curl $SCALE_URL 
+export OS_REGION=$AWS_DEFAULT_REGION 
+export OS_USERNAME=$OS_USERNAME 
+export OS_PASSWORD=$OS_PASSWORD 
+export OS_TENANT_NAME=$OS_TENANT_NAME 
+export no_proxy=$no_proxy 
+export OS_AUTH_URL=$OS_AUTH_URL 
+curl -XPOST $SCALE_URL 
 EOF
 while [ $((x)) -gt 0 ]; do
   set +e
