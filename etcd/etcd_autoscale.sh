@@ -490,8 +490,18 @@ while [ $((x)) -gt 0 ]; do
   echo moving $scriptname
   sleep 5
 done
+x=1
+while [ $((x)) -gt 0 ]; do
+  set +e
+  mv /home/etcd/healthcheck.sh /var/lib/etcd/healthcheck.sh
+  x=$?
+  set -e
+  echo moving $scriptname
+  sleep 5
+done
+chmod 744 /var/lib/etcd/healthcheck.sh
 chmod 744 /var/lib/etcd/recover.sh
-systemctl start recover.service
+systemctl start healthcheck.service
 chmod 744 /var/lib/etcd/$scriptname
 /var/lib/etcd/$scriptname
 chmod 744 /var/lib/etcd/suicide.sh
