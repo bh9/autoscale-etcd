@@ -15,7 +15,7 @@ xenial_image_creation:
    - openstack-autoscale
    - packer-autoscale
   script:
-   - packer build xenial_template.json
+   - /software/packer-0.9.0/bin/packer build xenial_template.json
 openstack_stack_create:
   stage: deploy
   tags:
