@@ -20,7 +20,7 @@ case ${PLATFORM} in
       set +e
       yum -y install epel-release
       yum -y install libcurl-devel curl etcd jq python2-pip python-devel zlib-devel libuuid-devel libmnl-devel gcc make git autoconf autogen automake pkg-config urllib3 chardet
-      pip install --upgrade python-etcd python-openstackclient pycurl urllib3 chardet
+      pip install --upgrade python-etcd python-openstackclient python-heatclient pycurl urllib3 chardet
       y=$?
       set -e
     done
@@ -38,7 +38,8 @@ case ${PLATFORM} in
     #apt-get update
     while [ $((y)) -gt 0 ]; do
       set +e
-      apt-get install -y curl etcd jq python-etcd python-openstackclient python-psutil python-pycurl zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config
+      apt-get install -y curl etcd jq python-etcd python-openstackclient python-pip python-psutil python-pycurl zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config
+      pip install --upgrade python-openstackclient python-heatclient
       y=$?
       set -e
     done
@@ -126,15 +127,6 @@ if [ $metrics_server != "None" ]; then
 EOF
     systemctl restart netdata
 fi
-x=1
-while [ $((x)) -gt 0 ]; do
-  set +e
-  mv /home/etcd/suicide.service /etc/systemd/system/suicide.service
-  x=$?
-  set -e
-  echo moving suicide.service
-  sleep 5
-done
 x=1
 while [ $((x)) -gt 0 ]; do
   set +e
@@ -349,7 +341,7 @@ if [[ $etcd_existing_peer_urls && $etcd_existing_peer_names != *"$ec2_instance_i
     initial-cluster: "$etcd_initial_cluster",
     initial-advertise-peer-urls: "$etcd_peer_scheme://$ec2_instance_ip:$server_port",
     advertise-client-urls: "$etcd_client_scheme://$ec2_instance_ip:$client_port",
-    proxy: $etcd_proxy,
+    proxy: "$etcd_proxy",
     listen-peer-urls: "$etcd_peer_scheme://$ec2_instance_ip:$server_port",
     listen-client-urls: "$etcd_client_scheme://$ec2_instance_ip:$client_port",
     client-transport-security: {
@@ -440,6 +432,55 @@ echo $ID
 sleep 5
 openstack server delete --os-region $AWS_DEFAULT_REGION --os-username $OS_USERNAME --os-password $OS_PASSWORD --os-tenant-name $OS_TENANT_NAME --os-auth-url $OS_AUTH_URL $ID #delete yourself
 EOF
+openstack stack show -c outputs -f json $asg_name
+SCALE_URL=$(openstack stack show -c outputs -f json $asg_name | jq '.outputs | select(.[].output_key=="scale_up_url") | .[0].output_value')
+cat > /var/lib/etcd/recover.sh <<-EOF 
+#!/bin/bash 
+set -e 
+export OS_REGION=$AWS_DEFAULT_REGION 
+export OS_USERNAME=$OS_USERNAME 
+export OS_PASSWORD=$OS_PASSWORD 
+export OS_TENANT_NAME=$OS_TENANT_NAME 
+export no_proxy=$no_proxy 
+export OS_AUTH_URL=$OS_AUTH_URL 
+curl -XPOST $SCALE_URL 
+EOF
+while [ $((x)) -gt 0 ]; do
+  set +e
+  mv /home/etcd/recover.sh /var/lib/etcd/recover.sh
+  x=$?
+  set -e
+  echo moving $scriptname
+  sleep 5
+done
+cat > /etc/systemd/system/suicide.service <<-EOF
+[Unit]
+Description=the killer cleanup service
+After=etcd2.service
+Wants=network-online.target
+
+[Service]
+Type=idle
+User=root
+ExecStart=/usr/bin/python /var/lib/etcd/locking.py
+
+[Install]
+WantedBy=multi-user.target
+EOF
+cat > /etc/systemd/system/healthcheck.service <<-EOF
+[Unit]
+Description=the etcd recovery service
+After=etcd2.service
+Wants=network-online.target
+
+[Service]
+Type=idle
+User=root
+ExecStart=/bin/bash /var/lib/etcd/healthcheck.sh
+
+[Install]
+WantedBy=multi-user.target
+EOF
 x=1
 while [ $((x)) -gt 0 ]; do
   set +e
@@ -449,6 +490,18 @@ while [ $((x)) -gt 0 ]; do
   echo moving $scriptname
   sleep 5
 done
+x=1
+while [ $((x)) -gt 0 ]; do
+  set +e
+  mv /home/etcd/healthcheck.sh /var/lib/etcd/healthcheck.sh
+  x=$?
+  set -e
+  echo moving $scriptname
+  sleep 5
+done
+chmod 744 /var/lib/etcd/healthcheck.sh
+chmod 744 /var/lib/etcd/recover.sh
+systemctl start healthcheck.service
 chmod 744 /var/lib/etcd/$scriptname
 /var/lib/etcd/$scriptname
 chmod 744 /var/lib/etcd/suicide.sh

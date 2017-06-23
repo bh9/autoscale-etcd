@@ -108,7 +108,7 @@ parameters:
   scaleupcooldown:
     type: number
     label: the minimum time between scale up operations
-    default: 10
+    default: 240
   etcdclientscheme:
     type: string
     label: client protocol (http or https)
@@ -179,8 +179,6 @@ resources:
                     get_param: etcdclientport
                   $thisisanattemptperiod:
                     get_param: lockattemptperiod
-            /home/etcd/suicide.service: 
-              get_file: etcd/etcd_suicide.service
             /home/etcd/etcd2.service: 
               get_file: etcd/etcd_etcd2.service
             /home/etcd/configscript.sh: 
@@ -194,6 +192,14 @@ resources:
                     get_param: etcdclientscheme  
             /home/etcd/cleanup.sh:
               get_file: cleanupscript.sh
+            /home/etcd/healthcheck.sh:
+              str_replace:
+                template:
+                  get_file: etcd/etcd_healthcheck.sh
+                params:
+                  $thisisaclientport: {get_param: etcdclientport}
+                  $etcd_client_scheme: {get_param: etcdclientscheme}
+                  $thisisanattemptperiod: {get_param: lockattemptperiod}
           user_data_format: RAW
           user_data: 
             str_replace:
@@ -300,18 +306,18 @@ resources:
         - {get_attr: [scaleup_policy, alarm_url]}
       comparison_operator: gt 
 
-  machine_count_low:
-    type: OS::Ceilometer::Alarm
-    properties:
-      meter_name: cpu
-      statistic: count
-      period: 700
-      evaluation_periods: 1
-      threshold: {get_param: min_cluster }
-      query: [{'field':'resource_metadata.user_metadata.stack', 'value': {get_param: "OS::stack_id"}}]
-      alarm_actions:
-        - {get_attr: [scaleup_policy, alarm_url]}
-      comparison_operator: lt
+#  machine_count_low:
+#    type: OS::Ceilometer::Alarm
+ #   properties:
+  #    meter_name: cpu
+   #   statistic: count
+    #  period: 700
+     # evaluation_periods: 1
+      #threshold: {get_param: min_cluster }
+#      query: [{'field':'resource_metadata.user_metadata.stack', 'value': {get_param: "OS::stack_id"}}]
+ #     alarm_actions:
+  #      - {get_attr: [scaleup_policy, alarm_url]}
+   #   comparison_operator: lt
 
   metrics_group:
     type: OS::Heat::AutoScalingGroup
@@ -350,6 +356,7 @@ resources:
     properties:
       network: { get_param: net_name }
       security_groups: ["cloudforms_ssh_in","netdata"]
+
 outputs:
   scale_up_url:
     description: >
