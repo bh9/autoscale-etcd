@@ -26,34 +26,34 @@ case ${PLATFORM} in
     done
   ;;
   xenial)
-    DEBIAN_FRONTEND=noninteractive
-    x=y=1
-    while [ $((x)) -gt 0 ]; do
-      set +e
-      apt-get update
-      x=$?
-      set -e
-      echo updating
-    done
+#    DEBIAN_FRONTEND=noninteractive
+ #   x=y=1
+  #  while [ $((x)) -gt 0 ]; do
+   #   set +e
+    #  apt-get update
+     # x=$?
+      #set -e
+#      echo updating
+ #   done
     #apt-get update
-    while [ $((y)) -gt 0 ]; do
-      set +e
-      apt-get install -y curl etcd jq python-etcd python-openstackclient python-pip python-psutil python-pycurl zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config
-      pip install --upgrade python-openstackclient python-heatclient
-      y=$?
-      set -e
-    done
+  #  while [ $((y)) -gt 0 ]; do
+   #   set +e
+    #  apt-get install -y curl etcd jq python-etcd python-openstackclient python-pip python-psutil python-pycurl zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config
+     # pip install --upgrade python-openstackclient python-heatclient
+      #y=$?
+#      set -e
+ #   done
   ;;
 esac
-curl -Ls https://github.com/coreos/etcd/releases/download/v3.1.8/etcd-v3.1.8-linux-amd64.tar.gz > etcd.tar.gz
-tar xvf etcd.tar.gz
-systemctl stop etcd
-mv -f etcd-v3.1.8-linux-amd64/etcd /usr/bin/etcd
-if [ -d /etc/sysconfig/ ]; then
-    echo /etc/sysconfig exists, good
-else
-    mkdir /etc/sysconfig
-fi
+#curl -Ls https://github.com/coreos/etcd/releases/download/v3.1.8/etcd-v3.1.8-linux-amd64.tar.gz > etcd.tar.gz
+#tar xvf etcd.tar.gz
+#systemctl stop etcd
+#mv -f etcd-v3.1.8-linux-amd64/etcd /usr/bin/etcd
+#if [ -d /etc/sysconfig/ ]; then
+#    echo /etc/sysconfig exists, good
+#else
+#    mkdir /etc/sysconfig
+#fi
 scriptname=$thisisascriptname
 metrics_server=$thisisametricserver
 timeout=$thisisatimeout
@@ -78,10 +78,10 @@ fi
 if [ $metrics_server != "None" ]; then
     METRICS_ID=$thisisaninstanceid
     #apt-get install -y zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config curl
-    git clone https://github.com/firehol/netdata.git --depth=1
-    cd netdata
+#    git clone https://github.com/firehol/netdata.git --depth=1
+#    cd netdata
     # run script with root privileges to build, install, start netdata
-    ./netdata-installer.sh
+#    ./netdata-installer.sh
     cat > /etc/netdata/stream.conf <<EOF
 [stream]
     # Enable this on slaves, to have them send metrics.
