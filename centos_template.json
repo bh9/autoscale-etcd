@@ -1,0 +1,42 @@
+{
+    "builders": [
+        {
+            "flavor": "m1.small",
+            "floating_ip_pool": "nova",
+            "image_name": "Centos etcd",
+            "security_groups": "cloudforms_ssh_in",
+            "source_image": "7135fbce-49e1-4493-90cc-4ac8ad46e683",
+            "ssh_pty": true,
+            "ssh_username": "centos",
+            "type": "openstack",
+            "use_floating_ip": "true",
+            "ssh_timeout": "100s",
+            "networks": "ee765151-75c3-4aaa-9bd4-8962b1e3330c"
+        }
+    ],
+    "min_packer_version": "0.9.0",
+    "provisioners": [
+        {
+            "type": "shell",
+            "execute_command": "echo centos | {{ .Vars }}  sudo -E -S bash '{{ .Path }}'",
+            "inline": [
+                "yum -y update",
+                "yum -y install epel-release",
+                "yum -y install curl etcd jq python2-pip python-devel zlib-devel libcurl-devel libuuid-devel libmnl-devel gcc make git autoconf autogen automake pkg-config urllib3 chardet",
+                "pip install --upgrade python-etcd python-openstackclient python-heatclient urllib3 chardet",
+                "curl -Ls https://github.com/coreos/etcd/releases/download/v3.1.8/etcd-v3.1.8-linux-amd64.tar.gz > etcd.tar.gz",
+                "tar xvf etcd.tar.gz",
+                "systemctl stop etcd",
+                "mv -f etcd-v3.1.8-linux-amd64/etcd /usr/bin/etcd",
+                "if [ -d /etc/sysconfig/ ]; then",
+                "echo /etc/sysconfig exists, good",
+                "else",
+                "mkdir /etc/sysconfig",
+                "fi",
+                "git clone https://github.com/firehol/netdata.git --depth=1",
+                "cd netdata",
+                "./netdata-installer.sh"
+            ]
+        }
+    ]
+}

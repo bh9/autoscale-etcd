@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import etcd
 import time
-import psutil
 import pycurl
 import cStringIO
 import sys
@@ -23,6 +22,7 @@ client = etcd.Client(host=IP, port=$thisisaclientport) #set up the etcd client
 lock = etcd.Lock(client, 'killlock') #establish the lock object
 makelock = etcd.Lock(client, 'makelock')
 time.sleep(20) #wait for other cluster members to recognise your existence
+failcount = 0
 while True:
   try:
     stats = client.members #find the number of members and compare to the minimum
@@ -47,12 +47,21 @@ while True:
           print "lock acquiring"
           lock.acquire(blocking=False, lock_ttl=$thisisatimeout, timeout=5) #try to get the lock if you're idle
           print "lock acquiring complete"
+          if failcount > 0:
+            failcount -= 1
         except etcd.EtcdException:
           print "EtcdException occured, I might not be a member of the cluster"
+          failcount += 5
         print "lock play done"
         if lock.is_acquired:
           print "got it" #if the lock is acquired, announce that you will remove yourself
           print "killing myself shortly"
+          file1 = open("/var/log/etcd_kill.log", "w")
+          subprocess.call(['/var/lib/etcd/suicide.sh'], stdout = file1) #and then remove yourself
+          quit()
+        elif failcount > $thisisatolerance:
+          print "can't talk to cluster"
+          print "killing myself because communications have failed too frequently"
           file1 = open("/var/log/etcd_kill.log", "w")
           subprocess.call(['/var/lib/etcd/suicide.sh'], stdout = file1) #and then remove yourself
           quit()
@@ -80,5 +89,12 @@ while True:
         print "didn't get the lock, someone else is bringing up an instance"
   except etcd.EtcdException:
     print "EtcdException occured, but not in the locking section"
+    failcount += 5
+    if failcount > $thisisatolerance:
+      print "can't talk to cluster"
+      print "killing myself because communications have failed too frequently"
+      file1 = open("/var/log/etcd_kill.log", "w")
+      subprocess.call(['/var/lib/etcd/suicide.sh'], stdout = file1) #and then remove yourself
+      quit()
   time.sleep($thisisanattemptperiod) #wait 10 seconds then try again. Agressiveness will be tunable in future
 
