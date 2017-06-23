@@ -23,7 +23,7 @@
                 "yum -y update",
                 "yum -y install epel-release",
                 "yum -y install curl etcd jq python2-pip python-devel zlib-devel libcurl-devel libuuid-devel libmnl-devel gcc make git autoconf autogen automake pkg-config urllib3 chardet",
-                "pip install --upgrade python-etcd python-openstackclient python-heatclient pycurl urllib3 chardet",
+                "pip install --upgrade python-etcd python-openstackclient python-heatclient urllib3 chardet",
                 "curl -Ls https://github.com/coreos/etcd/releases/download/v3.1.8/etcd-v3.1.8-linux-amd64.tar.gz > etcd.tar.gz",
                 "tar xvf etcd.tar.gz",
                 "systemctl stop etcd",
