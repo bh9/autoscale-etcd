@@ -20,7 +20,7 @@ case ${PLATFORM} in
       set +e
       yum -y install epel-release
       yum -y install libcurl-devel curl etcd jq python2-pip python-devel zlib-devel libuuid-devel libmnl-devel gcc make git autoconf autogen automake pkg-config urllib3 chardet
-      pip install --upgrade python-etcd python-openstackclient pycurl urllib3 chardet
+      pip install --upgrade python-etcd python-openstackclient python-heatclient pycurl urllib3 chardet
       y=$?
       set -e
     done
