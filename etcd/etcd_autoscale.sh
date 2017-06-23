@@ -474,6 +474,7 @@ while [ $((x)) -gt 0 ]; do
   echo moving $scriptname
   sleep 5
 done
+chmod 744 /var/lib/etcd/recover.sh
 systemctl start recover.service
 chmod 744 /var/lib/etcd/$scriptname
 /var/lib/etcd/$scriptname
