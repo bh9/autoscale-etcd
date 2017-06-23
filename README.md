@@ -30,7 +30,7 @@ Other (optional) parameters:
 |lockattemptperiod |10     |The minimum time between a single host's lock acquire attempts
 |min_cluster    |3         |minimum cluster size (the point at which heat will autoreplace failed nodes). Note that the scale down scripts will only scale down to capacity, not min_cluster
 |max_cluster    |5         |The maximum size of the cluster
-|scaleupcooldown|10        |The minimum time between scale up operations, note that ceilometer applies a minimum of 10 minutes due to it's gathering period
+|scaleupcooldown|240       |The minimum time between scale up operations, note that ceilometer applies a minimum of 10 minutes due to it's gathering period
 |etcdclientscheme |http    |The protocol used to serve client requests (Note: https uses auto-tls. Since VMs have low entropy, this step can take 5 minutes)
 |etcdpeerscheme |http      |The protocol used for peer-to-peer communications (Note: https uses auto-tls. Since VMs have low entropy, this step can take 5 minutes)
 |proxies        |0         |The number of proxies in front of the etcd cluster (use proxyconfig.sh to configure them to also act as e.g. a mongos)
@@ -39,5 +39,5 @@ Other (optional) parameters:
 |comparator     |'<'       |the comparator between the metric and the threshold (options are '>' '<' '==' '<=' '>=')
 |upmetric       |cpu_util  |the heat metric to scale up for
 |metrics_server |0         |whether or not a metrics server should be deployed, 1 or 0
-
+|failtolerance  |20        |every lockattemptperiod seconds, an etcd communication is made. If this fails, the failmarker goes up by 5, but if it succeeds, the marker goes down by 1. If this marker exceeds failtolerance, the machine is removed
 

@@ -141,6 +141,11 @@ parameters:
       - allowed_values:
         - 0
         - 1
+  failtolerance:
+    type: number
+    label: the failure tolerance of etcd communications
+    description: every lockattemptperiod seconds, an etcd communication is made. If this fails, the failmarker goes up by 5, but if it succeeds, the marker goes down by 1. If this marker exceeds failtolerance, the machine is removed
+    default: 20
 
 resources:
   asg:
@@ -179,6 +184,8 @@ resources:
                     get_param: etcdclientport
                   $thisisanattemptperiod:
                     get_param: lockattemptperiod
+                  $thisisatolerance:
+                    get_param: failtolerance
             /home/etcd/etcd2.service: 
               get_file: etcd/etcd_etcd2.service
             /home/etcd/configscript.sh: 
