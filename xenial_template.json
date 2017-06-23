@@ -5,7 +5,7 @@
             "floating_ip_pool": "nova",
             "image_name": "Xenial etcd",
             "security_groups": "cloudforms_ssh_in",
-            "source_image": "Ubuntu Xenial",
+            "source_image": "0fea53f3-a79f-459f-9c52-9ed49d537170",
             "ssh_pty": true,
             "ssh_username": "ubuntu",
             "type": "openstack",
