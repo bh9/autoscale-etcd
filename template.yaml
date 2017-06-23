@@ -108,7 +108,7 @@ parameters:
   scaleupcooldown:
     type: number
     label: the minimum time between scale up operations
-    default: 10
+    default: 240
   etcdclientscheme:
     type: string
     label: client protocol (http or https)
