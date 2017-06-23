@@ -16,5 +16,5 @@ while true; do
             echo deleting absent member $i
         fi
     done
-    sleep 10
+    sleep $thisisanattemptperiod
 done

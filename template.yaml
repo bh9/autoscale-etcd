@@ -199,6 +199,7 @@ resources:
                 params:
                   $thisisaclientport: {get_param: etcdclientport}
                   $etcd_client_scheme: {get_param: etcdclientscheme}
+                  $thisisanattemptperiod: {get_param: lockattemptperiod}
           user_data_format: RAW
           user_data: 
             str_replace:
