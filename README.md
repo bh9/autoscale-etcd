@@ -41,3 +41,4 @@ Other (optional) parameters:
 |metrics_server |0         |whether or not a metrics server should be deployed, 1 or 0
 |failtolerance  |20        |every lockattemptperiod seconds, an etcd communication is made. If this fails, the failmarker goes up by 5, but if it succeeds, the marker goes down by 1. If this marker exceeds failtolerance, the machine is removed
 
+Supplied with this is a pair of packer templates. Using the images produced by these templates has dropped the maximum time the cluster is down a member from ~200s to ~70s however they are not compulsory
