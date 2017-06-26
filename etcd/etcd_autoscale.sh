@@ -134,7 +134,9 @@ while [ $((x)) -gt 0 ]; do
   x=$?
   set -e
   echo moving etcd2.service
-  sleep 5
+  if [ $((x)) -gt 0 ]; then
+    sleep 5
+  fi
 done
 x=1
 while [ $((x)) -gt 0 ]; do
@@ -143,7 +145,9 @@ while [ $((x)) -gt 0 ]; do
   x=$?
   set -e
   echo moving cleanup.sh
-  sleep 5
+  if [ $((x)) -gt 0 ]; then
+    sleep 5
+  fi
 done
 chmod 744 /var/lib/etcd/cleanup.sh
 systemctl daemon-reload	#read the new service files
@@ -410,7 +414,9 @@ while [ $((x)) -gt 0 ]; do
   x=$?
   set -e
   echo moving locking.py
-  sleep 5
+  if [ $((x)) -gt 0 ]; then
+    sleep 5
+  fi
 done
 IP=$(curl -s http://169.254.169.254/2009-04-04/meta-data/local-ipv4)
 MEMBER_ID=$(curl -s $etcd_client_scheme://$IP:$ETCD_CLIENT_PORT/v2/members | jq ".members[] | select(.name == \"$IP\") | .id" | sed "s/\"//g")
@@ -451,7 +457,9 @@ while [ $((x)) -gt 0 ]; do
   x=$?
   set -e
   echo moving $scriptname
-  sleep 5
+  if [ $((x)) -gt 0 ]; then
+    sleep 5
+  fi
 done
 cat > /etc/systemd/system/suicide.service <<-EOF
 [Unit]
@@ -488,7 +496,9 @@ while [ $((x)) -gt 0 ]; do
   x=$?
   set -e
   echo moving $scriptname
-  sleep 5
+  if [ $((x)) -gt 0 ]; then
+    sleep 5
+  fi
 done
 x=1
 while [ $((x)) -gt 0 ]; do
@@ -496,8 +506,10 @@ while [ $((x)) -gt 0 ]; do
   mv /home/etcd/healthcheck.sh /var/lib/etcd/healthcheck.sh
   x=$?
   set -e
-  echo moving $scriptname
-  sleep 5
+  echo moving healthcheck.sh
+  if [ $((x)) -gt 0 ]; then
+    sleep 5
+  fi
 done
 chmod 744 /var/lib/etcd/healthcheck.sh
 chmod 744 /var/lib/etcd/recover.sh
