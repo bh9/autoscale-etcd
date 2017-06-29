@@ -122,6 +122,9 @@ parameters:
   protocol_port:
     type: number
     label: the port used by you application
+  metrics_server:
+    type: string
+    label: the ip address of the metrics server (if there is one)
   
 resources:
   server:
@@ -173,26 +176,42 @@ resources:
             template:
               get_file: etcd/etcd_healthcheck.sh
             params:
-              $thisisaclientport: {get_param: etcdclientport}
-              $etcd_client_scheme: {get_param: etcdclientscheme}
-              $thisisanattemptperiod: {get_param: lockattemptperiod}
+              $thisisaclientport: 
+                get_param: etcdclientport
+              $etcd_client_scheme: 
+                get_param: etcdclientscheme
+              $thisisanattemptperiod: 
+                get_param: lockattemptperiod
       user_data_format: RAW
       user_data:
         str_replace:
-          template: { get_file: etcd/etcd_autoscale.sh }
+          template: 
+            get_file: etcd/etcd_autoscale.sh 
           params:
-            $thisisausername: {get_param: OS_USERNAME}
-            $thisisapassword: {get_param: OS_PASSWORD}
-            $thisisatenantname: {get_param: OS_TENANT_NAME}
-            $thisisaregion: {get_param: OS_REGION}
-            $thisisacapacity: {get_param: capacity}
-            $thisisatimeout: {get_param: scaledownperiod}
-            $thisisametricserver: { get_attr: [metrics_ip, floating_ip_address] }
-            $thisisascriptname: {get_param: configscript}
-            $thisisaurl: {get_param: OS_AUTH_URL}
-            $thisisapeerport: {get_param: etcdpeerport}
-            $thisisaclientport: {get_param: etcdclientport}
-            $thisisaretrycount: {get_param: retries}
+            $thisisausername: 
+              get_param: OS_USERNAME
+            $thisisapassword: 
+              get_param: OS_PASSWORD
+            $thisisatenantname: 
+              get_param: OS_TENANT_NAME
+            $thisisaregion: 
+              get_param: OS_REGION
+            $thisisacapacity: 
+              get_param: capacity
+            $thisisatimeout: 
+              get_param: scaledownperiod
+            $thisisametricserver: 
+              get_param: metrics_server
+            $thisisascriptname: 
+              get_param: configscript
+            $thisisaurl: 
+              get_param: OS_AUTH_URL
+            $thisisapeerport: 
+              get_param: etcdpeerport
+            $thisisaclientport: 
+              get_param: etcdclientport
+            $thisisaretrycount: 
+              get_param: retries
             $thisisaclientscheme: 
               get_param: etcdclientscheme
             $thisisapeerscheme: 

@@ -257,6 +257,8 @@ resources:
             get_resource: pool
           protocol_port:
             get_param: protocol_port
+          metrics_server:
+            get_attr: [metrics_ip, floating_ip_address]
 #    type: OS::Heat::AutoScalingGroup
  #   properties:
   #    cooldown: {get_param: scaleupcooldown}
