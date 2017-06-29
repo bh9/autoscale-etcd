@@ -1,0 +1,206 @@
+parameters:
+  key_name:
+    type: string
+    label: Key Name
+    description: Name of key-pair to be used for compute instance
+  image:
+    type: string
+    label: Image Name
+    description: Image to be used for compute instance
+    default: Ubuntu Xenial #Note: Currently only works on Xenial and Centos
+  instance_type:
+    type: string
+    label: Instance Type
+    description: Type of instance (flavor) to be used
+    default: m1.tiny
+  net_name:
+    type: string
+    label: Network Name
+    description: Name of the network to use
+  OS_USERNAME:
+    type: string
+    label: Your username
+    hidden: true
+  OS_PASSWORD:
+    type: string
+    label: Your password
+    hidden: true
+  OS_TENANT_NAME:
+    type: string
+    label: Your tenant name
+    hidden: true
+  OS_REGION:
+    type: string
+    label: Your region
+    default: "regionOne"
+  OS_AUTH_URL:
+    type: string
+    label: The authorisation url for openstack
+    default: "http://delta.internal.sanger.ac.uk/5000/v2.0/"
+  sec_grps:
+    type: comma_delimited_list
+    label: a comma separated list of security groups
+    description: The list of security groups your instances require
+    default: ["cockroachdb","internal_etcd","cloudforms_ssh_in","netdata"]
+  scaledownperiod:
+    type: number
+    label: time between scales (down)
+    description: The minimum time between 1 idle instance being removed and the next idle instance being removed
+    default: 200
+  configscript:
+    type: string
+    label: name of script
+    description: The name the script should have on the instances
+  capacity:
+    type: number
+    label: start group size
+    default: 3
+  downmetric:
+    type: string
+    label: the netdata metric to use for scaling down
+    description: the netdata metric to use for scaling down (e.g. `NETDATA_SYSTEM_CPU_IDLE` or `NETDATA_SYSTEM_LIAD_LOAD1` or `NETDATA_SYSTEM_IO_IN, see doc/all_metrics for more options). Currently, this is only as it would be returned, however, I plan to add rate of change
+    default: NETDATA_SYSTEM_CPU_IDLE
+  threshold:
+    type: number
+    label: the scaledown threshold of the chosen metric (default is NETDATA_SYSTEM_CPU_IDLE)
+    default: 10
+  comparator:
+    type: string
+    label: the comparator between the metric and the threshold
+    default: '<'
+    constraints:
+      - allowed_values:
+        - '<'
+        - '>'
+        - '=='
+        - '<='
+        - '>='
+  etcdclientport:
+    type: number
+    label: etcd client-side port
+    description: the tcp port over which etcd serves client requests
+    default: 12379
+  etcdpeerport:
+    type: number
+    label: etcd peer-side port
+    description: the tcp port over which etcd communicates with the rest of the cluster
+    default: 12380
+  retries:
+    type: number
+    label: the number of attempt that should be made to join the etcd cluster
+    default: 10
+  lockattemptperiod:
+    type: number
+    label: the minimum time between a host's attempts at acquiring the kill lock
+    default: 10
+  etcdclientscheme:
+    type: string
+    label: client protocol (http or https)
+    constraints:
+      - allowed_values:
+        - http
+        - https
+    default: http
+  etcdpeerscheme:
+    type: string
+    label: peer to peer protocol (http or https)
+    constraints:
+      - allowed_values:
+        - http
+        - https
+    default: http
+  failtolerance:
+    type: number
+    label: the failure tolerance of etcd communications
+    description: every lockattemptperiod seconds, an etcd communication is made. If this fails, the failmarker goes up by 5, but if it succeeds, the marker goes down by 1. If this marker exceeds failtolerance, the machine is removed
+    default: 20
+  pool_id:
+    type: string
+    label: the pool_id, do not use as it will be overwritten by the main template
+  
+resources:
+  server:
+    type: OS::Nova::Server
+    properties:
+      #name: etcd_cluster-node-%index%
+      key_name: { get_param: key_name } #use a pre-registered key for access after creation
+      image: { get_param: image }    #which image to use for the VM
+      config_drive: true
+      flavor: { get_param: instance_type }      #which flavor of instance to boot
+      networks: [{"network": { get_param: net_name }}]   #which private network to put the instance on
+      security_groups: {get_param: sec_grps}
+      metadata: {"metering.stack": {get_param: "OS::stack_id"}}
+      personality:
+        /home/etcd/locking.py:
+          str_replace:
+            template:
+              get_file: etcd/etcd_locking.py
+            params:
+              $thisisatimeout:
+                get_param: scaledownperiod
+              $thisisametric:
+                get_param: downmetric
+              $thisisacomparator:
+                get_param: comparator
+              $thisisathreshold:
+                get_param: threshold
+              $thisisaclientport:
+                get_param: etcdclientport
+              $thisisanattemptperiod:
+                get_param: lockattemptperiod
+              $thisisatolerance:
+                get_param: failtolerance
+        /home/etcd/etcd2.service:
+          get_file: etcd/etcd_etcd2.service
+        /home/etcd/configscript.sh:
+          str_replace:
+            template:
+              get_file: configscript.sh
+            params:
+              $thisisaclientport:
+                get_param: etcdclientport
+              $thisisaclientscheme:
+                get_param: etcdclientscheme
+        /home/etcd/cleanup.sh:
+          get_file: cleanupscript.sh
+        /home/etcd/healthcheck.sh:
+          str_replace:
+            template:
+              get_file: etcd/etcd_healthcheck.sh
+            params:
+              $thisisaclientport: {get_param: etcdclientport}
+              $etcd_client_scheme: {get_param: etcdclientscheme}
+              $thisisanattemptperiod: {get_param: lockattemptperiod}
+      user_data_format: RAW
+      user_data:
+        str_replace:
+          template: { get_file: etcd/etcd_autoscale.sh }
+          params:
+            $thisisausername: {get_param: OS_USERNAME}
+            $thisisapassword: {get_param: OS_PASSWORD}
+            $thisisatenantname: {get_param: OS_TENANT_NAME}
+            $thisisaregion: {get_param: OS_REGION}
+            $thisisacapacity: {get_param: capacity}
+            $thisisatimeout: {get_param: scaledownperiod}
+            $thisisametricserver: { get_attr: [metrics_ip, floating_ip_address] }
+            $thisisascriptname: {get_param: configscript}
+            $thisisaurl: {get_param: OS_AUTH_URL}
+            $thisisapeerport: {get_param: etcdpeerport}
+            $thisisaclientport: {get_param: etcdclientport}
+            $thisisaretrycount: {get_param: retries}
+            $thisisaclientscheme: 
+              get_param: etcdclientscheme
+            $thisisapeerscheme: 
+              get_param: etcdpeerscheme
+            $thisisaninstanceid: 
+              get_param: "OS::stack_id"
+
+  member:
+    type: OS::Neutron::PoolMember
+    properties:
+      pool_id:
+        get_param: pool_id
+      address:
+        get_attr: [server, first_address]
+     protocol_port:
+        get_param: protocol_port
