@@ -202,5 +202,5 @@ resources:
         get_param: pool_id
       address:
         get_attr: [server, first_address]
-     protocol_port:
+      protocol_port:
         get_param: protocol_port
