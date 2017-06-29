@@ -150,6 +150,9 @@ parameters:
     type: number
     label: the port used for external access to your service
     default: 80
+  subnet:
+    type: string
+    label: the subnet name for the load balancer
 
 resources:
   pool:
@@ -163,6 +166,8 @@ resources:
           get_param: protocol_port
       protocol: 
         get_param: etcdclientscheme
+      subnet:
+        get_param: subnet
       
   monitor:
     type: OS::Neutron::HealthMonitor

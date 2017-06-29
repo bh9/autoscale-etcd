@@ -41,7 +41,7 @@ openstack_stack_create:
    - sec_grps=$(echo $sec_grps | cut -d\' -f2)
    - export OS_AUTH_URL=$auth_url
    - echo $sec_grps
-   - openstack stack create --wait -t template.yaml --parameter OS_AUTH_URL="$auth_url" --parameter OS_USERNAME="$OS_USERNAME" --parameter OS_TENANT_NAME="$OS_TENANT_NAME" --parameter OS_PASSWORD="$OS_PASSWORD" --parameter net_name="$net_name" --parameter image="Xenial etcd" --parameter sec_grps="$sec_grps" --parameter instance_type="$instance_type" --parameter key_name="$key_name" --parameter configscript="cockroach.sh" --parameter protocol_port=8080 a$CI_BUILD_ID
+   - openstack stack create --wait -t template.yaml --parameter OS_AUTH_URL="$auth_url" --parameter OS_USERNAME="$OS_USERNAME" --parameter OS_TENANT_NAME="$OS_TENANT_NAME" --parameter OS_PASSWORD="$OS_PASSWORD" --parameter net_name="$net_name" --parameter image="Xenial etcd" --parameter sec_grps="$sec_grps" --parameter instance_type="$instance_type" --parameter key_name="$key_name" --parameter configscript="cockroach.sh" --parameter protocol_port=8080 --parameter subnet="gitlab-sub" a$CI_BUILD_ID
    - sleep 300
    - ./test.sh
 #   - openstack stack delete --yes a$CI_BUILD_ID
@@ -54,7 +54,7 @@ centos_stack_create:
    - sec_grps=$(echo $sec_grps | cut -d\' -f2)
    - export OS_AUTH_URL=$auth_url
    - echo $sec_grps
-   - openstack stack create --wait -t template.yaml --parameter OS_AUTH_URL="$auth_url" --parameter OS_USERNAME="$OS_USERNAME" --parameter OS_TENANT_NAME="$OS_TENANT_NAME" --parameter OS_PASSWORD="$OS_PASSWORD" --parameter net_name="$net_name" --parameter image="Centos etcd" --parameter sec_grps="$sec_grps" --parameter instance_type="$instance_type" --parameter key_name="$key_name" --parameter configscript="cockroach.sh" --parameter protocol_port=8080 a$CI_BUILD_ID
+   - openstack stack create --wait -t template.yaml --parameter OS_AUTH_URL="$auth_url" --parameter OS_USERNAME="$OS_USERNAME" --parameter OS_TENANT_NAME="$OS_TENANT_NAME" --parameter OS_PASSWORD="$OS_PASSWORD" --parameter net_name="$net_name" --parameter image="Centos etcd" --parameter sec_grps="$sec_grps" --parameter instance_type="$instance_type" --parameter key_name="$key_name" --parameter configscript="cockroach.sh" --parameter protocol_port=8080 --parameter subnet="gitlab-sub" a$CI_BUILD_ID
    - sleep 300
    - ./test.sh
 #   - openstack stack delete --yes a$CI_BUILD_ID
