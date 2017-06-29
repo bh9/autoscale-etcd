@@ -364,7 +364,8 @@ resources:
       evaluation_periods: 1
       threshold: 50
       query: 
-        - 'field': 'resource_metadata.user_metadata.stack', 'value': {get_param: "OS::stack_id"}
+        - 'field': 'resource_metadata.user_metadata.stack'
+          'value': {get_param: "OS::stack_id"}
       alarm_actions:
         - get_attr: [scaleup_policy, alarm_url]
       comparison_operator: gt 
