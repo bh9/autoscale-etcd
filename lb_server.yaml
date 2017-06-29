@@ -119,6 +119,9 @@ parameters:
   pool_id:
     type: string
     label: the pool_id, do not use as it will be overwritten by the main template
+  protocol_port:
+    type: number
+    label: the port used by you application
   
 resources:
   server:
