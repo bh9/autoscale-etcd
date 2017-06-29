@@ -15,8 +15,10 @@ if [ "$leader" = 'not current leader' ]; then
 	if [ $? -eq 0 ]; then
 	    set -e
             echo joining cluster, exiting
+            set +e
             cockroach start --advertise-host $myip --background --insecure --join=$leaderip
-	    connected='yes'
+            set -e
+            connected='yes'
 	else
 	    set -e
 	    echo failed to join cluster, waiting for leader to come up
