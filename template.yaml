@@ -114,17 +114,17 @@ parameters:
     label: client protocol (http or https)
     constraints:
       - allowed_values:
-        - http
-        - https
-    default: http
+        - HTTP
+        - HTTPS
+    default: HTTP
   etcdpeerscheme:
     type: string
     label: peer to peer protocol (http or https)
     constraints:
       - allowed_values:
-        - http
-        - https
-    default: http
+        - HTTP
+        - HTTPS
+    default: HTTP
   proxies:
     type: number
     label: number of proxies
