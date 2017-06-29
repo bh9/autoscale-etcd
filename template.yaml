@@ -159,7 +159,8 @@ resources:
       monitors: 
         - get_resource: monitor
       vip:
-        get_param: protocol_port
+        protocol_port:
+          get_param: protocol_port
       protocol: 
         get_param: etcdclientscheme
       
