@@ -155,43 +155,53 @@ parameters:
     label: the subnet name for the load balancer
 
 resources:
-  pool:
-    type: OS::Neutron::Pool
+  listener:
+    type: OS::Neutron::LBaaS::Listener
     properties:
-      lb_method: ROUND_ROBIN
-#      monitors: 
- #       - get_resource: monitor
-      vip:
-        protocol_port:
-          get_param: protocol_port
+      name: ln
+      protocol: HTTP
+      protocol_port: 12379
+      loadbalancer:
+        get_resource: lb
+    
+  pool:
+    type: OS::Neutron::LBaaS::Pool
+    properties:
+      name: pl
+      lb_algorithm: ROUND_ROBIN
+      listener:
+        get_resource: listener
       protocol: 
         get_param: etcdclientscheme
-      subnet:
-        get_param: subnet
       
-  #monitor:
-   # type: OS::Neutron::HealthMonitor
-    #properties:
-     # type: TCP
-      #delay: 5
-#      max_retries: 5
- #     timeout: 5
+  monitor:
+    type: OS::Neutron::LBaaS::HealthMonitor
+    properties:
+      type: TCP
+      delay: 5
+      max_retries: 5
+      timeout: 5
+      pool:
+        get_resource: pool
 
   lb:
-    type: OS::Neutron::LoadBalancer
+    type: OS::Neutron::LBaaS::LoadBalancer
     properties:
-      protocol_port:
-        get_param: protocol_port
-      pool_id:
-        get_resource: pool
+      vip_subnet:
+        get_param: subnet
 
   lb_floating:
     type: OS::Neutron::FloatingIP
     properties:
-      floating_network: 
-        get_param: net_name
-      port_id: 
-        get_attr: [pool, vip, port_id]
+      floating_network: nova
+
+  lb_floating_associate:
+    type: OS::Neutron::FloatingIPAssociation
+    properties:
+      floatingip_id:
+        get_resource: lb_floating
+      port_id:
+        get_attr: [lb, vip_port_id]
 
   asg:
     type: OS::Heat::AutoScalingGroup
@@ -259,6 +269,10 @@ resources:
             get_param: protocol_port
           metrics_server:
             get_attr: [metrics_ip, floating_ip_address]
+          subnet:
+            get_param: subnet
+          superstack:
+            get_param: "OS::stack_name"
 #    type: OS::Heat::AutoScalingGroup
  #   properties:
   #    cooldown: {get_param: scaleupcooldown}
@@ -434,7 +448,7 @@ resources:
       scaling_adjustment: 1
 
   cpu_alarm_high:
-    type: OS::Ceilometer::Alarm
+    type: OS::Aodh::Alarm
     properties:
       meter_name: 
         get_param: upmetric 
@@ -508,7 +522,8 @@ resources:
     properties:
       network: 
         get_param: net_name 
-      security_groups: ["cloudforms_ssh_in","netdata"]
+      security_groups: 
+        get_param: sec_grps
 
 outputs:
   scale_up_url:
@@ -517,4 +532,4 @@ outputs:
       can invoke the scale-up operation by doing an HTTP POST to this
       URL; no body nor extra headers are needed.
     value: 
-      get_attr: [scaleup_policy, alarm_url]
+      get_attr: [scaleup_policy, signal_url]

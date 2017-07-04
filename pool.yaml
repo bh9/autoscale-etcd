@@ -1,0 +1,22 @@
+heat_template_version: 2015-10-15
+resources:
+  listener:
+    type: OS::Neutron::LBaaS::Listener
+    properties:
+      protocol: HTTP
+      protocol_port: 80
+      loadbalancer:
+        get_resource: lb
+
+  pool:
+    type: OS::Neutron::LBaaS::Pool
+    properties:
+      lb_algorithm: ROUND_ROBIN
+      protocol: HTTP
+      listener:
+        get_resource: listener
+      
+  lb:
+    type: OS::Neutron::LBaaS::LoadBalancer
+    properties:
+      vip_subnet: test-sub-d696406e-5ccb-11e7-8007-a39012e1dc85-0

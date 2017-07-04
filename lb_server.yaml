@@ -97,20 +97,20 @@ parameters:
     default: 10
   etcdclientscheme:
     type: string
-    label: client protocol (http or https)
+    label: client protocol (HTTP or HTTPS)
     constraints:
       - allowed_values:
-        - http
-        - https
-    default: http
+        - HTTP
+        - HTTPS
+    default: HTTP
   etcdpeerscheme:
     type: string
-    label: peer to peer protocol (http or https)
+    label: peer to peer protocol (HTTP or HTTPS)
     constraints:
       - allowed_values:
-        - http
-        - https
-    default: http
+        - HTTP
+        - HTTPS
+    default: HTTP
   failtolerance:
     type: number
     label: the failure tolerance of etcd communications
@@ -125,9 +125,15 @@ parameters:
   metrics_server:
     type: string
     label: the ip address of the metrics server (if there is one)
+  subnet:
+    type: string
+    label: the subnet name for the load balancer
+  superstack:
+    type: string
+    label: the top level stack id
   
 resources:
-  server:
+  s:
     type: OS::Nova::Server
     properties:
       #name: etcd_cluster-node-%index%
@@ -186,7 +192,7 @@ resources:
       user_data:
         str_replace:
           template: 
-            get_file: etcd/etcd_autoscale.sh 
+            get_file: etcd/etcd_autoscale_vanilla.sh 
           params:
             $thisisausername: 
               get_param: OS_USERNAME
@@ -218,13 +224,16 @@ resources:
               get_param: etcdpeerscheme
             $thisisaninstanceid: 
               get_param: "OS::stack_id"
-
+            $thisisastackname:
+              get_param: superstack
   member:
-    type: OS::Neutron::PoolMember
+    type: OS::Neutron::LBaaS::PoolMember
     properties:
-      pool_id:
+      pool:
         get_param: pool_id
       address:
-        get_attr: [server, first_address]
+        get_attr: [s, first_address]
       protocol_port:
         get_param: protocol_port
+      subnet:
+        get_param: subnet
