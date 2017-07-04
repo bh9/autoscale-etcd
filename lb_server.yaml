@@ -192,7 +192,7 @@ resources:
       user_data:
         str_replace:
           template: 
-            get_file: etcd/etcd_autoscale_vanilla.sh 
+            get_file: etcd/etcd_autoscale.sh 
           params:
             $thisisausername: 
               get_param: OS_USERNAME

@@ -1,13 +1,13 @@
 #!/bin/bash
 set -ex
 x=y=1
-if [ -f /etc/centos-release ]; then
-  PLATFORM=centos
-else
-  PLATFORM=$(lsb_release --release | sed -e 's/.*14.*/trusty/i' -e 's/.*16.*/xenial/i')
-fi
-case ${PLATFORM} in
-  centos)
+#if [ -f /etc/centos-release ]; then
+#  PLATFORM=centos
+#else
+#  PLATFORM=$(lsb_release --release | sed -e 's/.*14.*/trusty/i' -e 's/.*16.*/xenial/i')
+#fi
+#case ${PLATFORM} in
+#  centos)
 #    while [ $((x)) -gt 0 ]; do
 #      set +e
 #      yum -y update
@@ -15,39 +15,43 @@ case ${PLATFORM} in
 #      set -e
 #      echo updating
 #    done
-#    #apt-get update
-#    while [ $((y)) -gt 0 ]; do
+   # apt-get update
+#   while [ $((y)) -gt 0 ]; do
 #      set +e
 #      yum -y install epel-release
-#      yum -y install libcurl-devel curl etcd jq python2-pip python-devel zlib-devel libuuid-devel libmnl-devel gcc make git autoconf autogen automake pkg-config urllib3 chardet
+#      yum -y install libcurl-devel openssl curl etcd jq python2-pip python-devel zlib-devel libuuid-devel libmnl-devel gcc make git autoconf autogen automake pkg-config urllib3 chardet
 #      pip install --upgrade python-etcd python-openstackclient python-heatclient pycurl urllib3 chardet
 #      y=$?
 #      set -e
 #    done
-  ;;
-  xenial)
+#  ;;
+#  xenial)
 #    DEBIAN_FRONTEND=noninteractive
- #   x=y=1
-  #  while [ $((x)) -gt 0 ]; do
-   #   set +e
-    #  apt-get update
-     # x=$?
-      #set -e
-#      echo updating
- #   done
-    #apt-get update
-  #  while [ $((y)) -gt 0 ]; do
-   #   set +e
-    #  apt-get install -y curl etcd jq python-etcd python-openstackclient python-pip python-psutil python-pycurl zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config
-     # pip install --upgrade python-openstackclient python-heatclient
-      #y=$?
+#    x=y=1
+#    while [ $((x)) -gt 0 ]; do
+#      set +e
+#      apt-get update
+#      x=$?
 #      set -e
- #   done
-  ;;
-esac
+#      echo updating
+#    done
+    #apt-get update
+#    while [ $((y)) -gt 0 ]; do
+#      z=0
+#      set +e
+#      apt-get update
+#      z=$z+$?
+#      apt-get install -y openssl curl etcd jq python-etcd python-openstackclient python-pip python-psutil python-pycurl zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config
+#      z=$z+$?
+#      pip install --upgrade python-openstackclient python-heatclient
+#      y=$z+$?
+#      set -e
+#    done
+#  ;;
+#esac
 #curl -Ls https://github.com/coreos/etcd/releases/download/v3.1.8/etcd-v3.1.8-linux-amd64.tar.gz > etcd.tar.gz
 #tar xvf etcd.tar.gz
-#systemctl stop etcd
+systemctl stop etcd
 #mv -f etcd-v3.1.8-linux-amd64/etcd /usr/bin/etcd
 #if [ -d /etc/sysconfig/ ]; then
 #    echo /etc/sysconfig exists, good
@@ -77,7 +81,7 @@ if [[ ! $AWS_DEFAULT_REGION ]]; then
 fi
 if [ $metrics_server != "None" ]; then
     METRICS_ID=$thisisaninstanceid
-    #apt-get install -y zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config curl
+#    apt-get install -y zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config curl
 #    git clone https://github.com/firehol/netdata.git --depth=1
 #    cd netdata
     # run script with root privileges to build, install, start netdata
@@ -438,9 +442,9 @@ echo $ID
 sleep 5
 openstack server delete --os-region $AWS_DEFAULT_REGION --os-username $OS_USERNAME --os-password $OS_PASSWORD --os-tenant-name $OS_TENANT_NAME --os-auth-url $OS_AUTH_URL $ID #delete yourself
 EOF
-openstack stack show -c outputs -f json $asg_name
-SCALE_URL=$(openstack stack show -c outputs -f json $asg_name | jq '.outputs | select(.[].output_key=="scale_up_url") | .[0].output_value')
-cat > /var/lib/etcd/recover.sh <<-EOF 
+openstack stack show -c outputs -f json $thisisastackname
+SCALE_URL=$(openstack stack show -c outputs -f json $thisisastackname | jq '.outputs | select(.[].output_key=="scale_up_url") | .[0].output_value')
+cat > /var/lib/etcd/recover.sh <<EOF 
 #!/bin/bash 
 set -e 
 export OS_REGION=$AWS_DEFAULT_REGION 
@@ -448,9 +452,12 @@ export OS_USERNAME=$OS_USERNAME
 export OS_PASSWORD=$OS_PASSWORD 
 export OS_TENANT_NAME=$OS_TENANT_NAME 
 export no_proxy=$no_proxy 
-export OS_AUTH_URL=$OS_AUTH_URL 
-curl -XPOST $SCALE_URL 
+export OS_AUTH_URL=$OS_AUTH_URL
 EOF
+
+echo 'SCALE_URL=$(openstack stack show -c outputs -f json $thisisastackname | jq -r ".outputs | select(.[].output_key==\"scale_up_url\") | .[0].output_value")' >> /var/lib/etcd/recover.sh
+echo 'TOKEN=$(openstack token issue -f json | jq -r ".id")' >> /var/lib/etcd/recover.sh
+echo 'curl -k -H "X-Auth-Token:$TOKEN" -XPOST $SCALE_URL' >> /var/lib/etcd/recover.sh
 while [ $((x)) -gt 0 ]; do
   set +e
   mv /home/etcd/recover.sh /var/lib/etcd/recover.sh
