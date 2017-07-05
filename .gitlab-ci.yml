@@ -35,6 +35,18 @@ centos_image_creation:
    - /software/packer-0.9.0/bin/packer build centos_template.json
    - fi
 
+trusty_image_creation:
+  stage: imagecreate
+  tags:
+   - openstack-autoscale
+   - packer-autoscale
+  script:
+   - export OS_AUTH_URL=$auth_url
+   - imagelist=$(openstack image list | grep 'Trusty etcd')
+   - if [ -z imagelist ]; then
+   - /software/packer-0.9.0/bin/packer build trusty_template.json
+   - fi
+
 xenial_stack_create:
   stage: xenial
   tags:
