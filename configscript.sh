@@ -9,16 +9,24 @@ leader=$(curl -k -m 100 $thisisaclientscheme://$myip:$thisisaclientport/v2/stats
 if [ "$leader" = 'not current leader' ]; then
     leaderid=$(curl -k -m 100 $thisisaclientscheme://$myip:$thisisaclientport/v2/stats/self | jq '.leaderInfo.leader')
     leaderip=$(curl -k -m 100 $thisisaclientscheme://$myip:$thisisaclientport/v2/members | jq -r ".members[] | select(.id == $leaderid) | .name")
-    while [ ! $connected ]; do
+    while [ -z $connected ]; do
 	set +e
 	cockroach node ls --insecure --host $leaderip
 	if [ $? -eq 0 ]; then
 	    set -e
             echo joining cluster, exiting
-            set +e
-            cockroach start --advertise-host $myip --background --insecure --join=$leaderip
-            set -e
-            connected='yes'
+            x=1
+            while [ $x -ne 0 ]; do 
+                set +e
+                cockroach start --advertise-host $myip --background --insecure --join=$leaderip
+                x=$?
+                set -e
+                if [ $x -ne 0 ]; then 
+                    sleep 5 
+                else
+                    connected='yes' 
+                fi 
+            done
 	else
 	    set -e
 	    echo failed to join cluster, waiting for leader to come up
@@ -34,7 +42,9 @@ else
         echo $x
         set -e 
         if [ $x -ne 0 ]; then 
-            sleep 5 
+            sleep 5
+        else
+            connected='yes' 
         fi 
     done
 fi
