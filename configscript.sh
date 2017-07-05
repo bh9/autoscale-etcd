@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 curl https://binaries.cockroachdb.com/cockroach-latest.linux-amd64.tgz > cockroach.tgz
 tar xfz cockroach.tgz
 cp -i cockroach-latest.linux-amd64/cockroach /usr/local/bin
@@ -27,12 +27,13 @@ if [ "$leader" = 'not current leader' ]; then
     done
 else
     x=1
-    while [ $((x)) -ne 0 ]; do 
+    while [ $x -ne 0 ]; do 
         set +e 
         cockroach start --insecure --advertise-host $myip --background 
         x=$? 
+        echo $x
         set -e 
-        if [ $((x)) -ne 0 ]; then 
+        if [ $x -ne 0 ]; then 
             sleep 5 
         fi 
     done
