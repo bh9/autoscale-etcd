@@ -26,7 +26,16 @@ if [ "$leader" = 'not current leader' ]; then
         fi
     done
 else
-    cockroach start --insecure --advertise-host $myip --background
+    x=1
+    while [ $((x)) -gt 0 ]; do
+        set +e
+        cockroach start --insecure --advertise-host $myip --background
+        x=$?
+        set -e
+        if [$((x)) -gt 0]; then
+            sleep 5
+        fi
+    done
 fi
 echo connected
 
