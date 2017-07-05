@@ -32,7 +32,7 @@ else
         cockroach start --insecure --advertise-host $myip --background
         x=$?
         set -e
-        if [$((x)) -gt 0]; then
+        if [ $((x)) -gt 0 ]; then
             sleep 5
         fi
     done
