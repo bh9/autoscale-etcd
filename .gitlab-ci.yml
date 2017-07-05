@@ -17,7 +17,7 @@ xenial_image_creation:
   script:
    - export OS_AUTH_URL=$auth_url
    - imagelist=$(openstack image list | grep 'Xenial etcd' | wc -l)
-   - if [ $((imagelist))==0 ]; then
+   - if [ $((imagelist)) -eq 0 ]; then
    - echo $imagelist
    - /software/packer-0.9.0/bin/packer build xenial_template.json
    - fi
@@ -30,7 +30,7 @@ centos_image_creation:
   script:
    - export OS_AUTH_URL=$auth_url
    - imagelist=$(openstack image list | grep 'Centos etcd' | wc -l)
-   - if [ $((imagelist))==0 ]; then
+   - if [ $((imagelist)) -eq 0 ]; then
    - /software/packer-0.9.0/bin/packer build centos_template.json
    - fi
 
