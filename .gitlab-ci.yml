@@ -18,8 +18,8 @@ xenial_image_creation:
    - packer-autoscale
   script:
    - export OS_AUTH_URL=$auth_url
-   - imagelist=$(openstack image list | grep 'Xenial etcd')
-   - if [ -z imagelist ]; then
+   - imagelist=$(openstack image list)
+   - if [ -z $(echo imagelist | grep 'Xenial etcd'  ]; then
    - /software/packer-0.9.0/bin/packer build xenial_template.json
    - fi
 
@@ -30,8 +30,8 @@ centos_image_creation:
    - packer-autoscale
   script:
    - export OS_AUTH_URL=$auth_url
-   - imagelist=$(openstack image list | grep 'Centos etcd')
-   - if [ -z imagelist ]; then
+   - imagelist=$(openstack image list)
+   - if [ -z $(echo imagelist | grep 'Centos etcd'  ]; then
    - /software/packer-0.9.0/bin/packer build centos_template.json
    - fi
 
@@ -42,8 +42,8 @@ trusty_image_creation:
    - packer-autoscale
   script:
    - export OS_AUTH_URL=$auth_url
-   - imagelist=$(openstack image list | grep 'Trusty etcd')
-   - if [ -z imagelist ]; then
+   - imagelist=$(openstack image list)
+   - if [ -z $(echo imagelist | grep 'Trusty etcd' ]; then
    - /software/packer-0.9.0/bin/packer build trusty_template.json
    - fi
 
