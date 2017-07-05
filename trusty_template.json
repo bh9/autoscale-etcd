@@ -1,0 +1,41 @@
+{
+    "builders": [
+        {
+            "flavor": "m1.small",
+            "floating_ip_pool": "nova",
+            "image_name": "Trusty etcd",
+            "security_groups": "cloudforms_ssh_in",
+            "source_image": "9e910570-d364-458d-8aaf-2ebad748faec",
+            "ssh_pty": true,
+            "ssh_username": "ubuntu",
+            "type": "openstack",
+            "use_floating_ip": "true",
+            "ssh_timeout": "100s",
+            "networks": "ee765151-75c3-4aaa-9bd4-8962b1e3330c"
+        }
+    ],
+    "min_packer_version": "0.9.0",
+    "provisioners": [
+        {
+            "type": "shell",
+            "execute_command": "echo ubuntu | {{ .Vars }}  sudo -E -S bash '{{ .Path }}'",
+            "inline": [
+                "apt-get update",
+                "apt-get install -y curl etcd jq python-etcd python-openstackclient python-pip python-psutil python-pycurl zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config",
+                "pip install --upgrade python-openstackclient python-heatclient",
+                "curl -Ls https://github.com/coreos/etcd/releases/download/v3.1.8/etcd-v3.1.8-linux-amd64.tar.gz > etcd.tar.gz",
+                "tar xvf etcd.tar.gz",
+                "systemctl stop etcd",
+                "mv -f etcd-v3.1.8-linux-amd64/etcd /usr/bin/etcd",
+                "if [ -d /etc/sysconfig/ ]; then",
+                "echo /etc/sysconfig exists, good",
+                "else",
+                "mkdir /etc/sysconfig",
+                "fi",
+                "git clone https://github.com/firehol/netdata.git --depth=1",
+                "cd netdata",
+                "./netdata-installer.sh"
+            ]
+        }
+    ]
+}
