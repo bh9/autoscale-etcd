@@ -54,6 +54,8 @@ esac
 #else
 #    mkdir /etc/sysconfig
 #fi
+echo server ntp1.sanger.ac.uk iburst > /etc/ntp.conf
+systemctl restart ntpd
 scriptname=$thisisascriptname
 metrics_server=$thisisametricserver
 timeout=$thisisatimeout

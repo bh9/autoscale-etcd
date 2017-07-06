@@ -21,7 +21,7 @@
             "execute_command": "echo ubuntu | {{ .Vars }}  sudo -E -S bash '{{ .Path }}'",
             "inline": [
                 "apt-get update",
-                "apt-get install -y curl jq python-openstackclient python-pip python-psutil python-pycurl zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config",
+                "apt-get install -y ntp curl jq python-openstackclient python-pip python-psutil python-pycurl zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config",
                 "pip install --upgrade python-openstackclient python-heatclient python-etcd pythoon-openstackclient",
                 "curl -Ls https://github.com/coreos/etcd/releases/download/v3.1.8/etcd-v3.1.8-linux-amd64.tar.gz > etcd.tar.gz",
                 "tar xvf etcd.tar.gz",
