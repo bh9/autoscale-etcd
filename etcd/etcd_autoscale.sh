@@ -572,6 +572,8 @@ EOF
 
 start-stop-daemon -S -b -x /var/lib/etcd/healthcheck.sh
 EOF
+  chomd 755 /etc/init.d/suicide
+  chomd 755 /etc/init.d/healthcheck
 fi
 x=1
 while [ $((x)) -gt 0 ]; do
