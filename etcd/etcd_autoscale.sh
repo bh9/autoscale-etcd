@@ -52,6 +52,7 @@ case ${PLATFORM} in
   trusty)
     service ntp restart
     systemd='false'
+    mkdir /var/lib/etcd
 esac
 #curl -Ls https://github.com/coreos/etcd/releases/download/v3.1.8/etcd-v3.1.8-linux-amd64.tar.gz > etcd.tar.gz
 #tar xvf etcd.tar.gz
