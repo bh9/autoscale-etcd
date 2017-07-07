@@ -556,8 +556,7 @@ else
 # Short-Description: Start suicide daemon
 ### END INIT INFO
 
-DAEMON='/usr/bin/python /var/lib/etcd/locking.py'
-start-stop-daemon -S -b -x $DAEMON
+start-stop-daemon -S -b -x '/usr/bin/python /var/lib/etcd/locking.py'
 EOF
   cat > /etc/init.d/healthcheck <<EOF
 #!/bin/sh
