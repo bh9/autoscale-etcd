@@ -167,6 +167,7 @@ else
 
 /usr/bin/etcd --config-file /etc/sysconfig/etcd-peers --data-dir /var/lib/etcd/default
 EOF
+  chmod 755 /etc/init.d/etcd2
 fi
 x=1
 while [ $((x)) -gt 0 ]; do
