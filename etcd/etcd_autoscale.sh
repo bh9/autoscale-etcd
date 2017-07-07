@@ -443,8 +443,18 @@ echo $ID
 sleep 5
 openstack server delete --os-region $AWS_DEFAULT_REGION --os-username $OS_USERNAME --os-password $OS_PASSWORD --os-tenant-name $OS_TENANT_NAME --os-auth-url $OS_AUTH_URL $ID #delete yourself
 EOF
-openstack stack show -c outputs -f json $asg_name
-SCALE_URL=$(openstack stack show -c outputs -f json $asg_name | jq '.outputs | select(.[].output_key=="scale_up_url") | .[0].output_value')
+x=1
+while [ $((x)) -gt 0 ]; do
+  set +e
+  openstack stack show -c outputs -f json $asg_name
+  SCALE_URL=$(openstack stack show -c outputs -f json $asg_name | jq '.outputs | select(.[].output_key=="scale_up_url") | .[0].output_value')
+  x=$?
+  set -e
+  echo moving locking.py
+  if [ $((x)) -gt 0 ]; then
+    sleep 5
+  fi
+done
 cat > /var/lib/etcd/recover.sh <<-EOF 
 #!/bin/bash 
 set -e 
