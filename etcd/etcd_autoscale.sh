@@ -514,7 +514,8 @@ while [ $((x)) -gt 0 ]; do
     sleep 5
   fi
 done
-cat > /etc/systemd/system/suicide.service <<-EOF
+if [ $systemd == 'true' ]; then
+  cat > /etc/systemd/system/suicide.service <<-EOF
 [Unit]
 Description=the killer cleanup service
 After=etcd2.service
@@ -528,7 +529,7 @@ ExecStart=/usr/bin/python /var/lib/etcd/locking.py
 [Install]
 WantedBy=multi-user.target
 EOF
-cat > /etc/systemd/system/healthcheck.service <<-EOF
+  cat > /etc/systemd/system/healthcheck.service <<-EOF
 [Unit]
 Description=the etcd recovery service
 After=etcd2.service
@@ -542,6 +543,36 @@ ExecStart=/bin/bash /var/lib/etcd/healthcheck.sh
 [Install]
 WantedBy=multi-user.target
 EOF
+else
+  cat > /etc/init.d/suicide <<EOF
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:        suicide
+# Required-Start:  $network $remote_fs $syslog
+# Required-Stop:   $network $remote_fs $syslog
+# Default-Start:   2 3 4 5
+# Default-Stop:    1
+# Short-Description: Start suicide daemon
+### END INIT INFO
+
+start-stop-daemon -S -b -x /usr/bin/python -- /var/lib/etcd/locking.py
+EOF
+  cat > /etc/init.d/healthcheck <<EOF
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:        healthcheck
+# Required-Start:  $network $remote_fs $syslog
+# Required-Stop:   $network $remote_fs $syslog
+# Default-Start:   2 3 4 5
+# Default-Stop:    1
+# Short-Description: Start healthcheck daemon
+### END INIT INFO
+
+start-stop-daemon -S -b -x /var/lib/etcd/healthcheck.sh
+EOF
+fi
 x=1
 while [ $((x)) -gt 0 ]; do
   set +e
