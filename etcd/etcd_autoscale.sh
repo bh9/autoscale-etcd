@@ -304,7 +304,9 @@ if [[ $etcd_existing_peer_urls && $etcd_existing_peer_names != *"$ec2_instance_i
         status=0
         retry=1
         until [[ $status = $add_ok || $status = $already_added || $retry = $retry_times ]]; do
+            set +e
             status=$(curl $ETCD_CURLOPTS -f -s -w %{http_code} -o /dev/null -XPOST "$etcd_last_good_member_url/v2/members" -H "Content-Type: application/json" -d "{\"peerURLs\": [\"$peer_url\"], \"name\": \"$ec2_instance_ip\"}")
+            set -e
             echo "$pkg: adding instance ID $ec2_instance_id with peer URL $peer_url, retry $((retry++)), return code $status."
             joined=
             all_in='success'
