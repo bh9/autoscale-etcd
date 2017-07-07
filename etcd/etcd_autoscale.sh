@@ -6,8 +6,10 @@ if [ -f /etc/centos-release ]; then
 else
   PLATFORM=$(lsb_release --release | sed -e 's/.*14.*/trusty/i' -e 's/.*16.*/xenial/i')
 fi
+echo server ntp1.sanger.ac.uk iburst > /etc/ntp.conf
 case ${PLATFORM} in
   centos)
+    systemctl restart ntpd
 #    while [ $((x)) -gt 0 ]; do
 #      set +e
 #      yum -y update
@@ -26,6 +28,7 @@ case ${PLATFORM} in
 #    done
   ;;
   xenial)
+    systemctl restart ntp
 #    DEBIAN_FRONTEND=noninteractive
  #   x=y=1
   #  while [ $((x)) -gt 0 ]; do
@@ -54,8 +57,6 @@ esac
 #else
 #    mkdir /etc/sysconfig
 #fi
-echo server ntp1.sanger.ac.uk iburst > /etc/ntp.conf
-systemctl restart ntp
 scriptname=$thisisascriptname
 metrics_server=$thisisametricserver
 timeout=$thisisatimeout
