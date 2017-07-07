@@ -141,16 +141,32 @@ EOF
     fi
 fi
 x=1
-while [ $((x)) -gt 0 ]; do
-  set +e
-  mv /home/etcd/etcd2.service /etc/systemd/system/etcd2.service
-  x=$?
-  set -e
-  echo moving etcd2.service
-  if [ $((x)) -gt 0 ]; then
-    sleep 5
-  fi
-done
+if [ $systemd == 'true' ]; then
+  while [ $((x)) -gt 0 ]; do
+    set +e
+    mv /home/etcd/etcd2.service /etc/systemd/system/etcd2.service
+    x=$?
+    set -e
+    echo moving etcd2.service
+    if [ $((x)) -gt 0 ]; then
+      sleep 5
+    fi
+  done
+else
+  cat > /etc/init.d/etcd2 <<EOF
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:        etcd
+# Required-Start:  $network $remote_fs $syslog
+# Required-Stop:   $network $remote_fs $syslog
+# Default-Start:   2 3 4 5
+# Default-Stop:    1
+# Short-Description: Start etcd daemon
+### END INIT INFO
+
+/usr/bin/etcd --config-file /etc/sysconfig/etcd-peers --data-dir /var/lib/etcd/default
+EOF
 x=1
 while [ $((x)) -gt 0 ]; do
   set +e
