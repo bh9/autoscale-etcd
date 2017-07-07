@@ -10,6 +10,7 @@ echo server ntp1.sanger.ac.uk iburst > /etc/ntp.conf
 case ${PLATFORM} in
   centos)
     systemctl restart ntpd
+    systemd='true'
 #    while [ $((x)) -gt 0 ]; do
 #      set +e
 #      yum -y update
@@ -29,6 +30,7 @@ case ${PLATFORM} in
   ;;
   xenial)
     systemctl restart ntp
+    systemd='true'
 #    DEBIAN_FRONTEND=noninteractive
  #   x=y=1
   #  while [ $((x)) -gt 0 ]; do
@@ -47,6 +49,9 @@ case ${PLATFORM} in
 #      set -e
  #   done
   ;;
+  trusty)
+    service ntp restart
+    systemd='false'
 esac
 #curl -Ls https://github.com/coreos/etcd/releases/download/v3.1.8/etcd-v3.1.8-linux-amd64.tar.gz > etcd.tar.gz
 #tar xvf etcd.tar.gz
@@ -128,7 +133,11 @@ if [ $metrics_server != "None" ]; then
     # slave for that many iterations, when starting.
     initial clock resync iterations = 60
 EOF
-    systemctl restart netdata
+    if [ $systemd == 'true' ]; then
+        systemctl restart netdata
+    else
+        service netdata restart
+    fi
 fi
 x=1
 while [ $((x)) -gt 0 ]; do
@@ -153,7 +162,9 @@ while [ $((x)) -gt 0 ]; do
   fi
 done
 chmod 744 /var/lib/etcd/cleanup.sh
-systemctl daemon-reload	#read the new service files
+if [ $systemd == 'true' ]; then
+    systemctl daemon-reload	#read the new service files
+fi
 pkg="etcd-aws-cluster"
 version="0.5"
 etcd_peers_file_path="/etc/sysconfig/etcd-peers"
@@ -367,7 +378,11 @@ EOF
     echo "}" >> "$etcd_peers_file_path"
     rm -rf /var/lib/etcd/default/
 #    systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
-    systemctl start etcd2
+    if [ $systemd == 'true' ]; then
+        systemctl start etcd2
+    else
+        service etcd2 start
+    fi
     curl -s $ETCD_CURLOPTS "$etcd_last_good_member_url/v2/keys/killlock" -XDELETE
 # otherwise I was already listed as a member so assume that this is a new cluster
 else
@@ -408,9 +423,13 @@ EOF
     echo "}" >> "$etcd_peers_file_path"
     rm -rf /var/lib/etcd/default/
  #   systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
-    systemctl stop etcd
-    systemctl stop etcd2
-    systemctl start etcd2
+    if [ $systemd == 'true' ]; then
+        systemctl stop etcd
+        systemctl stop etcd2
+        systemctl start etcd2
+    else
+        service etcd2 restart
+    fi
 fi
 x=1
 while [ $((x)) -gt 0 ]; do
@@ -528,13 +547,21 @@ while [ $((x)) -gt 0 ]; do
 done
 chmod 744 /var/lib/etcd/healthcheck.sh
 chmod 744 /var/lib/etcd/recover.sh
-systemctl start healthcheck.service
+if [ $systemd == 'true' ]; then
+    systemctl start healthcheck.service
+else
+    service healthcheck start
+fi
 chmod 744 /var/lib/etcd/$scriptname
 /var/lib/etcd/$scriptname
 chmod 744 /var/lib/etcd/suicide.sh
-systemctl disable etcd
+if [ $systemd == 'true' ]; then
+    systemctl disable etcd
 #systemctl enable etcd2 #set both etcd and the suicide script to start on boot
-systemctl start suicide.service
+    systemctl start suicide.service
 #systemctl enable suicide.service #start the suicide script
+else
+    service suicide start
+fi
 exit 0
 

@@ -7,9 +7,9 @@ variables:
 
 stages:
  - imagecreate
+ - trusty
  - xenial
  - centos
- - trusty
 
 xenial_image_creation:
   stage: imagecreate
