@@ -165,7 +165,7 @@ else
 # Short-Description: Start etcd daemon
 ### END INIT INFO
 
-/usr/bin/etcd --config-file /etc/sysconfig/etcd-peers --data-dir /var/lib/etcd/default
+start-stop-daemon -S -b -x /usr/bin/etcd -- --config-file /etc/sysconfig/etcd-peers --data-dir /var/lib/etcd/default
 EOF
   chmod 755 /etc/init.d/etcd2
 fi
