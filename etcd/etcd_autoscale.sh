@@ -292,7 +292,7 @@ if [[ $etcd_existing_peer_urls && $etcd_existing_peer_names != *"$ec2_instance_i
     # If we're not a proxy we add ourselves as a member to the cluster
     if [[ ! $PROXY_ASG ]]; then
         peer_url="$etcd_peer_scheme://$ec2_instance_ip:$server_port"
-        curl -s $ETCD_CURLOPTS "$etcd_last_good_member_url/v2/keys/bh9testlock" -XPUT -d value=lock
+        curl -s $ETCD_CURLOPTS "$etcd_last_good_member_url/v2/keys/killlock" -XPUT -d value=lock
         etcd_initial_cluster=$(curl $ETCD_CURLOPTS -s -f "$etcd_last_good_member_url/v2/members" | jq --raw-output '.[] | map(.name + "=" + .peerURLs[0]) | .[]' | xargs | sed 's/  */,/g')$(echo ",$ec2_instance_ip=$peer_url")
         echo "etcd_initial_cluster=$etcd_initial_cluster"
         if [[ ! $etcd_initial_cluster ]]; then
@@ -365,7 +365,7 @@ EOF
     rm -rf /var/lib/etcd/default/
 #    systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
     systemctl start etcd2
-    curl -s $ETCD_CURLOPTS "$etcd_last_good_member_url/v2/keys/bh9testlock" -XDELETE
+    curl -s $ETCD_CURLOPTS "$etcd_last_good_member_url/v2/keys/killlock" -XDELETE
 # otherwise I was already listed as a member so assume that this is a new cluster
 else
     # create a new cluster
