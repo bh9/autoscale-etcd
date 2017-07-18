@@ -345,11 +345,11 @@ if [[ $etcd_existing_peer_urls && $etcd_existing_peer_names != *"$ec2_instance_i
             while [ -z $joined ]; do
                 for url in $etcd_peer_urls; do
                     url_cluster_size=$(curl $ETCD_CURLOPTS -s -f "$url/v2/members" | jq --raw-output '.[] | map(.name) | .[]' | wc -l)
-                    if [ $url_cluster_size -ne $cluster_size]; then
+                    if [ $url_cluster_size -ne $cluster_size ]; then
 			all_in='fail'
                     fi
                 done
-                if [ $all_in != 'success'];then 
+                if [ $all_in != 'success' ];then 
                     sleep $wait_time
                 else
                     joined=true
