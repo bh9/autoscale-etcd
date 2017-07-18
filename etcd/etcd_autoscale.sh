@@ -288,7 +288,9 @@ echo "etcd_existing_peer_names=$etcd_existing_peer_names"
 
 # if I am not listed as a member of the cluster assume that this is a existing cluster
 # this will also be the case for a proxy situation
-if [[ $etcd_existing_peer_urls && $etcd_existing_peer_names != *"$ec2_instance_ip"* ]]; then
+doiexist=$(echo $etcd_existing_peer_names | sed "s/.*$ec2_instance_ip.*/$ec2_instance_ip/i")
+echo $doiexist
+if [[ $etcd_existing_peer_urls && $doiexist != ".*$ec2_instance_ip.*" ]]; then
     echo "joining existing cluster"
 
     # eject bad members from cluster - Note: currently removes all but most recent, needs work
