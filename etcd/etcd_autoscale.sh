@@ -488,7 +488,6 @@ while [ $((x)) -gt 0 ]; do
   SCALE_URL=$(openstack stack show -c outputs -f json $asg_name | jq '.outputs | select(.[].output_key=="scale_up_url") | .[0].output_value')
   x=$?
   set -e
-  echo moving locking.py
   if [ $((x)) -gt 0 ]; then
     sleep 5
   fi
@@ -556,7 +555,11 @@ else
 # Short-Description: Start suicide daemon
 ### END INIT INFO
 
-start-stop-daemon -S -b -x '/usr/bin/python /var/lib/etcd/locking.py'
+start-stop-daemon -S -b -x '/var/lib/etcd/locking.sh'
+EOF
+  cat > /var/lib/etcd/locking.sh <<EOF
+#!/bin/bash -e
+/usr/bin/python /var/lib/etcd/locking.py
 EOF
   cat > /etc/init.d/healthcheck <<EOF
 #!/bin/sh
