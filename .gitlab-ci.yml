@@ -7,7 +7,9 @@ variables:
 
 stages:
  - imagecreate
- - deploy
+ - trusty
+ - xenial
+ - centos
 
 xenial_image_creation:
   stage: imagecreate
@@ -16,9 +18,7 @@ xenial_image_creation:
    - packer-autoscale
   script:
    - export OS_AUTH_URL=$auth_url
-   - imagelist=$(openstack image list | grep 'Xenial etcd' | wc -l)
-   - if [ $((imagelist)) -eq 0 ]; then
-   - echo $imagelist
+   - if [ -z $(openstack image list | grep 'Xenial etcd') ]; then
    - /software/packer-0.9.0/bin/packer build xenial_template.json
    - fi
 
@@ -29,13 +29,23 @@ centos_image_creation:
    - packer-autoscale
   script:
    - export OS_AUTH_URL=$auth_url
-   - imagelist=$(openstack image list | grep 'Centos etcd' | wc -l)
-   - if [ $((imagelist)) -eq 0 ]; then
+   - if [ -z $(openstack image list | grep 'Centos etcd') ]; then
    - /software/packer-0.9.0/bin/packer build centos_template.json
    - fi
 
-openstack_stack_create:
-  stage: deploy
+trusty_image_creation:
+  stage: imagecreate
+  tags:
+   - openstack-autoscale
+   - packer-autoscale
+  script:
+   - export OS_AUTH_URL=$auth_url
+   - if [ -z $(openstack image list | grep 'Trusty etcd') ]; then
+   - /software/packer-0.9.0/bin/packer build trusty_template.json
+   - fi
+
+xenial_stack_create:
+  stage: xenial
   tags:
    - openstack-autoscale
   script:
@@ -45,10 +55,9 @@ openstack_stack_create:
    - openstack stack create --wait -t template.yaml --parameter OS_AUTH_URL="$auth_url" --parameter OS_USERNAME="$OS_USERNAME" --parameter OS_TENANT_NAME="$OS_TENANT_NAME" --parameter OS_PASSWORD="$OS_PASSWORD" --parameter net_name="$net_name" --parameter image="Xenial etcd" --parameter sec_grps="$sec_grps" --parameter instance_type="$instance_type" --parameter key_name="$key_name" --parameter configscript="cockroach.sh" a$CI_BUILD_ID
    - sleep 300
    - ./test.sh
-#   - openstack stack delete --yes a$CI_BUILD_ID
 
 centos_stack_create:
-  stage: deploy
+  stage: centos
   tags:
    - openstack-autoscale
   script:
@@ -58,5 +67,17 @@ centos_stack_create:
    - openstack stack create --wait -t template.yaml --parameter OS_AUTH_URL="$auth_url" --parameter OS_USERNAME="$OS_USERNAME" --parameter OS_TENANT_NAME="$OS_TENANT_NAME" --parameter OS_PASSWORD="$OS_PASSWORD" --parameter net_name="$net_name" --parameter image="Centos etcd" --parameter sec_grps="$sec_grps" --parameter instance_type="$instance_type" --parameter key_name="$key_name" --parameter configscript="cockroach.sh" a$CI_BUILD_ID
    - sleep 300
    - ./test.sh
-#   - openstack stack delete --yes a$CI_BUILD_ID
+
+trusty_stack_create:
+  stage: trusty
+  tags:
+   - openstack-autoscale
+  script:
+   - sec_grps=$(echo $sec_grps | cut -d\' -f2)
+   - export OS_AUTH_URL=$auth_url
+   - echo $sec_grps
+   - openstack stack create --wait -t template.yaml --parameter OS_AUTH_URL="$auth_url" --parameter OS_USERNAME="$OS_USERNAME" --parameter OS_TENANT_NAME="$OS_TENANT_NAME" --parameter OS_PASSWORD="$OS_PASSWORD" --parameter net_name="$net_name" --parameter image="Trusty etcd" --parameter sec_grps="$sec_grps" --parameter instance_type="$instance_type" --parameter key_name="$key_name" --parameter configscript="cockroach.sh" a$CI_BUILD_ID
+   - sleep 300
+   - ./test.sh
+
  

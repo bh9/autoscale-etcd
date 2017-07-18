@@ -35,17 +35,14 @@ if [ "$leader" = 'not current leader' ]; then
     done
 else
     x=1
-    while [ $x -ne 0 ]; do 
-        set +e 
-        cockroach start --insecure --advertise-host $myip --background 
-        x=$? 
-        echo $x
-        set -e 
-        if [ $x -ne 0 ]; then 
+    while [ $((x)) -gt 0 ]; do
+        set +e
+        cockroach start --insecure --advertise-host $myip --background
+        x=$?
+        set -e
+        if [ $((x)) -gt 0 ]; then
             sleep 5
-        else
-            connected='yes' 
-        fi 
+        fi
     done
 fi
 echo connected

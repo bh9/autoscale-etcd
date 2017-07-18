@@ -6,8 +6,11 @@ if [ -f /etc/centos-release ]; then
 else
   PLATFORM=$(lsb_release --release | sed -e 's/.*14.*/trusty/i' -e 's/.*16.*/xenial/i')
 fi
+echo server ntp1.sanger.ac.uk iburst > /etc/ntp.conf
 case ${PLATFORM} in
   centos)
+    systemctl restart ntpd
+    systemd='true'
 #    while [ $((x)) -gt 0 ]; do
 #      set +e
 #      yum -y update
@@ -26,6 +29,8 @@ case ${PLATFORM} in
 #    done
   ;;
   xenial)
+    systemctl restart ntp
+    systemd='true'
 #    DEBIAN_FRONTEND=noninteractive
  #   x=y=1
   #  while [ $((x)) -gt 0 ]; do
@@ -44,6 +49,10 @@ case ${PLATFORM} in
 #      set -e
  #   done
   ;;
+  trusty)
+    service ntp restart
+    systemd='false'
+    mkdir /var/lib/etcd
 esac
 #curl -Ls https://github.com/coreos/etcd/releases/download/v3.1.8/etcd-v3.1.8-linux-amd64.tar.gz > etcd.tar.gz
 #tar xvf etcd.tar.gz
@@ -125,19 +134,41 @@ if [ $metrics_server != "None" ]; then
     # slave for that many iterations, when starting.
     initial clock resync iterations = 60
 EOF
-    systemctl restart netdata
+    if [ $systemd == 'true' ]; then
+        systemctl restart netdata
+    else
+        service netdata restart
+    fi
 fi
 x=1
-while [ $((x)) -gt 0 ]; do
-  set +e
-  mv /home/etcd/etcd2.service /etc/systemd/system/etcd2.service
-  x=$?
-  set -e
-  echo moving etcd2.service
-  if [ $((x)) -gt 0 ]; then
-    sleep 5
-  fi
-done
+if [ $systemd == 'true' ]; then
+  while [ $((x)) -gt 0 ]; do
+    set +e
+    mv /home/etcd/etcd2.service /etc/systemd/system/etcd2.service
+    x=$?
+    set -e
+    echo moving etcd2.service
+    if [ $((x)) -gt 0 ]; then
+      sleep 5
+    fi
+  done
+else
+  cat > /etc/init.d/etcd2 <<EOF
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:        etcd
+# Required-Start:  $network $remote_fs $syslog
+# Required-Stop:   $network $remote_fs $syslog
+# Default-Start:   2 3 4 5
+# Default-Stop:    1
+# Short-Description: Start etcd daemon
+### END INIT INFO
+
+start-stop-daemon -S -b -x /usr/bin/etcd -- --config-file /etc/sysconfig/etcd-peers --data-dir /var/lib/etcd/default
+EOF
+  chmod 755 /etc/init.d/etcd2
+fi
 x=1
 while [ $((x)) -gt 0 ]; do
   set +e
@@ -150,7 +181,9 @@ while [ $((x)) -gt 0 ]; do
   fi
 done
 chmod 744 /var/lib/etcd/cleanup.sh
-systemctl daemon-reload	#read the new service files
+if [ $systemd == 'true' ]; then
+    systemctl daemon-reload	#read the new service files
+fi
 pkg="etcd-aws-cluster"
 version="0.5"
 etcd_peers_file_path="/etc/sysconfig/etcd-peers"
@@ -290,7 +323,7 @@ if [[ $etcd_existing_peer_urls && $etcd_existing_peer_names != *"$ec2_instance_i
     # If we're not a proxy we add ourselves as a member to the cluster
     if [[ ! $PROXY_ASG ]]; then
         peer_url="$etcd_peer_scheme://$ec2_instance_ip:$server_port"
-        curl -s $ETCD_CURLOPTS "$etcd_last_good_member_url/v2/keys/bh9testlock" -XPUT -d value=lock
+        curl -s $ETCD_CURLOPTS "$etcd_last_good_member_url/v2/keys/killlock" -XPUT -d value=lock
         etcd_initial_cluster=$(curl $ETCD_CURLOPTS -s -f "$etcd_last_good_member_url/v2/members" | jq --raw-output '.[] | map(.name + "=" + .peerURLs[0]) | .[]' | xargs | sed 's/  */,/g')$(echo ",$ec2_instance_ip=$peer_url")
         echo "etcd_initial_cluster=$etcd_initial_cluster"
         if [[ ! $etcd_initial_cluster ]]; then
@@ -302,7 +335,9 @@ if [[ $etcd_existing_peer_urls && $etcd_existing_peer_names != *"$ec2_instance_i
         status=0
         retry=1
         until [[ $status = $add_ok || $status = $already_added || $retry = $retry_times ]]; do
+            set +e
             status=$(curl $ETCD_CURLOPTS -f -s -w %{http_code} -o /dev/null -XPOST "$etcd_last_good_member_url/v2/members" -H "Content-Type: application/json" -d "{\"peerURLs\": [\"$peer_url\"], \"name\": \"$ec2_instance_ip\"}")
+            set -e
             echo "$pkg: adding instance ID $ec2_instance_id with peer URL $peer_url, retry $((retry++)), return code $status."
             joined=
             all_in='success'
@@ -310,11 +345,11 @@ if [[ $etcd_existing_peer_urls && $etcd_existing_peer_names != *"$ec2_instance_i
             while [ -z $joined ]; do
                 for url in $etcd_peer_urls; do
                     url_cluster_size=$(curl $ETCD_CURLOPTS -s -f "$url/v2/members" | jq --raw-output '.[] | map(.name) | .[]' | wc -l)
-                    if [ $url_cluster_size -ne $cluster_size]; then
+                    if [ $url_cluster_size -ne $cluster_size ]; then
 			all_in='fail'
                     fi
                 done
-                if [ $all_in != 'success'];then 
+                if [ $all_in != 'success' ];then 
                     sleep $wait_time
                 else
                     joined=true
@@ -362,8 +397,12 @@ EOF
     echo "}" >> "$etcd_peers_file_path"
     rm -rf /var/lib/etcd/default/
 #    systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
-    systemctl start etcd2
-    curl -s $ETCD_CURLOPTS "$etcd_last_good_member_url/v2/keys/bh9testlock" -XDELETE
+    if [ $systemd == 'true' ]; then
+        systemctl start etcd2
+    else
+        service etcd2 start
+    fi
+    curl -s $ETCD_CURLOPTS "$etcd_last_good_member_url/v2/keys/killlock" -XDELETE
 # otherwise I was already listed as a member so assume that this is a new cluster
 else
     # create a new cluster
@@ -403,9 +442,13 @@ EOF
     echo "}" >> "$etcd_peers_file_path"
     rm -rf /var/lib/etcd/default/
  #   systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
-    systemctl stop etcd
-    systemctl stop etcd2
-    systemctl start etcd2
+    if [ $systemd == 'true' ]; then
+        systemctl stop etcd
+        systemctl stop etcd2
+        systemctl start etcd2
+    else
+        service etcd2 restart
+    fi
 fi
 x=1
 while [ $((x)) -gt 0 ]; do
@@ -438,8 +481,17 @@ echo $ID
 sleep 5
 openstack server delete --os-region $AWS_DEFAULT_REGION --os-username $OS_USERNAME --os-password $OS_PASSWORD --os-tenant-name $OS_TENANT_NAME --os-auth-url $OS_AUTH_URL $ID #delete yourself
 EOF
-openstack stack show -c outputs -f json $asg_name
-SCALE_URL=$(openstack stack show -c outputs -f json $asg_name | jq '.outputs | select(.[].output_key=="scale_up_url") | .[0].output_value')
+x=1
+while [ $((x)) -gt 0 ]; do
+  set +e
+  openstack stack show -c outputs -f json $asg_name
+  SCALE_URL=$(openstack stack show -c outputs -f json $asg_name | jq '.outputs | select(.[].output_key=="scale_up_url") | .[0].output_value')
+  x=$?
+  set -e
+  if [ $((x)) -gt 0 ]; then
+    sleep 5
+  fi
+done
 cat > /var/lib/etcd/recover.sh <<-EOF 
 #!/bin/bash 
 set -e 
@@ -461,7 +513,8 @@ while [ $((x)) -gt 0 ]; do
     sleep 5
   fi
 done
-cat > /etc/systemd/system/suicide.service <<-EOF
+if [ $systemd == 'true' ]; then
+  cat > /etc/systemd/system/suicide.service <<-EOF
 [Unit]
 Description=the killer cleanup service
 After=etcd2.service
@@ -475,7 +528,7 @@ ExecStart=/usr/bin/python /var/lib/etcd/locking.py
 [Install]
 WantedBy=multi-user.target
 EOF
-cat > /etc/systemd/system/healthcheck.service <<-EOF
+  cat > /etc/systemd/system/healthcheck.service <<-EOF
 [Unit]
 Description=the etcd recovery service
 After=etcd2.service
@@ -489,6 +542,42 @@ ExecStart=/bin/bash /var/lib/etcd/healthcheck.sh
 [Install]
 WantedBy=multi-user.target
 EOF
+else
+  cat > /etc/init.d/suicide <<EOF
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:        suicide
+# Required-Start:  $network $remote_fs $syslog
+# Required-Stop:   $network $remote_fs $syslog
+# Default-Start:   2 3 4 5
+# Default-Stop:    1
+# Short-Description: Start suicide daemon
+### END INIT INFO
+
+start-stop-daemon -S -b -x '/var/lib/etcd/locking.sh'
+EOF
+  cat > /var/lib/etcd/locking.sh <<EOF
+#!/bin/bash -e
+/usr/bin/python /var/lib/etcd/locking.py
+EOF
+  cat > /etc/init.d/healthcheck <<EOF
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:        healthcheck
+# Required-Start:  $network $remote_fs $syslog
+# Required-Stop:   $network $remote_fs $syslog
+# Default-Start:   2 3 4 5
+# Default-Stop:    1
+# Short-Description: Start healthcheck daemon
+### END INIT INFO
+
+start-stop-daemon -S -b -x /var/lib/etcd/healthcheck.sh
+EOF
+  chmod 755 /etc/init.d/suicide
+  chmod 755 /etc/init.d/healthcheck
+fi
 x=1
 while [ $((x)) -gt 0 ]; do
   set +e
@@ -513,13 +602,21 @@ while [ $((x)) -gt 0 ]; do
 done
 chmod 744 /var/lib/etcd/healthcheck.sh
 chmod 744 /var/lib/etcd/recover.sh
-systemctl start healthcheck.service
+if [ $systemd == 'true' ]; then
+    systemctl start healthcheck.service
+else
+    service healthcheck start
+fi
 chmod 744 /var/lib/etcd/$scriptname
 /var/lib/etcd/$scriptname
 chmod 744 /var/lib/etcd/suicide.sh
-systemctl disable etcd
+if [ $systemd == 'true' ]; then
+    systemctl disable etcd
 #systemctl enable etcd2 #set both etcd and the suicide script to start on boot
-systemctl start suicide.service
+    systemctl start suicide.service
 #systemctl enable suicide.service #start the suicide script
+else
+    service suicide start
+fi
 exit 0
 
