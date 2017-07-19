@@ -292,7 +292,7 @@ doiexist=$(echo $etcd_existing_peer_names | sed "s/.*$ec2_instance_ip.*/$ec2_ins
 echo $doiexist
 if [[ $etcd_existing_peer_urls && $doiexist != ".*$ec2_instance_ip.*" ]]; then
     echo "joining existing cluster"
-
+    echo $doiexist > /var/lib/etcd/idontexist
     # eject bad members from cluster - Note: currently removes all but most recent, needs work
 #    peer_regexp=$(echo "$etcd_peer_urls" | sed 's/^.*https\{0,1\}:\/\/\([0-9.]*\):[0-9]*.*$/contains(\\"\/\/\1:\\")/' | xargs | sed 's/  */ or /g')
 #    if [[ ! $peer_regexp ]]; then
@@ -342,10 +342,10 @@ if [[ $etcd_existing_peer_urls && $doiexist != ".*$ec2_instance_ip.*" ]]; then
             set -e
             echo "$pkg: adding instance ID $ec2_instance_id with peer URL $peer_url, retry $((retry++)), return code $status."
             joined=
-            all_in='success'
             cluster_size=$(echo $etcd_initial_cluster | sed 's/,/ /g' | wc -w)  
             while [ -z $joined ]; do
-                for url in $etcd_peer_urls; do
+                all_in='success'
+                for url in $etcd_good_member_urls; do
                     url_cluster_size=$(curl $ETCD_CURLOPTS -s -f "$url/v2/members" | jq --raw-output '.[] | map(.name) | .[]' | wc -l)
                     if [ $url_cluster_size -ne $cluster_size ]; then
 			all_in='fail'
@@ -409,7 +409,7 @@ EOF
 else
     # create a new cluster
     echo "creating new cluster"
-
+    echo $doiexist > /var/lib/etcd/iexist
     for i in $etcd_peers; do
         etcd_initial_cluster="$etcd_initial_cluster,$i=$etcd_peer_scheme://$i:$server_port"
     done
