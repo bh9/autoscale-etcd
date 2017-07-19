@@ -344,7 +344,7 @@ if [[ $etcd_existing_peer_urls && $doiexist != "$ec2_instance_ip" ]]; then
             all_in='success'
             cluster_size=$(echo $etcd_initial_cluster | sed 's/,/ /g' | wc -w)  
             while [ -z $joined ]; do
-                for url in $etcd_peer_urls; do
+                for url in $etcd_good_member_urls; do
                     url_cluster_size=$(curl $ETCD_CURLOPTS -s -f "$url/v2/members" | jq --raw-output '.[] | map(.name) | .[]' | wc -l)
                     if [ $url_cluster_size -ne $cluster_size ]; then
 			all_in='fail'
