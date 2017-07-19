@@ -291,7 +291,7 @@ echo "etcd_existing_peer_names=$etcd_existing_peer_names"
 doiexist=$(echo $etcd_existing_peer_names | sed "s/.*$ec2_instance_ip.*/$ec2_instance_ip/i")
 if [[ $etcd_existing_peer_urls && $doiexist != "$ec2_instance_ip" ]]; then
     echo "joining existing cluster"
-    echo $doiexist > /var/lib/etcd/idontexist
+    echo "<$doiexist> <$ec2_instance_ip>" > /var/lib/etcd/idontexist
     # eject bad members from cluster - Note: currently removes all but most recent, needs work
 #    peer_regexp=$(echo "$etcd_peer_urls" | sed 's/^.*https\{0,1\}:\/\/\([0-9.]*\):[0-9]*.*$/contains(\\"\/\/\1:\\")/' | xargs | sed 's/  */ or /g')
 #    if [[ ! $peer_regexp ]]; then
