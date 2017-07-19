@@ -399,6 +399,8 @@ EOF
     rm -rf /var/lib/etcd/default/
 #    systemctl stop etcd #restart etcd now it is configured correctly so the config takes hold
     if [ $systemd == 'true' ]; then
+        systemctl stop etcd
+        systemctl stop etcd2
         systemctl start etcd2
     else
         service etcd2 start
