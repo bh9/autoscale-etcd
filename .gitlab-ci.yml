@@ -16,6 +16,8 @@ xenial_image_creation:
   tags:
    - openstack-autoscale
    - packer-autoscale
+  except:
+    documentation
   script:
    - export OS_AUTH_URL=$auth_url
    - if [ -z $(openstack image list | grep 'Xenial etcd') ]; then
@@ -27,6 +29,8 @@ centos_image_creation:
   tags:
    - openstack-autoscale
    - packer-autoscale
+  except:
+    documentation
   script:
    - export OS_AUTH_URL=$auth_url
    - if [ -z $(openstack image list | grep 'Centos etcd') ]; then
@@ -38,6 +42,8 @@ trusty_image_creation:
   tags:
    - openstack-autoscale
    - packer-autoscale
+  except:
+    documentation
   script:
    - export OS_AUTH_URL=$auth_url
    - if [ -z $(openstack image list | grep 'Trusty etcd') ]; then
@@ -48,6 +54,8 @@ xenial_stack_create:
   stage: xenial
   tags:
    - openstack-autoscale
+  except:
+    documentation
   script:
    - sec_grps=$(echo $sec_grps | cut -d\' -f2)
    - export OS_AUTH_URL=$auth_url
@@ -60,6 +68,8 @@ centos_stack_create:
   stage: centos
   tags:
    - openstack-autoscale
+  except:
+    documentation
   script:
    - sec_grps=$(echo $sec_grps | cut -d\' -f2)
    - export OS_AUTH_URL=$auth_url
@@ -72,6 +82,8 @@ trusty_stack_create:
   stage: trusty
   tags:
    - openstack-autoscale
+  except:
+    documentation
   script:
    - sec_grps=$(echo $sec_grps | cut -d\' -f2)
    - export OS_AUTH_URL=$auth_url
