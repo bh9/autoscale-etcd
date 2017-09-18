@@ -43,3 +43,5 @@ Other (optional) parameters:
 |failtolerance  |20        |every lockattemptperiod seconds, an etcd communication is made. If this fails, the failmarker goes up by 5, but if it succeeds, the marker goes down by 1. If this marker exceeds failtolerance, the machine is removed
 
 Supplied with this is a pair of packer templates. Using the images produced by these templates has dropped the maximum time the cluster is down a member from ~200s to ~70s on  the same hardware, however they are not compulsory. Note: to use other images, add the commands in the relevant template to the top of etcd/etcd_autoscale
+
+Note: etcd/etcd_autoscale.sh is based on https://github.com/MonsantoCo/etcd-aws-cluster 
